@@ -1,0 +1,32 @@
+/* v1.5.1: Android Chromeでも押しやすい「空島へ」導線 */
+.skyHomeV151{
+  position:fixed;
+  top:max(10px,env(safe-area-inset-top));
+  left:max(10px,env(safe-area-inset-left));
+  z-index:12000;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid #d8e4f5;
+  border-radius:999px;
+  background:rgba(255,255,255,.96);
+  color:#365986;
+  font-weight:950;
+  box-shadow:0 7px 20px rgba(54,76,118,.18);
+  touch-action:manipulation!important;
+  pointer-events:auto!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.skyHomeV151:active{transform:translateY(1px) scale(.98)}
+
+#backHomeBtn,#resultHomeBtn{
+  touch-action:manipulation!important;
+  pointer-events:auto!important;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* 正解後のレビューでは左上ボタンと本文が重ならないよう少し余白を確保 */
+#reviewScreen .reviewShell,#okuriScreen .okuriShell{padding-top:max(72px,calc(env(safe-area-inset-top) + 62px))}
+
+@media(max-width:760px){
+  .skyHomeV151{font-size:13px;min-height:42px;padding:9px 12px}
+}
