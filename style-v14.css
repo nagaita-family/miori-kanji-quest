@@ -1,0 +1,73 @@
+/* v1.4: TOPを「みおりの空島」に。1問ごとに生き物・建物・自然が増える。 */
+
+/* 旧ことばタワーはv1.4では使わない */
+.growthWorldV13{display:none!important}
+.hero{min-height:390px}
+.skyArt{width:50%;height:100%;right:0;top:0;overflow:visible}
+.homeIslandWrapV14{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+
+/* 音ON/OFF */
+.soundBtnV14{position:absolute;z-index:20;right:18px;top:16px;width:46px;height:46px;border-radius:50%;background:#ffffffd9;border:1px solid #fff;box-shadow:0 6px 18px #526b9630;font-size:22px;display:grid;place-items:center;pointer-events:auto;touch-action:manipulation;backdrop-filter:blur(8px)}
+.soundBtnV14:active{transform:scale(.93)}
+
+/* 空島本体 */
+.skyIslandV14{position:relative;width:330px;height:300px;transform-origin:center bottom;animation:islandFloatV14 4.2s ease-in-out infinite;filter:drop-shadow(0 18px 18px #526c8b2b)}
+.islandAuraV14{position:absolute;left:50%;top:50%;width:82%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fffad98a 0 18%,#b6eaff45 42%,transparent 70%);animation:auraPulseV14 3s ease-in-out infinite}
+.islandRockV14{position:absolute;left:50%;top:58%;width:220px;height:115px;transform:translate(-50%,-50%);background:linear-gradient(155deg,#b18e72,#806853 60%,#675443);clip-path:polygon(4% 17%,15% 5%,85% 5%,97% 18%,76% 72%,62% 100%,37% 92%,20% 68%);transition:.7s cubic-bezier(.2,.8,.2,1)}
+.islandGrassV14{position:absolute;left:-3%;top:-8%;width:106%;height:34%;border-radius:50%;background:linear-gradient(#8edb73,#55b86e);border:3px solid #d9ffc9;box-shadow:inset 0 -8px 0 #3c9f5e33}
+.islandCloudV14{position:absolute;font-size:72px;z-index:-1;filter:drop-shadow(0 7px 9px #6b89a52b);opacity:.9}.islandCloudV14.cA{left:-7px;top:48%;animation:cloudDriftV14 5s ease-in-out infinite}.islandCloudV14.cB{right:-6px;top:64%;font-size:58px;animation:cloudDriftV14 4.5s ease-in-out infinite reverse}
+.islandRainbowV14{position:absolute;left:50%;top:5%;transform:translateX(-50%) scale(.6);font-size:84px;opacity:0;transition:.7s;filter:drop-shadow(0 8px 8px #5b77a422)}
+.islandThingsV14{position:absolute;inset:0;z-index:5}
+.islandItemV14{position:absolute;left:var(--left);top:var(--top);font-size:31px;transform:translate(-50%,-50%) scale(var(--scale));transform-origin:center bottom;filter:drop-shadow(0 3px 3px #52647b33);animation:itemBreatheV14 2.7s ease-in-out infinite;animation-delay:var(--delay);transition:.6s}
+.islandItemV14.rareV14{font-size:37px;filter:drop-shadow(0 0 9px #fff4a9) drop-shadow(0 4px 4px #52647b33)}
+.islandBonusV14{position:absolute;right:17%;top:26%;padding:4px 7px;border-radius:999px;background:#ffffffd9;font-size:11px;font-weight:950;color:#526aa2}
+
+/* 5問ごとに島そのものも大きくなる */
+.skyIslandV14.stage1 .islandRockV14{width:238px;height:124px}
+.skyIslandV14.stage2 .islandRockV14{width:258px;height:134px}
+.skyIslandV14.stage2 .islandRainbowV14,.skyIslandV14.stage3 .islandRainbowV14,.skyIslandV14.stage4 .islandRainbowV14{opacity:.62;transform:translateX(-50%) scale(.86)}
+.skyIslandV14.stage3 .islandRockV14{width:278px;height:144px}
+.skyIslandV14.stage4 .islandRockV14{width:296px;height:152px}
+.skyIslandV14.stage4 .islandAuraV14{background:radial-gradient(circle,#fff6a8a8 0 16%,#b8eaff58 42%,transparent 72%)}
+
+.islandStatusV14{position:absolute;right:3%;top:17%;width:158px;padding:9px 11px;border-radius:17px;background:#ffffffdd;border:1px solid #fff;box-shadow:0 8px 22px #526b9330;backdrop-filter:blur(8px);text-align:center;color:#52637e}
+.islandStatusV14 span{display:block;font-size:8px;letter-spacing:.12em;font-weight:950;color:#7183a2}.islandStatusV14 b{display:block;font-size:18px;color:#3659aa;margin:2px 0}.islandStatusV14 small{font-size:9px;font-weight:850;line-height:1.25;display:block}
+.homeIslandWrapV14 .altitude{right:5%;bottom:3%;font-size:9px}
+.nextRewardV14{margin-top:5px;font-size:12px;color:#78869b;font-weight:800}.nextRewardV14 b{color:#536cb1;margin-left:5px}
+
+@keyframes islandFloatV14{0%,100%{transform:translateY(5px) rotate(-.5deg)}50%{transform:translateY(-8px) rotate(.5deg)}}
+@keyframes auraPulseV14{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.72}}
+@keyframes cloudDriftV14{50%{transform:translateX(10px) translateY(-4px)}}
+@keyframes itemBreatheV14{0%,100%{transform:translate(-50%,-50%) scale(var(--scale)) rotate(-1deg)}50%{transform:translate(-50%,calc(-50% - 4px)) scale(calc(var(--scale) * 1.04)) rotate(2deg)}}
+
+/* ミッションクリア：新しい報酬が空島に降りてくる */
+.islandRewardV14{width:min(620px,94vw);margin:13px auto 4px;padding:12px 18px;border-radius:28px;background:linear-gradient(135deg,#e8f8ff,#fff8d9 57%,#f7ecff);border:1px solid #fff;box-shadow:0 14px 34px #526d9724;display:flex;align-items:center;justify-content:center;gap:14px;overflow:hidden;animation:rewardCardInV14 .55s cubic-bezier(.2,.85,.2,1.15) both}
+.miniIslandHolderV14{width:160px;height:150px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;position:relative}
+.skyIslandV14.miniV14{width:165px;height:145px;animation:none;transform:scale(.93)}
+.skyIslandV14.miniV14 .islandRockV14{width:120px!important;height:64px!important;top:63%}.skyIslandV14.miniV14 .islandGrassV14{height:36%;border-width:2px}.skyIslandV14.miniV14 .islandCloudV14{font-size:38px}.skyIslandV14.miniV14 .islandCloudV14.cB{font-size:31px}.skyIslandV14.miniV14 .islandRainbowV14{font-size:46px}.skyIslandV14.miniV14 .islandItemV14{font-size:18px}.skyIslandV14.miniV14 .islandItemV14.rareV14{font-size:22px}.skyIslandV14.miniV14 .islandAuraV14{display:none}
+.newRewardPopV14{position:absolute;left:50%;top:15%;z-index:20;transform:translate(-50%,-50%);text-align:center;animation:newRewardPopV14 1.2s cubic-bezier(.18,.9,.25,1.2) both;filter:drop-shadow(0 5px 8px #4b63853b)}
+.newRewardPopV14 span{display:block;font-size:54px}.newRewardPopV14 b{display:block;white-space:nowrap;font-size:10px;padding:4px 8px;border-radius:999px;background:#fff;color:#4c6090;border:1px solid #e1e8f3}
+.islandRewardCopyV14{text-align:left;min-width:0}.rewardLabelV14{font-size:10px;letter-spacing:.12em;color:#7888a5;font-weight:950}.islandRewardCopyV14>b{display:block;font-size:22px;color:#3659aa;margin:3px 0}.islandRewardCopyV14>span{display:block;font-size:12px;color:#66768e;font-weight:800}.islandMilestoneV14,.levelUpV14{display:inline-block;margin:7px 5px 0 0;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:1000}.islandMilestoneV14{background:#e5f8df;color:#387a42}.levelUpV14{background:#ffde67;color:#705000;animation:levelGlowV14 .7s ease-in-out infinite alternate}
+@keyframes rewardCardInV14{from{transform:translateY(18px) scale(.94);opacity:0}to{transform:none;opacity:1}}
+@keyframes newRewardPopV14{0%{transform:translate(-50%,65px) scale(.2) rotate(-12deg);opacity:0}48%{transform:translate(-50%,-12px) scale(1.25) rotate(5deg);opacity:1}72%{transform:translate(-50%,2px) scale(.96)}100%{transform:translate(-50%,0) scale(1);opacity:1}}
+@keyframes levelGlowV14{to{transform:scale(1.07);box-shadow:0 0 16px #ffd85a99}}
+
+/* 既存の正解演出も少し強く */
+.successFxV13 .successGlowV13{width:min(58vw,500px)}
+.successFxV13 .successTextV13{letter-spacing:.05em}
+
+@media(max-width:760px){
+  .hero{min-height:445px;padding-bottom:180px}
+  .skyArt{width:100%;height:250px;top:auto;bottom:0;opacity:1!important;transform:none!important}
+  .homeIslandWrapV14{align-items:center;justify-content:center}
+  .skyIslandV14{width:275px;height:235px;transform:scale(.82);animation:islandFloatMobileV14 4s ease-in-out infinite}
+  .islandStatusV14{right:3%;top:5%;width:127px;padding:7px 8px}.islandStatusV14 b{font-size:15px}.islandStatusV14 small{font-size:8px}
+  .soundBtnV14{right:14px;top:13px;width:42px;height:42px}
+  .islandRewardV14{gap:5px;padding:10px 9px}.miniIslandHolderV14{width:125px;height:126px}.skyIslandV14.miniV14{transform:scale(.72)}.islandRewardCopyV14>b{font-size:17px}.islandRewardCopyV14>span{font-size:10px}
+}
+@keyframes islandFloatMobileV14{0%,100%{transform:scale(.82) translateY(4px)}50%{transform:scale(.82) translateY(-6px)}}
+
+@media(max-height:760px) and (min-width:761px){
+  .hero{min-height:330px}.skyIslandV14{transform:scale(.82);animation:islandFloatShortV14 4s ease-in-out infinite}.islandStatusV14{top:8%}
+}
+@keyframes islandFloatShortV14{0%,100%{transform:scale(.82) translateY(3px)}50%{transform:scale(.82) translateY(-5px)}}
