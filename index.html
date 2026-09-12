@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>Miori Kanji Quest v1.5</title>
-<link rel="stylesheet" href="./style-v10.css?v=1501">
-<link rel="stylesheet" href="./style-v11.css?v=1501">
-<link rel="stylesheet" href="./style-v12.css?v=1501">
-<link rel="stylesheet" href="./style-v13.css?v=1501">
-<link rel="stylesheet" href="./style-v14.css?v=1501">
-<link rel="stylesheet" href="./style-v15.css?v=1501">
+<title>Miori Kanji Quest v1.5.1</title>
+<link rel="stylesheet" href="./style-v10.css?v=1510">
+<link rel="stylesheet" href="./style-v11.css?v=1510">
+<link rel="stylesheet" href="./style-v12.css?v=1510">
+<link rel="stylesheet" href="./style-v13.css?v=1510">
+<link rel="stylesheet" href="./style-v14.css?v=1510">
+<link rel="stylesheet" href="./style-v15.css?v=1510">
+<link rel="stylesheet" href="./style-v15-navfix.css?v=1510">
 <meta name="theme-color" content="#edf7ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -21,7 +22,7 @@
     <div class="homeShell">
       <header class="hero">
         <div class="heroCopy">
-          <div class="eyebrow">MIORI KANJI QUEST <span>v1.5</span></div>
+          <div class="eyebrow">MIORI KANJI QUEST <span>v1.5.1</span></div>
           <h1>みおりの <em>空島</em></h1>
           <p>モコといっしょに、ことばの力で島を育てよう。</p>
           <div class="levelRow">
@@ -53,7 +54,7 @@
   </section>
 
   <section id="challengeScreen" class="screen">
-    <header class="playTop"><button id="backHomeBtn" class="backBtn">← もどる</button><div class="playTitle"><span id="stageLabel">MISSION 1</span><b id="wordTitle">路線</b></div><div id="playLevel" class="miniLevel">LV 1</div></header>
+    <header class="playTop"><button id="backHomeBtn" class="backBtn" type="button">← 空島へ</button><div class="playTitle"><span id="stageLabel">MISSION 1</span><b id="wordTitle">路線</b></div><div id="playLevel" class="miniLevel">LV 1</div></header>
     <div class="challengeLayout">
       <main class="writingPane">
         <div class="wordProgress" id="wordProgress"></div><div id="charPrompt" class="charPrompt">漢字を書いてみよう</div>
@@ -104,17 +105,18 @@
   </section>
 
   <section id="resultScreen" class="screen">
-    <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn">空島に置きにいく →</button></div></div>
+    <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn" type="button">🏝️ 空島に戻る</button></div></div>
   </section>
 </div>
-<script src="./data-v10.js?v=1501"></script>
-<script src="./data-v11-patch.js?v=1501"></script>
-<script src="./app-v10.js?v=1501"></script>
-<script src="./app-v11-patch.js?v=1501"></script>
-<script src="./app-v12-patch.js?v=1501"></script>
-<script src="./app-v13-patch.js?v=1501"></script>
-<script src="./app-v14-patch.js?v=1501"></script>
-<script src="./app-v14-fix.js?v=1501"></script>
-<script src="./app-v15-patch.js?v=1501"></script>
+<script src="./data-v10.js?v=1510"></script>
+<script src="./data-v11-patch.js?v=1510"></script>
+<script src="./app-v10.js?v=1510"></script>
+<script src="./app-v11-patch.js?v=1510"></script>
+<script src="./app-v12-patch.js?v=1510"></script>
+<script src="./app-v13-patch.js?v=1510"></script>
+<script src="./app-v14-patch.js?v=1510"></script>
+<script src="./app-v14-fix.js?v=1510"></script>
+<script src="./app-v15-patch.js?v=1510"></script>
+<script src="./app-v15-navfix.js?v=1510"></script>
 </body>
 </html>
