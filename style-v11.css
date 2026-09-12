@@ -1,0 +1,83 @@
+/* v1.1 additions: 送り仮名・iPad Pencil安定化 */
+
+/* 送り仮名は学校プリントに近い「波線」で強調 */
+.verticalQuestion .targetWithOkuri{background:#ffe48d;border-radius:7px;padding:4px 1px}
+.verticalQuestion .okuriReading{
+  text-decoration-line:underline;
+  text-decoration-style:wavy;
+  text-decoration-color:#d45e5e;
+  text-decoration-thickness:1.5px;
+  text-underline-offset:5px;
+}
+
+/* 送り仮名クイズ */
+.okuriShell{
+  width:min(760px,94vw);min-height:100dvh;margin:auto;padding:30px 18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+}
+.okuriShell h2{font-size:clamp(30px,5vw,46px);margin:7px 0 5px}
+.okuriLead{color:var(--muted);font-weight:800;margin:0 0 18px}
+.okuriWordBuild{
+  min-width:min(520px,88vw);padding:24px 28px;margin:8px 0 20px;border-radius:28px;
+  background:#fff;box-shadow:var(--shadow);border:1px solid #e5ebf3;
+  display:flex;align-items:baseline;justify-content:center;gap:8px;
+  font-family:"Yu Mincho","Noto Serif JP",serif;
+}
+.okuriKanji{font-size:clamp(78px,16vw,150px);font-weight:900;line-height:1}
+.okuriSlot{
+  min-width:100px;font-size:clamp(42px,8vw,72px);font-weight:900;line-height:1.2;color:#8997aa;
+  border-bottom:4px wavy #d45e5e;padding:0 8px 4px;
+}
+.okuriChoices{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:650px}
+.okuriChoice{
+  min-width:125px;padding:16px 24px;border-radius:20px;background:#fff;color:var(--ink);
+  border:2px solid #dce6f2;font-size:26px;font-weight:950;box-shadow:0 7px 18px rgba(54,76,118,.09);
+  touch-action:manipulation;
+}
+.okuriChoice:hover{border-color:#91aaff}
+.okuriChoice.wrong{background:#fff0ee;border-color:#e28a80;animation:okuriShake .25s}
+.okuriChoice.correct{background:#e9f8ef;border-color:#6fc493;color:#27784b}
+@keyframes okuriShake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.okuriFeedback{min-height:38px;margin:15px 0 8px;font-weight:950;font-size:18px}
+.okuriComplete{font-size:clamp(42px,8vw,72px);font-family:"Yu Mincho","Noto Serif JP",serif;font-weight:900;color:#2e7d52}
+#okuriNextBtn[hidden]{display:none}
+
+/* HELPがiPadで確実に押せるように前面へ */
+.helpDock{position:relative;z-index:25;flex:0 0 auto}
+.helpBtn{position:relative;z-index:30;min-height:48px;touch-action:manipulation;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.writeActions button,.playTop button,.reviewActions button,.strokeActions button,.resultActions button,.okuriChoice,#okuriNextBtn{
+  position:relative;z-index:30;touch-action:manipulation;pointer-events:auto;-webkit-tap-highlight-color:transparent;
+}
+button:disabled{cursor:default;opacity:.72}
+
+/* Pencil中はページそのものを動かさず、文字選択・長押しを抑える。
+   ボタンは touch-action:manipulation で操作可能に保つ。 */
+body.playing{height:100dvh;overflow:hidden;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body.playing *:not(button){-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body.playing .challengeScreen,body.playing .strokeScreen{touch-action:auto}
+.canvasShell,#writeCanvas{touch-action:none!important}
+.challengeScreen.active{height:100dvh;overflow:hidden}
+.challengeLayout{height:calc(100dvh - 70px);min-height:0;overflow:hidden}
+.writingPane{height:100%;min-height:0;overflow:hidden}
+.canvasShell{width:min(450px,46vh,68vw);flex:0 0 auto}
+
+@media(max-height:760px) and (min-width:761px){
+  .canvasShell{width:min(350px,42vh,58vw)}
+  .wordDot{width:38px;height:38px;font-size:22px}
+  .charPrompt{font-size:16px;margin:1px 0 3px}
+  .statusLine{min-height:25px;font-size:13px;margin-top:3px}
+  .writeActions .toolBtn,.writeActions .checkBtn{padding:9px 12px}
+  .helpDock{margin-top:4px;padding:7px 10px}
+  .helpBtn{margin-top:5px;padding:8px;min-height:40px}
+  .helpNote{margin-top:3px;font-size:10px}
+}
+
+@media(max-width:760px){
+  .challengeLayout{height:calc(100dvh - 70px);grid-template-rows:145px minmax(0,1fr);overflow:hidden;padding:6px 0}
+  .questionPaper{min-height:0;height:145px;padding:12px 14px}
+  .verticalQuestion{height:105px;margin:4px auto 0;font-size:22px}
+  .writingPane{min-height:0;padding:7px 10px}
+  .canvasShell{width:min(330px,36vh,72vw)}
+  .helpDock{margin-top:5px;padding:8px 10px}
+  .helpNote{display:none}
+}
