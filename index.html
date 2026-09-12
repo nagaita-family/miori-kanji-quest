@@ -12,100 +12,38 @@
 <meta name="apple-mobile-web-app-title" content="Kanji Quest">
 </head>
 <body>
-
 <div class="app">
   <div class="topbar">
     <div class="brand">🌱 Miori Kanji Quest v0.6 iPad</div>
     <div class="progressWrap"><div id="progress" class="progress"></div></div>
     <div id="score" class="score">⭐ 0</div>
   </div>
-
   <section class="card">
     <div class="scene">
-      <div id="sceneText" class="sceneText"></div>
-      <div id="sceneIcon" class="sceneIcon"></div>
-      <div id="bus" class="bus">🚌💨</div>
-      <div id="sun" class="sun">☀️</div>
+      <div id="sceneText" class="sceneText"></div><div id="sceneIcon" class="sceneIcon"></div><div id="bus" class="bus">🚌💨</div><div id="sun" class="sun">☀️</div>
     </div>
-
     <div id="gameArea" class="gameArea">
-      <div class="headline">
-        <div class="smallcap">かんじ・クエスト</div>
-        <h1>形を組み立てて、書き順まで覚えよう</h1>
-      </div>
-
+      <div class="headline"><div class="smallcap">かんじ・クエスト</div><h1>形を組み立てて、書き順まで覚えよう</h1></div>
       <div class="studyLayout">
-        <aside class="jpPaper">
-          <div id="verticalSentence" class="verticalSentence"></div>
-          <div class="paperLabel">こくごノート</div>
-        </aside>
-
+        <aside class="jpPaper"><div id="verticalSentence" class="verticalSentence"></div><div class="paperLabel">こくごノート</div></aside>
         <main class="workPanel">
-          <div id="recall" class="recall">
-            <div class="recallTitle">🧠 まず3秒、頭の中で書いてみよう</div>
-            <div id="timer" class="timer">3</div>
-            <div class="note">どのパーツが、上・下・左・右にあったかな？</div>
-            <div class="actions"><button id="showPartsBtn" class="btn primary" disabled>ちょっと待って…</button></div>
-          </div>
-
-          <div id="puzzle" class="puzzle">
-            <div id="kanjiGrid" class="kanjiGrid"></div>
-            <div class="partsTitle">👇 パーツをえらぶと、正しい位置に入るよ</div>
-            <div id="parts" class="parts"></div>
-            <div id="feedback" class="feedback"></div>
-            <div class="actions">
-              <button id="hintBtn" class="btn hint">👀 1秒だけ見る</button>
-              <button id="resetBtn" class="btn secondary">↩ やり直す</button>
-            </div>
-          </div>
-
+          <div id="recall" class="recall"><div class="recallTitle">🧠 まず3秒、頭の中で書いてみよう</div><div id="timer" class="timer">3</div><div class="note">どのパーツが、上・下・左・右にあったかな？</div><div class="actions"><button id="showPartsBtn" class="btn primary" disabled>ちょっと待って…</button></div></div>
+          <div id="puzzle" class="puzzle"><div id="kanjiGrid" class="kanjiGrid"></div><div class="partsTitle">👇 パーツをえらぶと、正しい位置に入るよ</div><div id="parts" class="parts"></div><div id="feedback" class="feedback"></div><div class="actions"><button id="hintBtn" class="btn hint">👀 1秒だけ見る</button><button id="resetBtn" class="btn secondary">↩ やり直す</button></div></div>
           <div id="lesson" class="lesson">
-            <div class="lessonTitle">✏️ 書き順を見てみよう</div>
-            <div id="wordAnswer" class="wordAnswer"></div>
-            <div id="charSteps" class="charSteps"></div>
-
-            <div id="strokeStage" class="strokeStage">
-              <svg id="strokeSvg" viewBox="0 0 109 109" aria-label="漢字の書き順"></svg>
-              <div id="pencil" class="pencil">✏️</div>
-            </div>
-
-            <div id="lessonMsg" class="lessonMsg">書き順を準備中…</div>
-            <div id="lessonSub" class="lessonSub">線の先を鉛筆が追いかけるよ。</div>
-            <div class="actions" id="lessonActions">
-              <button id="replayBtn" class="btn secondary">▶ もう一回見る</button>
-              <button id="practiceBtn" class="btn primary" disabled>✏️ Apple Pencilで書く</button>
-            </div>
-            <div id="practicePanel" class="practicePanel">
-              <div id="practiceTitle" class="practiceTitle">白いマスに書いてみよう</div>
-              <div id="practiceCharDots" class="charSteps"></div>
-              <div class="practiceCanvasWrap"><canvas id="practiceCanvas" width="700" height="700"></canvas></div>
-              <div id="practiceInfo" class="practiceInfo">Apple Pencilでも、指でも、マウスでも書けるよ。</div>
-              <div id="practiceResult" class="practiceResult"></div>
-              <div class="actions">
-                <button id="undoStrokeBtn" class="btn secondary">↩ 1画もどす</button>
-                <button id="clearCanvasBtn" class="btn secondary">消す</button>
-                <button id="checkPracticeBtn" class="btn hint">✓ できたか判定</button>
-                <button id="nextPracticeBtn" class="btn primary" disabled>次へ →</button>
-              </div>
-            </div>
+            <div class="lessonTitle">✏️ 書き順を見てみよう</div><div id="wordAnswer" class="wordAnswer"></div><div id="charSteps" class="charSteps"></div>
+            <div id="strokeStage" class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109" aria-label="漢字の書き順"></svg><div id="pencil" class="pencil">✏️</div></div>
+            <div id="lessonMsg" class="lessonMsg">書き順を準備中…</div><div id="lessonSub" class="lessonSub">線の先を鉛筆が追いかけるよ。</div>
+            <div class="actions" id="lessonActions"><button id="replayBtn" class="btn secondary">▶ もう一回見る</button><button id="practiceBtn" class="btn primary" disabled>✏️ Apple Pencilで書く</button></div>
+            <div id="practicePanel" class="practicePanel"><div id="practiceTitle" class="practiceTitle">白いマスに書いてみよう</div><div id="practiceCharDots" class="charSteps"></div><div class="practiceCanvasWrap"><canvas id="practiceCanvas" width="700" height="700"></canvas></div><div id="practiceInfo" class="practiceInfo">Apple Pencilでも、指でも、マウスでも書けるよ。</div><div id="practiceResult" class="practiceResult"></div><div class="actions"><button id="undoStrokeBtn" class="btn secondary">↩ 1画もどす</button><button id="clearCanvasBtn" class="btn secondary">消す</button><button id="checkPracticeBtn" class="btn hint">✓ できたか判定</button><button id="nextPracticeBtn" class="btn primary" disabled>次へ →</button></div></div>
           </div>
         </main>
       </div>
-
-      <div class="attribution">
-        書き順データ: KanjiVG (CC BY-SA 3.0) / インターネット接続時に取得。取得できない場合は完成形を表示します。
-      </div>
+      <div class="attribution">書き順データ: KanjiVG (CC BY-SA 3.0) / インターネット接続時に取得。取得できない場合は完成形を表示します。</div>
     </div>
-
-    <div id="finish" class="finish">
-      <h2>🎉 QUEST CLEAR!</h2>
-      <p id="finishMsg"></p>
-      <div id="review" class="review"></div>
-      <div class="actions"><button id="againBtn" class="btn primary">もう1回</button></div>
-    </div>
+    <div id="finish" class="finish"><h2>🎉 QUEST CLEAR!</h2><p id="finishMsg"></p><div id="review" class="review"></div><div class="actions"><button id="againBtn" class="btn primary">もう1回</button></div></div>
   </section>
 </div>
-
-<script src="./app.js"></script>
+<script src="./core.js"></script>
+<script src="./practice.js"></script>
 </body>
 </html>
