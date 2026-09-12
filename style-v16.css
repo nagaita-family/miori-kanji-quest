@@ -1,0 +1,24 @@
+/* v1.6: 全部見るフェード / 正解後もう一回 */
+.fullHintStrokeV16{
+  fill:none;
+  stroke:#6d8fe6;
+  stroke-width:3.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.28;
+}
+#hintSvg.fadeAllV16{transition:opacity .38s ease;opacity:0}
+#hintSvg:not(.fadeAllV16){opacity:1}
+
+#retryWriteBtnV16{
+  min-width:150px;
+  background:#fff7dc;
+  border:1px solid #eadc9d;
+  color:#6d5a1d;
+  font-weight:950;
+}
+
+@media(max-width:760px){
+  .reviewActions{flex-wrap:wrap}
+  #retryWriteBtnV16{min-width:0;flex:1 1 44%}
+}
