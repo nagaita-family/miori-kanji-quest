@@ -1,0 +1,55 @@
+const stages=[
+ {reading:"ろせん",before:"",after:"バスにのる。",answer:"路線",icon:"🚌",action:"bus",kanji:[
+   {char:"路",layout:"horizontal",parts:["足","各"],distract:["口","夂"]},{char:"線",layout:"horizontal",parts:["糸","泉"],distract:["白","水"]}]},
+ {reading:"かん",before:"よろこびを",after:"じる。",answer:"感",icon:"😊",action:"pop",kanji:[
+   {char:"感",layout:"vertical",parts:["咸","心"],distract:["口","戌"]}]},
+ {reading:"たい",before:"絵に",after:"する意見。",answer:"対",icon:"🖼️",action:"pop",kanji:[
+   {char:"対",layout:"horizontal",parts:["文","寸"],distract:["又","斗"]}]},
+ {reading:"く",before:"二つに",after:"切る。",answer:"区",icon:"✂️",action:"pop",kanji:[
+   {char:"区",layout:"overlay",parts:["匚","㐅"],distract:["凵","メ"]}]},
+ {reading:"たいよう",before:"",after:"がしずむ。",answer:"太陽",icon:"🌇",action:"sunset",kanji:[
+   {char:"太",layout:"overlay",parts:["大","丶"],distract:["犬","人"]},{char:"陽",layout:"horizontal",parts:["阝","昜"],distract:["日","易"]}]},
+ {reading:"ととの",before:"本だなを",after:"える。",answer:"整",icon:"📚",action:"pop",kanji:[
+   {char:"整",layout:"top2bottom1",parts:["束","攵","正"],distract:["木","文"]}]},
+ {reading:"いちぶ",before:"物語の",after:"。",answer:"一部",icon:"📖",action:"pop",kanji:[
+   {char:"一",layout:"single",parts:["一"],distract:["二","十"]},{char:"部",layout:"leftstack_right",parts:["立","口","阝"],distract:["日","月"]}]},
+ {reading:"いえじ",before:"",after:"をいそぐ。",answer:"家路",icon:"🏠",action:"pop",kanji:[
+   {char:"家",layout:"vertical",parts:["宀","豕"],distract:["冖","犬"]},{char:"路",layout:"horizontal",parts:["足","各"],distract:["口","夂"]}]},
+ {reading:"せいり",before:"へやを",after:"する。",answer:"整理",icon:"🧸",action:"pop",kanji:[
+   {char:"整",layout:"top2bottom1",parts:["束","攵","正"],distract:["木"]},{char:"理",layout:"horizontal",parts:["王","里"],distract:["玉","田"]}]},
+ {reading:"あらわ",before:"グラフで",after:"す。",answer:"表",icon:"📊",action:"pop",kanji:[
+   {char:"表",layout:"vertical",parts:["龶","𧘇"],distract:["衣","王"]}]}
+];
+
+let si=0,total=0,mistakes=0,hintUsed=false,ki=0,pi=0,results=[];
+let animationToken=0;
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function shuffled(a){return [...a].sort(()=>Math.random()-.5)}
+function verticalPhrase(s){return `${escapeHtml(s.before)}<span class="target">${escapeHtml(s.reading)}</span>${escapeHtml(s.after)}`;}
+function escapeHtml(t){return t.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function syncAppHeight(){const h=(window.visualViewport&&window.visualViewport.height)||window.innerHeight;document.documentElement.style.setProperty("--app-h",`${Math.round(h)}px`)}
+syncAppHeight();window.addEventListener("resize",syncAppHeight);window.addEventListener("orientationchange",()=>setTimeout(syncAppHeight,120));if(window.visualViewport)window.visualViewport.addEventListener("resize",syncAppHeight);
+
+function loadStage(){document.body.classList.remove("lessonMode","practiceMode");const s=stages[si];mistakes=0;hintUsed=false;ki=0;pi=0;animationToken++;$("sceneText").textContent=`STAGE ${si+1} / ${stages.length}`;$("sceneIcon").textContent=s.icon;$("verticalSentence").innerHTML=verticalPhrase(s);$("recall").style.display="block";$("puzzle").classList.remove("show");$("lesson").classList.remove("show");$("progress").style.width=`${si/stages.length*100}%`;$("score").textContent=`⭐ ${total}`;$("bus").classList.remove("go");$("sun").classList.remove("set");$("sun").style.display="none";renderPuzzle();startRecall()}
+function startRecall(){let n=3;$("timer").textContent=n;$("showPartsBtn").disabled=true;$("showPartsBtn").textContent="ちょっと待って…";const t=setInterval(()=>{n--;if(n>0)$("timer").textContent=n;else{clearInterval(t);$("timer").textContent="💭";$("showPartsBtn").disabled=false;$("showPartsBtn").textContent="パーツを出す！"}},700)}
+function renderPuzzle(){const s=stages[si];$("kanjiGrid").innerHTML="";s.kanji.forEach((k,i)=>{const c=document.createElement("div");c.className="kanjiCard"+(i===0?" active":"");c.dataset.ki=i;c.innerHTML=`<div class="kanjiHead"><div class="kanjiNo">${i+1}文字目</div><div class="kanjiReveal">${k.char}</div></div><div class="shapeWrap"><div class="shape ${k.layout}">${k.parts.map((_,j)=>`<div class="slot" data-ki="${i}" data-pi="${j}"></div>`).join("")}</div></div>`;$("kanjiGrid").appendChild(c)});refreshParts()}
+function refreshParts(){const k=stages[si].kanji[ki];$("parts").innerHTML="";shuffled([...k.parts.slice(pi),...k.distract]).forEach(txt=>{const b=document.createElement("button");b.className="part";b.textContent=txt;b.onclick=()=>choosePart(b,txt);$("parts").appendChild(b)})}
+function choosePart(btn,txt){const k=stages[si].kanji[ki],expected=k.parts[pi];if(txt===expected){const slot=document.querySelector(`.slot[data-ki="${ki}"][data-pi="${pi}"]`);slot.textContent=txt;slot.classList.add("filled");pi++;$("feedback").textContent="いいね！ 位置も見てね。";if(pi>=k.parts.length){const card=document.querySelector(`.kanjiCard[data-ki="${ki}"]`);card.classList.remove("active");card.classList.add("done");ki++;pi=0;if(ki>=stages[si].kanji.length)finishPuzzle();else{document.querySelector(`.kanjiCard[data-ki="${ki}"]`).classList.add("active");setTimeout(refreshParts,180)}}else setTimeout(refreshParts,150)}else{mistakes++;btn.classList.add("wrong");$("feedback").textContent="おしい！ もう一回。";setTimeout(()=>btn.classList.remove("wrong"),320)}}
+function peek(){hintUsed=true;document.querySelectorAll(".kanjiReveal").forEach(e=>e.classList.add("peek"));setTimeout(()=>document.querySelectorAll(".kanjiReveal").forEach(e=>{if(!e.closest(".kanjiCard").classList.contains("done"))e.classList.remove("peek")}),1000)}
+function stageStars(){return !hintUsed&&mistakes===0?3:mistakes<=2?2:1}
+function finishPuzzle(){const s=stages[si],st=stageStars();total+=st;results.push({word:s.answer,stars:st});$("progress").style.width=`${(si+1)/stages.length*100}%`;$("score").textContent=`⭐ ${total}`;$("puzzle").classList.remove("show");runScene(s.action);confetti(st===3?15:8);startLesson()}
+function runScene(a){if(a==="bus"){$("bus").classList.remove("go");void $("bus").offsetWidth;$("bus").classList.add("go")}else if(a==="sunset"){$("sun").style.display="block";void $("sun").offsetWidth;$("sun").classList.add("set")}else $("sceneIcon").animate([{transform:"scale(1)"},{transform:"scale(1.28) rotate(-5deg)"},{transform:"scale(1)"}],{duration:650})}
+function hexForChar(ch){return ch.codePointAt(0).toString(16).padStart(5,"0")}
+async function fetchStrokeSvg(ch){const hex=hexForChar(ch),url=`https://raw.githubusercontent.com/KanjiVG/kanjivg/master/kanji/${hex}.svg`,res=await fetch(url,{cache:"force-cache"});if(!res.ok)throw new Error("stroke fetch failed");return await res.text()}
+function setCharDots(chars,current,doneCount){$("charSteps").innerHTML=chars.map((c,i)=>`<div class="charDot ${i<doneCount?"done":i===current?"current":""}">${c}</div>`).join("")}
+async function startLesson(){document.body.classList.add("lessonMode");document.body.classList.remove("practiceMode");$("practiceBtn").disabled=true;$("practicePanel").classList.remove("show");window.scrollTo({top:0,behavior:"instant"});const s=stages[si],token=++animationToken;$("lesson").classList.add("show");$("wordAnswer").textContent=`正解：${s.answer}`;$("practiceBtn").disabled=true;$("lessonMsg").textContent="書き順を準備中…";$("lessonSub").textContent="線の先を鉛筆が追いかけるよ。";await playWordAnimation(s.answer,token)}
+async function playWordAnimation(word,token){const chars=[...word];for(let i=0;i<chars.length;i++){if(token!==animationToken)return;setCharDots(chars,i,i);$("lessonMsg").textContent=`「${chars[i]}」を書いています…`;await playCharacter(chars[i],token);if(token!==animationToken)return;setCharDots(chars,-1,i+1);await wait(700)}if(token!==animationToken)return;$("pencil").style.opacity=0;$("lessonMsg").textContent="できあがり！ 今度は自分で書いてみよう ✏️";$("lessonSub").textContent="Apple Pencilがあれば、そのまま画面に書けるよ。";$("practiceBtn").disabled=false}
+async function playCharacter(ch,token){const svg=$("strokeSvg"),pencil=$("pencil");svg.innerHTML="";pencil.style.opacity=0;let text;try{text=await fetchStrokeSvg(ch)}catch(e){svg.innerHTML=`<text x="54.5" y="57" class="fallbackChar">${escapeHtml(ch)}</text>`;$("lessonSub").textContent="書き順データを取得できなかったので、完成形を表示しています。";await wait(1100);return}if(token!==animationToken)return;const doc=new DOMParser().parseFromString(text,"image/svg+xml");let paths=[...doc.querySelectorAll('g[id*="StrokePaths"] path')];if(!paths.length)paths=[...doc.querySelectorAll("path")];const ns="http://www.w3.org/2000/svg",drawn=[];for(const src of paths){const p=document.createElementNS(ns,"path");p.setAttribute("d",src.getAttribute("d"));p.setAttribute("class","strokePath");svg.appendChild(p);drawn.push(p)}await wait(70);const lengths=drawn.map(p=>{const len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;return len});await wait(180);for(let i=0;i<drawn.length;i++){if(token!==animationToken)return;const p=drawn[i],len=lengths[i];$("lessonMsg").textContent=`「${ch}」 ${i+1} / ${drawn.length}画`;const duration=Math.max(520,Math.min(1250,len*12.5));await animateStroke(p,len,duration,pencil,token);await wait(230)}}
+function animateStroke(path,len,duration,pencil,token){return new Promise(resolve=>{const svg=$("strokeSvg"),svgRect=svg.getBoundingClientRect(),sx=svgRect.width/109,sy=svgRect.height/109;pencil.style.opacity=1;const start=performance.now();function frame(now){if(token!==animationToken){pencil.style.opacity=0;resolve();return}const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,2);path.style.strokeDashoffset=len*(1-ease);const pt=path.getPointAtLength(len*ease);pencil.style.left=(pt.x*sx)+"px";pencil.style.top=(pt.y*sy)+"px";if(t<1)requestAnimationFrame(frame);else resolve()}requestAnimationFrame(frame)})}
+function replay(){document.body.classList.remove("practiceMode");$("practicePanel").classList.remove("show");$("practiceBtn").disabled=true;const token=++animationToken;$("lessonSub").textContent="線の先を鉛筆が追いかけるよ。";playWordAnimation(stages[si].answer,token)}
+function nextStage(){animationToken++;if(si<stages.length-1){si++;loadStage();scrollTo({top:0,behavior:"smooth"})}else finishGame()}
+function finishGame(){document.body.classList.remove("lessonMode","practiceMode");$("gameArea").style.display="none";$("finish").classList.add("show");$("sceneIcon").textContent="🏆";$("sceneText").textContent="CLEAR!";$("finishMsg").textContent=`${stages.length*3}こ中 ${total}こ のスターをゲット！`;$("review").innerHTML=results.map(r=>`<div class="reviewItem"><div class="reviewWord">${r.word}</div><div>${"⭐".repeat(r.stars)}${"☆".repeat(3-r.stars)}</div></div>`).join("");confetti(28)}
+function restart(){document.body.classList.remove("lessonMode","practiceMode");si=0;total=0;results=[];$("finish").classList.remove("show");$("gameArea").style.display="block";loadStage()}
+function confetti(n){const cs=["✨","⭐","🌸","🍀"];for(let i=0;i<n;i++){const e=document.createElement("div");e.className="confetti";e.textContent=cs[Math.floor(Math.random()*cs.length)];e.style.left=Math.random()*96+"vw";e.style.animationDelay=Math.random()*.3+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),1900)}}
