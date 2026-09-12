@@ -3,119 +3,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>漢字の木 〜空の上へ〜 v0.9</title>
-<link rel="stylesheet" href="./style-v08.css?v=0901">
-<meta name="theme-color" content="#e9f7ff">
+<title>Miori Kanji Quest v1.0</title>
+<link rel="stylesheet" href="./style-v10.css?v=1001">
+<meta name="theme-color" content="#edf7ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="漢字の木">
+<meta name="apple-mobile-web-app-title" content="Kanji Quest">
 </head>
 <body>
-<div id="app" class="app">
-  <section id="mapScreen" class="screen mapScreen active">
-    <div class="mapTop">
-      <div>
-        <div class="eyebrow">MIORI KANJI QUEST v0.9</div>
-        <h1>漢字の木 <span>〜空の上へ〜</span></h1>
-        <p>漢字を覚えるたびに、木が空へ空へとのびていくよ。</p>
-      </div>
-      <div class="mapStats"><b id="mapLevel">LEVEL 1</b><span id="mapCount">0 / 10</span></div>
-    </div>
+<div id="app">
+  <section id="homeScreen" class="screen active">
+    <div class="homeShell">
+      <header class="hero">
+        <div class="heroCopy">
+          <div class="eyebrow">MIORI KANJI QUEST <span>v1.0</span></div>
+          <h1>漢字で、<br><em>空の上へ。</em></h1>
+          <p>覚えるほどレベルアップ。苦手な漢字は多めに、できる漢字はときどき復習。</p>
+          <div class="levelRow">
+            <div class="levelBadge"><span>LEVEL</span><b id="levelNum">1</b></div>
+            <div class="xpBox">
+              <div class="xpText"><span id="worldName">草原</span><b id="xpText">0 / 100 XP</b></div>
+              <div class="xpTrack"><div id="xpFill"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="skyArt" aria-hidden="true">
+          <div class="sunOrb">☀️</div>
+          <div class="cloud cloudA">☁️</div><div class="cloud cloudB">☁️</div>
+          <div class="island">🏝️</div><div class="rocket">✏️</div><div class="altitude" id="altitudeLabel">GROUND</div>
+        </div>
+      </header>
 
-    <div class="skyWorld" aria-label="漢字の木の成長マップ">
-      <div class="moon">🌙</div>
-      <div class="cloud c1">☁️</div><div class="cloud c2">☁️</div><div class="cloud c3">☁️</div>
-      <div class="stars">✨　⭐　✨</div>
-      <div class="mountains">⛰️　🏔️　⛰️</div>
-      <div class="city">🏠　🏫　🏢　🏠</div>
-      <div class="treeBase"></div>
-      <div id="treeTrunk" class="treeTrunk"></div>
-      <div id="treeCrown" class="treeCrown">🌳</div>
-      <div id="stageMarkers" class="stageMarkers"></div>
-      <div class="ground">🌱🌿🌼🌱🌿🌼🌱🌿</div>
-    </div>
+      <section class="recommendCard">
+        <div><div class="smallLabel">🎯 いまのおすすめ</div><div id="recommendWord" class="recommendWord">路線</div><div id="recommendReason" class="recommendReason">まずはここから！</div></div>
+        <button id="recommendBtn" class="primaryBtn">おすすめ練習 →</button>
+      </section>
 
-    <div class="mapBottom">
-      <div id="nextMission" class="nextMission"></div>
-      <button id="startBtn" class="bigBtn">冒険をはじめる！ 🚀</button>
-      <button id="resetProgressBtn" class="textBtn">進みぐあいをリセット</button>
+      <section class="selectSection">
+        <div class="sectionHead"><div><div class="smallLabel">FREE SELECT</div><h2>好きな問題をえらぶ</h2></div><div class="legend"><span>○ れんしゅう中</span><span>★ マスター</span></div></div>
+        <div id="missionGrid" class="missionGrid"></div>
+      </section>
+      <button id="resetProgressBtn" class="resetBtn">学習データをリセット</button>
     </div>
   </section>
 
-  <section id="challengeScreen" class="screen challengeScreen">
-    <header class="challengeTop">
-      <button id="backMapBtn" class="iconBtn">← 木を見る</button>
-      <div class="miniProgress"><div id="miniProgressFill"></div></div>
-      <div id="stageLabel" class="stageLabel">STAGE 1</div>
-    </header>
-
+  <section id="challengeScreen" class="screen">
+    <header class="playTop"><button id="backHomeBtn" class="backBtn">← もどる</button><div class="playTitle"><span id="stageLabel">MISSION 1</span><b id="wordTitle">路線</b></div><div id="playLevel" class="miniLevel">LV 1</div></header>
     <div class="challengeLayout">
-      <main class="writingArea">
-        <div class="wordGuide">
-          <div class="wordSlots" id="wordSlots"></div>
-          <div id="charPrompt" class="charPrompt"></div>
-        </div>
-
+      <main class="writingPane">
+        <div class="wordProgress" id="wordProgress"></div><div id="charPrompt" class="charPrompt">漢字を書いてみよう</div>
         <div class="canvasShell">
-          <canvas id="writeCanvas" width="760" height="760"></canvas>
-          <div id="ghostChar" class="ghostChar"></div>
-          <div class="cross v"></div><div class="cross h"></div>
+          <canvas id="writeCanvas" width="760" height="760"></canvas><svg id="hintSvg" class="hintSvg" viewBox="0 0 109 109" aria-hidden="true"></svg>
+          <div class="guideLine v"></div><div class="guideLine h"></div><div id="hintBubble" class="hintBubble"></div>
         </div>
-
-        <div id="statusLine" class="statusLine">思い出せたら、書いてみよう ✏️</div>
-        <div class="mainActions">
-          <button id="undoBtn" class="toolBtn">↩ 1画もどす</button>
-          <button id="clearBtn" class="toolBtn">消す</button>
-          <button id="checkBtn" class="checkBtn">できた！判定</button>
-        </div>
-
-        <div class="helpZone">
-          <div class="helpHead"><b>止まったら HELP！</b><span>答えを一気に見せず、少しずつヒント</span></div>
-          <div id="helpSteps" class="helpSteps"></div>
-          <button id="helpBtn" class="helpBtn">💡 ヒントを1つもらう</button>
-          <div id="helpCard" class="helpCard"></div>
+        <div id="statusLine" class="statusLine">思い出せたら、そのまま書いてみよう ✏️</div>
+        <div class="writeActions"><button id="undoBtn" class="toolBtn">↩ 1画もどす</button><button id="clearBtn" class="toolBtn">消す</button><button id="checkBtn" class="checkBtn">できた！判定</button></div>
+        <div class="helpDock">
+          <div class="helpTop"><div><b>💡 HELP</b><span>書く場所にヒントが出るよ</span></div><div id="helpPips" class="helpPips"></div></div>
+          <button id="helpBtn" class="helpBtn">① 1画目を出す</button><div class="helpNote">HELPを使ってもOK。最後に自分で書けたら学習成功！</div>
         </div>
       </main>
-
-      <aside class="questionPaper">
-        <div class="paperTag">きょうの もんだい</div>
-        <div id="verticalQuestion" class="verticalQuestion"></div>
-        <div id="questionIcon" class="questionIcon">🚌</div>
-      </aside>
+      <aside class="questionPaper"><div class="paperTag">きょうの もんだい</div><div id="verticalQuestion" class="verticalQuestion"></div><div id="questionIcon" class="questionIcon"></div></aside>
     </div>
   </section>
 
-  <section id="strokeScreen" class="screen strokeScreen">
-    <header class="challengeTop"><button id="closeStrokeBtn" class="iconBtn">← もどる</button><div class="strokeTitle">書き順ヘルプ</div></header>
-    <div class="strokeBody">
-      <div id="strokeCharLabel" class="strokeCharLabel"></div>
-      <div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div>
-      <div id="strokeMsg" class="strokeMsg">書き順を準備中…</div>
-      <div class="strokeActions"><button id="replayStrokeBtn" class="toolBtn">▶ もう一回</button><button id="returnWriteBtn" class="checkBtn">自分で書く！</button></div>
+  <section id="reviewScreen" class="screen">
+    <div class="reviewShell">
+      <div class="celebrate">✨ NICE! ✨</div><h2 id="reviewTitle">「感」できた！</h2><p class="reviewLead">自分の字と、きれいなお手本を見くらべてみよう。</p>
+      <div class="compareGrid">
+        <div class="compareCard"><div class="compareLabel">みおりの字</div><img id="userPreview" alt="自分で書いた字"></div>
+        <div class="compareCard sampleCard"><div class="compareLabel">お手本</div><div id="sampleGlyph" class="sampleGlyph"></div></div>
+      </div>
+      <div id="judgeBadges" class="judgeBadges"></div><div id="secretMini" class="secretMini"></div>
+      <div class="reviewActions"><button id="reviewStrokeBtn" class="secondaryBtn">▶ 書き順をおさらい</button><button id="reviewNextBtn" class="primaryBtn">つぎへ →</button></div>
     </div>
   </section>
 
-  <section id="secretScreen" class="screen secretScreen">
-    <div class="secretWrap">
-      <div class="eyebrow">KANJI SECRET</div>
-      <h2>漢字のヒミツをゲット！</h2>
-      <div id="secretCards" class="secretCards"></div>
-      <div class="rewardBox"><div id="rewardStars" class="rewardStars"></div><div id="rewardText"></div></div>
-      <button id="growTreeBtn" class="bigBtn">木をのばす！ 🌳</button>
-    </div>
+  <section id="strokeScreen" class="screen">
+    <header class="playTop"><button id="closeStrokeBtn" class="backBtn">← おさらいにもどる</button><div class="playTitle"><span>STROKE REVIEW</span><b id="strokeCharLabel">感</b></div><div></div></header>
+    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div id="strokeMsg" class="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
   </section>
 
-  <section id="growScreen" class="screen growScreen">
-    <div class="growSky"><div class="growCloud">☁️</div><div id="growTree" class="growTree">🌳</div><div id="growMessage" class="growMessage">ぐんぐん のびる！</div></div>
-  </section>
-
-  <section id="finishScreen" class="screen finishScreen">
-    <div class="finishCard"><div class="finishEmoji">🌳☁️✨</div><h2>雲の上まで とどいた！</h2><p>10この漢字クエスト、クリア！</p><div id="finishStars" class="finishStars"></div><button id="finishMapBtn" class="bigBtn">育った木を見る</button></div>
+  <section id="resultScreen" class="screen">
+    <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn">問題をえらぶ</button></div></div>
   </section>
 </div>
-
-<script src="./data-v08.js?v=0901"></script>
-<script src="./app-v08.js?v=0901"></script>
-<script src="./judge-v09.js?v=0901"></script>
+<script src="./data-v10.js?v=1001"></script>
+<script src="./app-v10.js?v=1001"></script>
 </body>
 </html>
