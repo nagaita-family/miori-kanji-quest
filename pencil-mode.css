@@ -1,0 +1,59 @@
+/* v0.7 iPad / Apple Pencil focus mode */
+body.practiceMode,
+body.practiceMode * {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+body.practiceMode {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+/* Text and decorative UI should never steal touches while handwriting. */
+body.practiceMode .practiceTitle,
+body.practiceMode .practiceInfo,
+body.practiceMode .practiceResult,
+body.practiceMode .charSteps,
+body.practiceMode .charDot,
+body.practiceMode .lessonTitle,
+body.practiceMode .wordAnswer,
+body.practiceMode .lessonMsg,
+body.practiceMode .lessonSub {
+  pointer-events: none !important;
+}
+
+/* Only the writing surface and explicit controls remain interactive. */
+body.practiceMode .practiceCanvasWrap,
+body.practiceMode #practiceCanvas,
+body.practiceMode .actions,
+body.practiceMode .btn {
+  pointer-events: auto !important;
+}
+
+body.practiceMode .practiceCanvasWrap,
+body.practiceMode #practiceCanvas {
+  touch-action: none !important;
+  -webkit-user-drag: none;
+}
+
+body.practiceMode .practiceCanvasWrap {
+  position: relative;
+}
+
+/* Small status chip so it is obvious when Pencil priority has kicked in. */
+.pencilStatus {
+  display: none;
+  margin: 2px auto 3px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #eef7ff;
+  border: 1px solid #b9d9f3;
+  color: #365f7d;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+body.practiceMode .pencilStatus.show { display: inline-flex; align-items: center; gap: 4px; }
