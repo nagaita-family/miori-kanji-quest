@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>Miori Kanji Quest v1.0</title>
-<link rel="stylesheet" href="./style-v10.css?v=1001">
+<title>Miori Kanji Quest v1.1</title>
+<link rel="stylesheet" href="./style-v10.css?v=1101">
+<link rel="stylesheet" href="./style-v11.css?v=1101">
 <meta name="theme-color" content="#edf7ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -16,7 +17,7 @@
     <div class="homeShell">
       <header class="hero">
         <div class="heroCopy">
-          <div class="eyebrow">MIORI KANJI QUEST <span>v1.0</span></div>
+          <div class="eyebrow">MIORI KANJI QUEST <span>v1.1</span></div>
           <h1>漢字で、<br><em>空の上へ。</em></h1>
           <p>覚えるほどレベルアップ。苦手な漢字は多めに、できる漢字はときどき復習。</p>
           <div class="levelRow">
@@ -79,6 +80,18 @@
     </div>
   </section>
 
+  <section id="okuriScreen" class="screen">
+    <div class="okuriShell">
+      <div class="eyebrow">OKURIGANA CHECK</div>
+      <h2>送り仮名をえらぼう</h2>
+      <p id="okuriPrompt" class="okuriLead">「ととのえる」の送り仮名はどれ？</p>
+      <div class="okuriWordBuild"><span id="okuriKanji" class="okuriKanji">整</span><span id="okuriSlot" class="okuriSlot">？</span></div>
+      <div id="okuriChoices" class="okuriChoices"></div>
+      <div id="okuriFeedback" class="okuriFeedback"></div>
+      <button id="okuriNextBtn" class="primaryBtn" hidden>ミッションクリア →</button>
+    </div>
+  </section>
+
   <section id="strokeScreen" class="screen">
     <header class="playTop"><button id="closeStrokeBtn" class="backBtn">← おさらいにもどる</button><div class="playTitle"><span>STROKE REVIEW</span><b id="strokeCharLabel">感</b></div><div></div></header>
     <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div id="strokeMsg" class="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
@@ -88,7 +101,9 @@
     <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn">問題をえらぶ</button></div></div>
   </section>
 </div>
-<script src="./data-v10.js?v=1001"></script>
-<script src="./app-v10.js?v=1001"></script>
+<script src="./data-v10.js?v=1101"></script>
+<script src="./data-v11-patch.js?v=1101"></script>
+<script src="./app-v10.js?v=1101"></script>
+<script src="./app-v11-patch.js?v=1101"></script>
 </body>
 </html>
