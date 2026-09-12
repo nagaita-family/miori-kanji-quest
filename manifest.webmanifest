@@ -1,0 +1,9 @@
+{
+  "name": "Miori Kanji Quest",
+  "short_name": "Kanji Quest",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff8e6",
+  "theme_color": "#fff8e6",
+  "description": "漢字の形・書き順・Apple Pencil練習を組み合わせた学習ゲーム"
+}
