@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>Miori Kanji Quest v1.1</title>
-<link rel="stylesheet" href="./style-v10.css?v=1101">
-<link rel="stylesheet" href="./style-v11.css?v=1101">
+<title>Miori Kanji Quest v1.2</title>
+<link rel="stylesheet" href="./style-v10.css?v=1201">
+<link rel="stylesheet" href="./style-v11.css?v=1201">
+<link rel="stylesheet" href="./style-v12.css?v=1201">
 <meta name="theme-color" content="#edf7ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +18,7 @@
     <div class="homeShell">
       <header class="hero">
         <div class="heroCopy">
-          <div class="eyebrow">MIORI KANJI QUEST <span>v1.1</span></div>
+          <div class="eyebrow">MIORI KANJI QUEST <span>v1.2</span></div>
           <h1>漢字で、<br><em>空の上へ。</em></h1>
           <p>覚えるほどレベルアップ。苦手な漢字は多めに、できる漢字はときどき復習。</p>
           <div class="levelRow">
@@ -60,8 +61,10 @@
         <div id="statusLine" class="statusLine">思い出せたら、そのまま書いてみよう ✏️</div>
         <div class="writeActions"><button id="undoBtn" class="toolBtn">↩ 1画もどす</button><button id="clearBtn" class="toolBtn">消す</button><button id="checkBtn" class="checkBtn">できた！判定</button></div>
         <div class="helpDock">
-          <div class="helpTop"><div><b>💡 HELP</b><span>書く場所にヒントが出るよ</span></div><div id="helpPips" class="helpPips"></div></div>
-          <button id="helpBtn" class="helpBtn">① 1画目を出す</button><div class="helpNote">HELPを使ってもOK。最後に自分で書けたら学習成功！</div>
+          <div class="helpTop"><div><b>💡 HELP</b><span>必要なところだけ、少しずつ見よう</span></div><div id="helpPips" class="helpPips"></div></div>
+          <div class="helpButtons"><button id="helpBtn" class="helpBtn">✏️ 次の1画ヒント</button><button id="fullHintBtn" class="fullHintBtn">👀 ぜんぶ見る</button></div>
+          <div id="shapeHintLine" class="shapeHintLine" hidden></div>
+          <div class="helpNote">左は1画ずつ。どうしても分からない時だけ「ぜんぶ見る」でOK！</div>
         </div>
       </main>
       <aside class="questionPaper"><div class="paperTag">きょうの もんだい</div><div id="verticalQuestion" class="verticalQuestion"></div><div id="questionIcon" class="questionIcon"></div></aside>
@@ -101,9 +104,10 @@
     <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn">問題をえらぶ</button></div></div>
   </section>
 </div>
-<script src="./data-v10.js?v=1101"></script>
-<script src="./data-v11-patch.js?v=1101"></script>
-<script src="./app-v10.js?v=1101"></script>
-<script src="./app-v11-patch.js?v=1101"></script>
+<script src="./data-v10.js?v=1201"></script>
+<script src="./data-v11-patch.js?v=1201"></script>
+<script src="./app-v10.js?v=1201"></script>
+<script src="./app-v11-patch.js?v=1201"></script>
+<script src="./app-v12-patch.js?v=1201"></script>
 </body>
 </html>
