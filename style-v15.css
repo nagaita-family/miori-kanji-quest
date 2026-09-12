@@ -1,0 +1,94 @@
+/* v1.5: 空島を主役に / SVGキャラクター / もようがえ */
+
+/* TOPの主役をタイトルから島へ */
+.hero.v15Hero{min-height:650px;padding:0;overflow:hidden;background:linear-gradient(180deg,#aee2ff 0%,#dff4ff 46%,#fff8e6 100%);border:1px solid #d9efff}
+.hero.v15Hero .heroCopy{position:absolute;z-index:20;left:28px;top:22px;max-width:410px;padding:13px 16px;border-radius:20px;background:#ffffffc9;border:1px solid #ffffffeb;box-shadow:0 9px 26px #54789624;backdrop-filter:blur(12px)}
+.hero.v15Hero .eyebrow{font-size:9px;letter-spacing:.13em}
+.hero.v15Hero h1{font-size:clamp(25px,3vw,36px);line-height:1.05;margin:5px 0 5px;letter-spacing:-.03em}
+.hero.v15Hero h1 em{color:#5478d5}
+.hero.v15Hero .heroCopy>p{font-size:12px;line-height:1.45;margin:0;color:#63758b;font-weight:800}
+.hero.v15Hero .levelRow{position:absolute;left:0;top:118px;margin:0;width:370px;gap:8px;align-items:stretch}
+.hero.v15Hero .levelBadge{width:64px;height:58px;border-radius:17px;display:flex;flex-direction:column;justify-content:center;gap:0}
+.hero.v15Hero .levelBadge span{font-size:8px;margin:0;align-self:center}.hero.v15Hero .levelBadge b{font-size:26px;line-height:1;align-self:center}
+.hero.v15Hero .xpBox{padding:8px 12px;border-radius:17px}.hero.v15Hero .xpText{font-size:10px}.hero.v15Hero .xpTrack{height:8px;margin-top:6px}
+.hero.v15Hero .skyArt{position:absolute;inset:0;width:100%;height:100%;pointer-events:auto;overflow:hidden}
+.hero.v15Hero .homeIslandWrapV14,.hero.v15Hero .growthWorldV13{display:none!important}
+.hero.v15Hero .soundBtnV14{z-index:60;right:18px;top:16px}
+.nextRewardV14{display:none!important}
+
+.worldV15{position:absolute;inset:0;overflow:hidden;touch-action:pan-y;background:
+ radial-gradient(circle at 78% 16%,#fffbd5 0 6%,transparent 6.4%),
+ linear-gradient(180deg,#9ddcff 0%,#d8f3ff 55%,#fff7e4 100%)}
+.worldV15:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 28%,#fff9 0 2px,transparent 3px),radial-gradient(circle at 88% 35%,#fff8 0 2px,transparent 3px),radial-gradient(circle at 67% 12%,#fff8 0 1.5px,transparent 2.5px);background-size:190px 150px,230px 180px,160px 130px;opacity:.8;animation:skySparkleV15 6s ease-in-out infinite alternate}
+@keyframes skySparkleV15{to{opacity:.35;transform:translateY(-4px)}}
+.sunV15{position:absolute;right:8%;top:9%;width:78px;height:78px;border-radius:50%;background:#fff5a4;box-shadow:0 0 50px #fff2a5bb,0 0 90px #ffe37b66;animation:sunPulseV15 4s ease-in-out infinite}.sunV15 span{position:absolute;inset:13px;border-radius:50%;background:#fffbd8}
+@keyframes sunPulseV15{50%{transform:scale(1.05);box-shadow:0 0 65px #fff2a5dd,0 0 110px #ffe37b77}}
+.farCloudV15{position:absolute;width:190px;height:45px;border-radius:50px;background:#ffffffb8;filter:blur(.2px);box-shadow:45px -19px 0 0 #ffffffb8,90px -3px 0 2px #ffffffb8;opacity:.72;animation:cloudDriftV15 13s ease-in-out infinite alternate}
+.farCloudV15.f1{left:-35px;top:31%}.farCloudV15.f2{right:-25px;top:43%;transform:scale(.72);opacity:.58;animation-delay:-5s}
+@keyframes cloudDriftV15{to{transform:translateX(28px)}}
+
+/* 大きな箱庭エリア */
+.islandPlayV15{position:absolute;left:50%;top:53%;width:min(850px,82vw);height:440px;transform:translate(-50%,-43%);z-index:5;touch-action:none;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.worldV15.stage0 .islandPlayV15{width:min(760px,76vw)}.worldV15.stage1 .islandPlayV15{width:min(815px,80vw)}.worldV15.stage2 .islandPlayV15{width:min(870px,84vw)}.worldV15.stage3 .islandPlayV15{width:min(920px,88vw)}.worldV15.stage4 .islandPlayV15{width:min(980px,91vw)}
+.islandCloudBackV15{position:absolute;z-index:0;width:42%;height:80px;border-radius:55%;background:#fff;opacity:.82;filter:drop-shadow(0 12px 20px #6590aa22)}
+.islandCloudBackV15.c1{left:1%;bottom:30px;transform:rotate(-4deg)}.islandCloudBackV15.c2{right:2%;bottom:48px;transform:rotate(4deg) scale(.82)}
+.islandLandV15{position:absolute;left:50%;top:54%;width:72%;height:42%;transform:translate(-50%,-35%);z-index:2;filter:drop-shadow(0 28px 23px #426d8d40);transition:width .65s ease,height .65s ease}
+.islandLandV15.stage1{width:78%}.islandLandV15.stage2{width:84%;height:44%}.islandLandV15.stage3{width:90%;height:46%}.islandLandV15.stage4{width:96%;height:48%}
+.islandGrassTopV15{position:absolute;inset:0;border-radius:50% 52% 46% 48%/38% 42% 55% 58%;background:
+ radial-gradient(ellipse at 42% 30%,#baf18e 0 8%,transparent 9%),
+ radial-gradient(ellipse at 65% 45%,#80d87c 0 11%,transparent 12%),
+ linear-gradient(180deg,#9ae58a 0%,#5fc377 72%,#4aaf71 100%);border:5px solid #dcffc7;box-shadow:inset 0 -16px 0 #42a76c55,inset 0 9px 19px #ffffff55;z-index:3}
+.islandGrassTopV15:after{content:"";position:absolute;inset:11% 9%;border-radius:50%;border:1px dashed #dfffd37a;opacity:.45}
+.islandCliffV15{position:absolute;left:12%;right:12%;top:55%;height:115%;clip-path:polygon(0 0,100% 0,80% 88%,65% 100%,54% 83%,43% 100%,25% 82%);background:linear-gradient(155deg,#a98972,#705b58 52%,#536078 100%);z-index:1;box-shadow:inset 0 12px 0 #c7a78b,inset -28px -15px 28px #3f4d6640}
+.islandCliffV15:before{content:"";position:absolute;inset:12% 13% 18%;background:repeating-linear-gradient(108deg,transparent 0 24px,#d7bea53b 25px 28px,transparent 29px 48px);clip-path:inherit}
+.pondV15{position:absolute;z-index:5;left:60%;top:33%;width:20%;height:19%;border-radius:50%;background:linear-gradient(180deg,#baf5ff,#66c9e7);border:4px solid #d6ffd0;box-shadow:inset 0 5px 9px #fff8}.pondV15 span{position:absolute;left:22%;top:38%;width:45%;height:4px;border-radius:99px;background:#fff9;animation:pondShineV15 2.4s ease-in-out infinite}@keyframes pondShineV15{50%{transform:translateX(16px);opacity:.35}}
+.stonePathV15{position:absolute;z-index:5;left:38%;top:62%;width:28%;height:14%;transform:rotate(-7deg);background:radial-gradient(ellipse at 8% 50%,#eee5d3 0 7%,transparent 8%),radial-gradient(ellipse at 27% 45%,#e3d9ca 0 8%,transparent 9%),radial-gradient(ellipse at 48% 55%,#f3eadb 0 7%,transparent 8%),radial-gradient(ellipse at 69% 43%,#ddd3c5 0 8%,transparent 9%),radial-gradient(ellipse at 90% 52%,#efe5d5 0 7%,transparent 8%)}
+.tinyBridgeV15{position:absolute;z-index:6;right:8%;top:51%;width:20%;height:14%;border-top:9px solid #c88f5e;border-radius:50%;box-shadow:0 -3px 0 #f1c28a;transform:rotate(7deg)}
+.objectsLayerV15{position:absolute;inset:0;z-index:8;pointer-events:none}
+
+/* 高品質SVGオブジェクト */
+.islandObjectV15{position:absolute;width:92px;height:92px;transform:translate(-50%,-72%);z-index:10;pointer-events:auto;touch-action:none;cursor:default;filter:drop-shadow(0 9px 6px #35546b30);transition:filter .18s,transform .18s}
+.islandObjectV15.mokoObjectV15{width:122px;height:122px;z-index:18;animation:mokoFloatV15 3s ease-in-out infinite}
+.islandObjectV15 .objectArtV15{width:100%;height:100%;display:grid;place-items:center}.artSvgV15{width:100%;height:100%;overflow:visible}
+.islandObjectV15 .objectNameV15{position:absolute;left:50%;top:94%;transform:translateX(-50%);white-space:nowrap;font-size:9px;font-weight:950;color:#475f77;padding:3px 7px;border-radius:99px;background:#ffffffe8;border:1px solid #fff;box-shadow:0 3px 9px #4f678422;opacity:0;transition:.15s;pointer-events:none}
+.islandPlayV15.editingV15 .islandObjectV15{cursor:grab;filter:drop-shadow(0 10px 6px #294d6c3c) drop-shadow(0 0 8px #fff);animation:editWiggleV15 1.3s ease-in-out infinite alternate}
+.islandPlayV15.editingV15 .islandObjectV15 .objectNameV15{opacity:1}.islandObjectV15.draggingV15{cursor:grabbing!important;z-index:50!important;transform:translate(-50%,-78%) scale(1.14)!important;filter:drop-shadow(0 18px 11px #294d6c55)!important;animation:none!important}
+@keyframes editWiggleV15{from{transform:translate(-50%,-72%) rotate(-1deg)}to{transform:translate(-50%,-74%) rotate(1deg)}}
+@keyframes mokoFloatV15{50%{transform:translate(-50%,-77%)}}
+.mokoObjectV15 .mokoBodyV15{transform-origin:60px 90px;animation:mokoBreatheV15 2.7s ease-in-out infinite}@keyframes mokoBreatheV15{50%{transform:scale(1.018)}}
+
+.mokoTalkV15{position:absolute;z-index:30;left:50%;top:12%;transform:translateX(-50%);max-width:290px;padding:8px 12px;border-radius:16px 16px 16px 4px;background:#fff;color:#4d5f76;font-size:12px;font-weight:900;box-shadow:0 8px 22px #48678524;border:1px solid #e9f4ff;pointer-events:none;transition:.2s}
+.mokoTalkV15:after{content:"";position:absolute;left:28%;bottom:-8px;border:9px solid transparent;border-top-color:#fff;border-bottom:0}
+.mokoTalkV15.popV15{animation:talkPopV15 .6s cubic-bezier(.2,.9,.2,1.2)}@keyframes talkPopV15{40%{transform:translateX(-50%) scale(1.08)}}
+
+/* 島のHUD */
+.islandHudV15{position:absolute;left:22px;bottom:18px;z-index:45;display:flex;align-items:center;gap:12px;padding:9px 10px 9px 14px;border-radius:18px;background:#ffffffd8;border:1px solid #fff;box-shadow:0 9px 25px #4b6f8e24;backdrop-filter:blur(12px)}
+.islandHudV15>div{display:flex;flex-direction:column;min-width:150px}.islandHudV15 span{font-size:8px;letter-spacing:.13em;color:#7086a0;font-weight:1000}.islandHudV15 b{font-size:14px;color:#3c5672}.islandHudV15 small{font-size:9px;color:#728298;font-weight:800}
+.editIslandBtnV15{padding:9px 13px;border-radius:13px;background:linear-gradient(135deg,#657ff2,#69b3ec);color:#fff;font-size:11px;font-weight:1000;box-shadow:0 5px 12px #5576be33;touch-action:manipulation}
+.nextGiftV15{position:absolute;right:24px;bottom:18px;z-index:42;width:132px;height:85px;border-radius:18px;background:#ffffffda;border:1px solid #fff;box-shadow:0 9px 25px #4b6f8e22;backdrop-filter:blur(12px);padding:8px 8px 6px;text-align:center}.nextGiftV15>span{display:block;font-size:8px;font-weight:1000;color:#76879b;letter-spacing:.08em}.nextGiftArtV15{position:absolute;width:61px;height:61px;left:50%;top:18px;transform:translateX(-50%);filter:blur(3px) saturate(.3);opacity:.37}.nextGiftV15>b{position:absolute;left:0;right:0;bottom:7px;font-size:11px;color:#526c87;letter-spacing:.12em}
+
+/* イントロストーリー */
+.storyV15{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;padding:18px;background:#31527077;backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:.3s}
+.storyV15.showV15{opacity:1;visibility:visible}.storyCardV15{width:min(560px,94vw);padding:25px 28px 28px;border-radius:34px;background:linear-gradient(160deg,#fff,#f0f8ff);box-shadow:0 28px 80px #20394b55;text-align:center;border:2px solid #fff;transform:translateY(20px) scale(.96);transition:.35s cubic-bezier(.2,.8,.2,1.1)}.storyV15.showV15 .storyCardV15{transform:none}
+.storyMokoV15{width:170px;height:170px;margin:-8px auto -9px;filter:drop-shadow(0 13px 10px #4a66842c)}.storyEyebrowV15{font-size:10px;letter-spacing:.17em;font-weight:1000;color:#7591ba}.storyCardV15 h2{font-size:30px;margin:7px 0 10px;color:#405b79}.storyCardV15 p{font-size:14px;line-height:1.75;color:#63748a;margin:8px auto;max-width:450px}.storyCardV15 .primaryBtn{margin-top:13px;min-width:230px}
+
+/* クリア報酬も絵文字ではなく同じSVGアート */
+.rewardV15{width:min(600px,93vw);margin:14px auto 3px;padding:14px 18px;border-radius:27px;background:linear-gradient(135deg,#edfaff,#fff4dc);border:1px solid #fff;box-shadow:0 13px 32px #506d9128;display:flex;align-items:center;gap:18px;overflow:hidden;animation:rewardInV15 .75s cubic-bezier(.2,.85,.2,1.15) both}.rewardArtV15{width:125px;height:125px;flex:0 0 auto;filter:drop-shadow(0 10px 7px #3d58732a);animation:rewardBobV15 1.5s ease-in-out infinite alternate}.rewardCopyV15{text-align:left}.rewardCopyV15>span{font-size:9px;letter-spacing:.15em;font-weight:1000;color:#7087a2}.rewardCopyV15>b{display:block;margin-top:3px;font-size:22px;color:#405d7d}.rewardCopyV15 p{font-size:12px;color:#718095;font-weight:800;line-height:1.45;margin:4px 0}.islandExpandV15{display:inline-block;margin-top:4px;padding:5px 10px;border-radius:999px;background:#dff7d8;color:#38794f;font-size:11px;font-weight:1000}
+@keyframes rewardInV15{from{opacity:0;transform:translateY(28px) scale(.88)}to{opacity:1;transform:none}}@keyframes rewardBobV15{to{transform:translateY(-5px) rotate(2deg)}}
+
+/* v1.4の絵文字島は完全に裏へ */
+.islandRewardV14{display:none!important}
+
+@media(max-width:800px){
+  .hero.v15Hero{min-height:630px}.hero.v15Hero .heroCopy{left:14px;top:12px;max-width:310px;padding:9px 12px}.hero.v15Hero h1{font-size:25px}.hero.v15Hero .heroCopy>p{font-size:10px}.hero.v15Hero .levelRow{top:95px;width:290px}.hero.v15Hero .levelBadge{width:56px;height:50px}.hero.v15Hero .xpBox{padding:7px 9px}
+  .islandPlayV15,.worldV15.stage0 .islandPlayV15,.worldV15.stage1 .islandPlayV15,.worldV15.stage2 .islandPlayV15,.worldV15.stage3 .islandPlayV15,.worldV15.stage4 .islandPlayV15{width:96vw;height:390px;top:54%}
+  .islandLandV15{width:87%!important;height:40%}.worldV15.stage2 .islandLandV15,.worldV15.stage3 .islandLandV15,.worldV15.stage4 .islandLandV15{height:44%}
+  .islandObjectV15{width:72px;height:72px}.islandObjectV15.mokoObjectV15{width:95px;height:95px}.mokoTalkV15{top:15%;font-size:10px;max-width:230px}
+  .islandHudV15{left:10px;bottom:10px;padding:7px 8px 7px 10px}.islandHudV15>div{min-width:120px}.islandHudV15 b{font-size:11px}.islandHudV15 small{font-size:8px}.editIslandBtnV15{padding:8px 9px;font-size:10px}.nextGiftV15{right:10px;bottom:10px;width:90px;height:70px}.nextGiftArtV15{width:48px;height:48px;top:16px}.nextGiftV15>b{font-size:9px}
+  .storyMokoV15{width:135px;height:135px}.storyCardV15{padding:20px 18px 22px}.storyCardV15 h2{font-size:25px}.storyCardV15 p{font-size:12px}
+  .rewardV15{gap:8px;padding:10px 12px}.rewardArtV15{width:95px;height:95px}.rewardCopyV15>b{font-size:18px}.rewardCopyV15 p{font-size:10px}
+}
+
+@media(max-height:760px) and (min-width:801px){
+  .hero.v15Hero{min-height:560px}.islandPlayV15{height:360px;top:55%}.hero.v15Hero .levelRow{top:108px}.islandObjectV15{width:76px;height:76px}.islandObjectV15.mokoObjectV15{width:100px;height:100px}
+}
