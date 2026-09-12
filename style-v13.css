@@ -1,0 +1,63 @@
+/* v1.3: ゲーム演出 / ことばタワー / 正解後の書き順お手本 */
+
+/* 書き順ヒントは「線そのもの」で分かるようにし、番号の丸は出さない。 */
+.hintOrder{display:none!important}
+
+/* 正解エフェクト */
+.successFxV13{position:fixed;inset:0;z-index:9999;pointer-events:none;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .16s}
+.successFxV13.active{opacity:1;visibility:visible}
+.successFxV13 .successGlowV13{position:absolute;width:min(48vw,420px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff8a8aa 0 18%,#85dcff55 38%,transparent 70%);animation:successGlowV13 .9s ease-out both}
+.successFxV13 .successCoreV13{position:relative;text-align:center;transform:scale(.4);animation:successPopV13 .78s cubic-bezier(.18,.88,.25,1.25) both;filter:drop-shadow(0 12px 20px #405b8b44)}
+.successFxV13 .successKanjiV13{font-family:"Yu Mincho","Noto Serif JP",serif;font-size:clamp(92px,20vw,180px);font-weight:900;line-height:.9;color:#24324a;text-shadow:0 4px 0 #fff,0 0 26px #fff}
+.successFxV13 .successTextV13{margin-top:8px;font-size:clamp(24px,5vw,42px);font-weight:1000;color:#3159c8;text-shadow:0 2px 0 #fff}
+.successFxV13 .successXpV13{display:inline-block;margin-top:7px;padding:6px 14px;border-radius:999px;background:#24324ae8;color:#fff;font-weight:950;font-size:15px}
+.successParticleV13{position:absolute;left:50%;top:50%;font-size:24px;animation:successParticleV13 .95s ease-out both;animation-delay:var(--delay);transform:translate(-50%,-50%)}
+@keyframes successPopV13{0%{transform:scale(.35) rotate(-8deg);opacity:0}55%{transform:scale(1.12) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes successGlowV13{0%{transform:scale(.25);opacity:0}45%{opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes successParticleV13{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}18%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--rot)) scale(1.05);opacity:0}}
+
+/* トップ：ゲージだけでなく、練習するほど「ことばタワー」が上へ育つ。 */
+.skyArt .island,.skyArt .rocket{display:none}
+.skyArt{overflow:visible}
+.growthWorldV13{position:absolute;inset:8px 4% 4px 4%;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.towerSceneV13{position:relative;width:220px;height:330px;display:flex;align-items:flex-end;justify-content:center}
+.towerCloudV13{position:absolute;bottom:3px;font-size:86px;filter:drop-shadow(0 9px 12px #6a8da533);z-index:1;animation:cloudBreatheV13 3s ease-in-out infinite}
+.towerStackV13{position:absolute;bottom:58px;z-index:3;display:flex;flex-direction:column-reverse;align-items:center;filter:drop-shadow(0 10px 10px #405b7c2c)}
+.towerFloorV13{width:72px;height:25px;margin-top:-2px;border:2px solid #ffffffb8;border-radius:7px 7px 4px 4px;background:linear-gradient(135deg,#7698ff,#5ec8e7);position:relative;box-shadow:inset 0 -4px 0 #3d62b522}
+.towerFloorV13:nth-child(3n+2){width:82px;background:linear-gradient(135deg,#7b7de9,#a879e8)}
+.towerFloorV13:nth-child(3n){width:66px;background:linear-gradient(135deg,#58c69d,#6fd9c8)}
+.towerFloorV13:before,.towerFloorV13:after{content:"";position:absolute;top:6px;width:8px;height:9px;border-radius:2px;background:#fff7a8;box-shadow:0 0 7px #fff4a8}
+.towerFloorV13:before{left:16px}.towerFloorV13:after{right:16px}
+.towerCapV13{font-size:40px;line-height:1;transform:translateY(4px);animation:capFloatV13 2.1s ease-in-out infinite;filter:drop-shadow(0 0 9px #fff39b)}
+.towerFoundationV13{width:84px;height:18px;border-radius:50%;background:linear-gradient(#a7e4ff,#6aa5e3);border:2px solid #fff;box-shadow:0 4px 10px #45688b33}
+.towerSparkV13{position:absolute;font-size:17px;animation:towerSparkV13 2.4s ease-in-out infinite;opacity:.8}.towerSparkV13.s1{left:14px;bottom:115px}.towerSparkV13.s2{right:10px;bottom:190px;animation-delay:.8s}.towerSparkV13.s3{left:28px;top:35px;animation-delay:1.4s}
+.towerStatusV13{position:absolute;right:-8px;top:10px;min-width:86px;padding:7px 9px;border-radius:13px;background:#ffffffdf;border:1px solid #fff;text-align:center;box-shadow:0 7px 18px #516d9230;color:#49617e;font-size:10px;font-weight:900;backdrop-filter:blur(8px)}
+.towerStatusV13 b{display:block;font-size:17px;color:#3659aa}
+@keyframes capFloatV13{50%{transform:translateY(-4px) rotate(4deg)}}
+@keyframes cloudBreatheV13{50%{transform:scale(1.045) translateY(-2px)}}
+@keyframes towerSparkV13{0%,100%{transform:scale(.7) rotate(0);opacity:.35}50%{transform:scale(1.25) rotate(20deg);opacity:1}}
+
+/* ミッションクリア後：新しい1階がその場で生える */
+.growthRewardV13{width:min(560px,92vw);margin:16px auto 4px;padding:12px 18px;border-radius:25px;background:linear-gradient(135deg,#eef8ff,#fff7d9);border:1px solid #fff;box-shadow:0 12px 30px #526d9720;display:flex;align-items:center;justify-content:center;gap:18px;overflow:hidden}
+.miniTowerV13{position:relative;width:125px;height:145px;display:flex;align-items:flex-end;justify-content:center;flex:0 0 auto}
+.miniTowerV13 .towerCloudV13{font-size:58px;bottom:-3px}.miniTowerV13 .towerStackV13{bottom:39px}.miniTowerV13 .towerFloorV13{width:51px;height:17px;border-radius:5px;border-width:1.5px}.miniTowerV13 .towerFloorV13:nth-child(3n+2){width:59px}.miniTowerV13 .towerFloorV13:nth-child(3n){width:47px}.miniTowerV13 .towerFloorV13:before,.miniTowerV13 .towerFloorV13:after{width:5px;height:6px;top:4px}.miniTowerV13 .towerFloorV13:before{left:11px}.miniTowerV13 .towerFloorV13:after{right:11px}.miniTowerV13 .towerCapV13{font-size:27px}.newFloorV13{animation:newFloorV13 .85s cubic-bezier(.2,.85,.2,1.25) both;transform-origin:center bottom}
+.growthCopyV13{text-align:left}.growthCopyV13 b{display:block;font-size:22px;color:#3659aa}.growthCopyV13 span{display:block;margin-top:3px;color:#60718a;font-weight:800;font-size:13px}.levelUpV13{display:inline-block;margin-top:7px;padding:5px 10px;border-radius:999px;background:#ffde67;color:#705000;font-weight:1000;animation:levelPulseV13 .8s ease-in-out infinite alternate}
+@keyframes newFloorV13{0%{transform:translateY(55px) scale(.35);opacity:0}65%{transform:translateY(-5px) scale(1.12);opacity:1}100%{transform:none;opacity:1}}
+@keyframes levelPulseV13{to{transform:scale(1.08);box-shadow:0 0 18px #ffd54c99}}
+
+/* 正解後のお手本：静止字ではなく、その場で書き順を自動再生 */
+.sampleCard{position:relative;overflow:hidden}
+#sampleGlyph{display:none!important}
+.reviewStrokeStageV13{flex:1;min-height:0;position:relative;display:grid;place-items:center;background:
+ linear-gradient(90deg,transparent calc(50% - .6px),#d98f8f22 calc(50% - .6px),#d98f8f22 calc(50% + .6px),transparent calc(50% + .6px)),
+ linear-gradient(0deg,transparent calc(50% - .6px),#d98f8f22 calc(50% - .6px),#d98f8f22 calc(50% + .6px),transparent calc(50% + .6px));border-radius:18px;margin-top:6px;overflow:hidden}
+#reviewStrokeSvgV13{width:92%;height:92%}.reviewStrokePathV13{fill:none;stroke:#2e3440;stroke-width:4.4;stroke-linecap:round;stroke-linejoin:round}.reviewStrokePathV13.done{stroke:#4c5b72}.reviewStrokePathV13.active{stroke:#426ff0;filter:drop-shadow(0 0 2px #7ca2ff)}
+.reviewPencilV13{position:absolute;font-size:30px;transform:translate(-12px,-24px) rotate(-20deg);pointer-events:none;opacity:0;z-index:3}
+.reviewReplayMiniV13{position:absolute;right:11px;bottom:10px;z-index:5;padding:7px 10px;border-radius:999px;background:#ffffffea;color:#4363a7;border:1px solid #d7e1f5;font-weight:950;font-size:11px;box-shadow:0 4px 10px #4a648324;touch-action:manipulation}
+.reviewLeadV13{font-weight:800;color:#6a788e}
+
+@media(max-width:760px){
+  .growthWorldV13{opacity:.62;right:-8%;transform:scale(.82);transform-origin:right bottom}
+  .towerStatusV13{display:none}
+  .growthRewardV13{gap:8px;padding:10px 12px}.miniTowerV13{width:102px;height:120px}.growthCopyV13 b{font-size:18px}.growthCopyV13 span{font-size:11px}
+}
