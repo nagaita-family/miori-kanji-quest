@@ -47,9 +47,14 @@
     const c=countsV19();
     const hud=document.querySelector(".islandHudV15");
     const b=hud?.querySelector("div b");
-    if(b) b.textContent=`島に ${c.onIsland}こ ・ 宝箱 ${c.stored}こ`;
+    const hudText=`島に ${c.onIsland}こ ・ 宝箱 ${c.stored}こ`;
+    if(b && b.textContent!==hudText) b.textContent=hudText;
     const badge=$("storageCountV19");
-    if(badge){badge.textContent=String(c.stored);badge.hidden=c.stored===0;}
+    if(badge){
+      const badgeText=String(c.stored);
+      if(badge.textContent!==badgeText)badge.textContent=badgeText;
+      badge.hidden=c.stored===0;
+    }
   }
 
   function storageButtonV19(){
@@ -70,7 +75,7 @@
     art.removeAttribute("aria-hidden");
     storageButtonV19();
     applyStoredVisibilityV19();
-    const v=document.querySelector(".hero .eyebrow span");if(v)v.textContent="v1.9";
+    const v=document.querySelector(".hero .eyebrow span");if(v&&v.textContent!=="v1.9")v.textContent="v1.9";
   }
   function scheduleEnhanceV19(){
     cancelAnimationFrame(storageRAFv19);
@@ -108,7 +113,7 @@
         toneV19(wasStored?500:760,wasStored?820:470,.14);
         applyStoredVisibilityV19();
         updateStoragePanelV19();
-        const card=grid.querySelector(`.storageItemV19[data-key="${CSS.escape(key)}"]`);
+        const card=[...grid.querySelectorAll(".storageItemV19")].find(x=>x.dataset.key===key);
         if(card){card.classList.remove("popV19");void card.offsetWidth;card.classList.add("popV19");}
       };
     });
