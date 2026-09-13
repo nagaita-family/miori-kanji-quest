@@ -1,0 +1,40 @@
+/* v1.8: 正解後の「もう一回れんしゅうしたい」チェック */
+.practiceWishV18{
+  margin:16px 0 18px;
+  padding:14px 15px 13px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#fff8dd 0%,#fff 48%,#eefbff 100%);
+  border:2px solid rgba(255,190,77,.42);
+  box-shadow:0 10px 28px rgba(77,93,132,.10);
+  text-align:left;
+}
+.practiceWishCopyV18{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.practiceWishCopyV18 span{font-size:12px;font-weight:900;letter-spacing:.12em;color:#9c6a19}
+.practiceWishCopyV18 b{font-size:15px;color:#35445a}
+#practiceWishBtnV18{
+  width:100%;min-height:54px;border:0;border-radius:16px;padding:12px 14px;
+  font:900 16px/1.25 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#315b45;background:linear-gradient(135deg,#e9ffe9,#e8f9ff);
+  box-shadow:inset 0 0 0 2px rgba(87,181,122,.22),0 6px 15px rgba(71,130,100,.10);
+  cursor:pointer;touch-action:manipulation;
+}
+#practiceWishBtnV18.onV18{
+  color:#fff;background:linear-gradient(135deg,#ff9e56,#ff6f88 52%,#8f74ff);
+  box-shadow:0 8px 22px rgba(255,112,125,.24);
+}
+.wishCheckV18{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#fff;color:#ef6e77;margin-right:3px}
+#practiceWishHelpV18{display:block;margin-top:8px;color:#6f7c8f;font-size:12px;line-height:1.45}
+.practiceWishV18.pulseV18{animation:wishPulseV18 .46s ease}
+@keyframes wishPulseV18{0%{transform:scale(1)}45%{transform:scale(1.025)}100%{transform:scale(1)}}
+.practiceWishBadgeV18{
+  position:absolute;left:10px;bottom:9px;z-index:3;
+  padding:5px 8px;border-radius:999px;background:#fff1db;color:#a65f18;
+  font-size:10px;font-weight:900;box-shadow:0 3px 9px rgba(121,80,32,.10)
+}
+.missionCard{position:relative}
+.practiceModeV18{background:#fff0d8!important;color:#a65f18!important}
+@media(max-width:700px){
+  .practiceWishV18{margin:12px 0 14px;padding:12px}
+  #practiceWishBtnV18{font-size:15px;min-height:50px}
+  .practiceWishBadgeV18{font-size:9px;left:8px;bottom:7px}
+}
