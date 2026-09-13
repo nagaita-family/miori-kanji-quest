@@ -1,0 +1,8 @@
+/* v2.0.3: Android Chrome interaction/scroll fix */
+html,body{touch-action:pan-y}
+#homeScreen.active{touch-action:pan-y;overflow:visible}
+.hero.v15Hero .worldV15{touch-action:pan-y!important}
+.hero.v15Hero .islandPlayV15{touch-action:pan-y!important}
+.hero.v15Hero .islandPlayV15.editingV15{touch-action:none!important}
+#treasureFallbackV202,#weeklyStaticOpenV202{touch-action:manipulation!important;pointer-events:auto!important}
+.buildFlagV202{pointer-events:none!important}
