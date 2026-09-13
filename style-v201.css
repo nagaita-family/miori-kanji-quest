@@ -1,0 +1,6 @@
+/* v2.0.1 reliability polish */
+.treasureBtnV201{display:flex!important;visibility:visible!important;opacity:1!important;z-index:140!important}
+.weeklyCardV201{display:grid!important;visibility:visible!important;opacity:1!important}
+#treasureSummaryV201{display:inline-block;margin-top:8px;padding:5px 10px;border-radius:99px;background:#fff0c9;color:#86632f;font-size:10px;font-weight:950}
+@media(max-width:760px){.treasureBtnV201{right:10px!important;top:80px!important}.weeklyCardV201{grid-template-columns:68px 1fr auto!important;gap:9px!important}.weeklyCardV201 .weeklyCardGoalV20{display:none}.weeklyCardV201>button{min-width:84px}}
+@media(max-width:430px){.treasureBtnV201>span:nth-child(2){display:inline!important;font-size:9px}.treasureBtnV201{padding:7px 9px!important;min-height:40px!important}.weeklyCardV201{grid-template-columns:58px 1fr!important}.weeklyCardV201 .weeklyMiniTrophyV20{width:56px;height:56px}.weeklyCardV201>button{grid-column:2;width:100%}}
