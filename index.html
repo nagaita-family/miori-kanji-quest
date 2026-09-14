@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<title>Miori Kanji Quest v2.1.0</title>
+<title>Miori Kanji Quest v2.4.0</title>
+<link rel="manifest" href="./manifest.webmanifest?v=2400">
 <link rel="stylesheet" href="./style-v10.css?v=2030">
 <link rel="stylesheet" href="./style-v11.css?v=2030">
 <link rel="stylesheet" href="./style-v12.css?v=2030">
@@ -21,6 +22,8 @@
 <link rel="stylesheet" href="./style-v203.css?v=2030">
 <link rel="stylesheet" href="./style-v210.css?v=2102">
 <meta name="theme-color" content="#edf7ff">
+<meta name="application-name" content="Miori Kanji Quest">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Kanji Quest">
@@ -31,7 +34,7 @@
     <div class="homeShell">
       <header class="hero">
         <div class="heroCopy">
-          <div class="eyebrow">MIORI KANJI QUEST <span>v2.1.0</span></div>
+          <div class="eyebrow">MIORI KANJI QUEST <span>v2.4.0</span></div>
           <h1>みおりの <em>空島</em></h1>
           <p>モコといっしょに、ことばの力で島を育てよう。</p>
           <div class="levelRow">
@@ -47,15 +50,15 @@
           <div class="cloud cloudA">☁️</div><div class="cloud cloudB">☁️</div>
           <div class="island">🏝️</div><div class="rocket">✏️</div><div class="altitude" id="altitudeLabel">GROUND</div>
         </div>
-        <div class="buildFlagV202">NEW v2.1.0</div>
+        <div class="buildFlagV202">NEW v2.4.0</div>
         <button id="treasureFallbackV202" class="treasureBtnV20 treasureFallbackV202" type="button" aria-label="モコの宝箱をひらく"><span class="miniChestV20"><i></i></span><span>モコの宝箱</span></button>
       </header>
 
       <section id="weeklyStaticV202" class="weeklyCardV20 weeklyCardV202">
         <div class="weeklyMiniTrophyV20"><div class="fallbackTrophyV202"><i></i></div></div>
-        <div class="weeklyCardCopyV20"><span>🏆 今週のまとめ</span><b>10問テスト</b><small>今週の漢字をまとめてチェック！</small><span class="weeklyStaticNoteV202">○は1点・△は0.5点　めざせ10点！</span></div>
+        <div class="weeklyCardCopyV20"><span>🏆 今週のまとめ</span><b>10問テスト</b><small>学校のテストに近い形で今週の漢字をチェック！</small><span class="weeklyStaticNoteV202">10問をプリントみたいにまとめて書いて、最後に採点！</span></div>
         <div class="weeklyCardGoalV20"><strong>?<small>/10</small></strong><span>めざせ10点！</span></div>
-        <button id="weeklyStaticOpenV202" type="button">テストする</button>
+        <button id="weeklyStaticOpenV202" type="button">プリントでテスト</button>
       </section>
 
       <section class="recommendCard">
@@ -144,6 +147,20 @@
 <script src="./app-v203-patch.js?v=2030"></script>
 <script src="./app-v204-patch.js?v=2040"></script>
 <script src="./app-v210-patch.js?v=2102"></script>
-<!-- github-pages-release: v2.1.0 cache-bust-2102 -->
+<script src="./app-v220-patch.js?v=2210"></script>
+<script src="./app-v222-patch.js?v=2220"></script>
+<script src="./app-v223-fix.js?v=2221"></script>
+<script src="./app-v223-patch.js?v=2230"></script>
+<script src="./app-v224-patch.js?v=2240"></script>
+<script src="./app-v225-patch.js?v=2250"></script>
+<script src="./app-v226-fix.js?v=2260"></script>
+<script src="./app-v227-fix.js?v=2270"></script>
+<script src="./app-v228-hint.js?v=2280"></script>
+<script src="./app-v230-print-test.js?v=2300"></script>
+<script src="./app-v231-print-test-fix.js?v=2310"></script>
+<script src="./app-v232-polish.js?v=2320"></script>
+<script src="./app-v234-stability.js?v=2340"></script>
+<script src="./app-v240-release.js?v=2400"></script>
+<!-- github-pages-release: v2.4.0 stable-root -->
 </body>
 </html>
