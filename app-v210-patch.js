@@ -1,10 +1,19 @@
-// v2.1.0: weekly pack priority + selectable past review
+// v2.1.1: weekly pack priority + selectable past review + legacy-home compatibility
 (() => {
-  const VERSION='v2.1.0';
+  const VERSION='v2.1.1';
   const previousRenderHome210=renderHome;
   const previousFinishStage210=finishStage;
   let historyMode210=false;
   let historyPackId210=null;
+
+  function ensureLegacyHomeCompat210(){
+    if(!$('altitudeLabel')){
+      const ghost=document.createElement('span');
+      ghost.id='altitudeLabel';
+      ghost.hidden=true;
+      document.body.appendChild(ghost);
+    }
+  }
 
   function setVersion210(){
     const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;
@@ -111,6 +120,7 @@
   }
 
   renderHome=function(){
+    ensureLegacyHomeCompat210();
     restoreCurrent210();
     previousRenderHome210();
     setTimeout(enhanceCurrentPack210,0);
@@ -132,7 +142,6 @@
     }
   };
 
-  // Existing handlers were assigned before this patch, so rewire the home routes.
   const back=$('backHomeBtn');if(back)back.onclick=()=>renderHome();
   const resultHome=$('resultHomeBtn');if(resultHome)resultHome.onclick=()=>renderHome();
 
