@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Miori Kanji Quest v2.2.3 Preview</title>
+<title>Miori Kanji Quest v2.2.4 Preview</title>
 <style>body{font-family:system-ui,sans-serif;background:#edf7ff;color:#24324a;display:grid;place-items:center;min-height:100vh;margin:0}.loading{font-weight:900}</style>
 </head>
 <body>
-<div class="loading">v2.2.3 プリント練習を準備中…</div>
+<div class="loading">v2.2.4 プリント練習を準備中…</div>
 <script>
 (async()=>{
   try{
-    const r=await fetch('./index.html?preview=2230',{cache:'no-store'});
+    const r=await fetch('./index.html?preview=2240',{cache:'no-store'});
     if(!r.ok)throw new Error('index fetch failed');
     let html=await r.text();
-    html=html.replace('</body>','<script src="./app-v220-patch.js?v=2210"><\/script><script src="./app-v222-patch.js?v=2220"><\/script><script src="./app-v223-fix.js?v=2221"><\/script><script src="./app-v223-patch.js?v=2230"><\/script></body>');
+    html=html.replace('</body>','<script src="./app-v220-patch.js?v=2210"><\/script><script src="./app-v222-patch.js?v=2220"><\/script><script src="./app-v223-fix.js?v=2221"><\/script><script src="./app-v223-patch.js?v=2230"><\/script><script src="./app-v224-patch.js?v=2240"><\/script></body>');
     document.open();document.write(html);document.close();
   }catch(e){
     document.body.innerHTML='<div class="loading">読み込みに失敗したよ。もう一度リロードしてね。</div>';
