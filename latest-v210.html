@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Miori Kanji Quest v2.1.0</title>
+<link rel="stylesheet" href="./style-v10.css?v=2030">
+<link rel="stylesheet" href="./style-v11.css?v=2030">
+<link rel="stylesheet" href="./style-v12.css?v=2030">
+<link rel="stylesheet" href="./style-v13.css?v=2030">
+<link rel="stylesheet" href="./style-v14.css?v=2030">
+<link rel="stylesheet" href="./style-v15.css?v=2030">
+<link rel="stylesheet" href="./style-v15-navfix.css?v=2030">
+<link rel="stylesheet" href="./style-v16.css?v=2030">
+<link rel="stylesheet" href="./style-v17.css?v=2030">
+<link rel="stylesheet" href="./style-v18.css?v=2030">
+<link rel="stylesheet" href="./style-v19.css?v=2030">
+<link rel="stylesheet" href="./style-v20.css?v=2030">
+<link rel="stylesheet" href="./style-v201.css?v=2030">
+<link rel="stylesheet" href="./style-v202.css?v=2030">
+<link rel="stylesheet" href="./style-v203.css?v=2030">
+<link rel="stylesheet" href="./style-v210.css?v=2100">
+<meta name="theme-color" content="#edf7ff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Kanji Quest">
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});}</script>
+</head>
+<body>
+<div id="app">
+  <section id="homeScreen" class="screen active">
+    <div class="homeShell">
+      <header class="hero">
+        <div class="heroCopy">
+          <div class="eyebrow">MIORI KANJI QUEST <span>v2.1.0</span></div>
+          <h1>みおりの <em>空島</em></h1>
+          <p>モコといっしょに、ことばの力で島を育てよう。</p>
+          <div class="levelRow">
+            <div class="levelBadge"><span>LEVEL</span><b id="levelNum">1</b></div>
+            <div class="xpBox">
+              <div class="xpText"><span id="worldName">草原</span><b id="xpText">0 / 100 XP</b></div>
+              <div class="xpTrack"><div id="xpFill"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="skyArt" aria-hidden="true">
+          <div class="sunOrb">☀️</div>
+          <div class="cloud cloudA">☁️</div><div class="cloud cloudB">☁️</div>
+          <div class="island">🏝️</div><div class="rocket">✏️</div><div class="altitude" id="altitudeLabel">GROUND</div>
+        </div>
+        <div class="buildFlagV202">NEW v2.1.0</div>
+        <button id="treasureFallbackV202" class="treasureBtnV20 treasureFallbackV202" type="button" aria-label="モコの宝箱をひらく"><span class="miniChestV20"><i></i></span><span>モコの宝箱</span></button>
+      </header>
+
+      <section id="weeklyStaticV202" class="weeklyCardV20 weeklyCardV202">
+        <div class="weeklyMiniTrophyV20"><div class="fallbackTrophyV202"><i></i></div></div>
+        <div class="weeklyCardCopyV20"><span>🏆 今週のまとめ</span><b>10問テスト</b><small>今週の漢字をまとめてチェック！</small><span class="weeklyStaticNoteV202">○は1点・△は0.5点　めざせ10点！</span></div>
+        <div class="weeklyCardGoalV20"><strong>?<small>/10</small></strong><span>めざせ10点！</span></div>
+        <button id="weeklyStaticOpenV202" type="button">テストする</button>
+      </section>
+
+      <section class="recommendCard">
+        <div><div class="smallLabel">🎯 いまのおすすめ</div><div id="recommendWord" class="recommendWord">路線</div><div id="recommendReason" class="recommendReason">まずはここから！</div></div>
+        <button id="recommendBtn" class="primaryBtn">おすすめ練習 →</button>
+      </section>
+
+      <section class="selectSection">
+        <div class="sectionHead"><div><div class="smallLabel">FREE SELECT</div><h2>好きな問題をえらぶ</h2></div><div class="legend"><span>○ れんしゅう中</span><span>★ マスター</span></div></div>
+        <div id="missionGrid" class="missionGrid"></div>
+      </section>
+      <button id="resetProgressBtn" class="resetBtn">学習データをリセット</button>
+    </div>
+  </section>
+
+  <section id="challengeScreen" class="screen">
+    <header class="playTop"><button id="backHomeBtn" class="backBtn" type="button">← 空島へ</button><div class="playTitle"><span id="stageLabel">MISSION 1</span><b id="wordTitle">漢字チャレンジ</b></div><div id="playLevel" class="miniLevel">LV 1</div></header>
+    <div class="challengeLayout">
+      <main class="writingPane">
+        <div class="wordProgress" id="wordProgress"></div><div id="charPrompt" class="charPrompt">漢字を書いてみよう</div>
+        <div class="canvasShell">
+          <canvas id="writeCanvas" width="760" height="760"></canvas><svg id="hintSvg" class="hintSvg" viewBox="0 0 109 109" aria-hidden="true"></svg>
+          <div class="guideLine v"></div><div class="guideLine h"></div><div id="hintBubble" class="hintBubble"></div>
+        </div>
+        <div id="statusLine" class="statusLine">思い出せたら、そのまま書いてみよう ✏️</div>
+        <div class="writeActions"><button id="undoBtn" class="toolBtn">↩ 1画もどす</button><button id="clearBtn" class="toolBtn">消す</button><button id="checkBtn" class="checkBtn">できた！判定</button></div>
+        <div class="helpDock">
+          <div class="helpTop"><div><b>💡 HELP</b><span>必要なところだけ、少しずつ見よう</span></div><div id="helpPips" class="helpPips"></div></div>
+          <div class="helpButtons"><button id="helpBtn" class="helpBtn">✏️ 次の1画ヒント</button><button id="fullHintBtn" class="fullHintBtn">👀 ぜんぶ見る</button></div>
+          <div id="shapeHintLine" class="shapeHintLine" hidden></div>
+          <div class="helpNote">左は1画ずつ。どうしても分からない時だけ「ぜんぶ見る」でOK！</div>
+        </div>
+      </main>
+      <aside class="questionPaper"><div class="paperTag">きょうの もんだい</div><div id="verticalQuestion" class="verticalQuestion"></div><div id="questionIcon" class="questionIcon"></div></aside>
+    </div>
+  </section>
+
+  <section id="reviewScreen" class="screen">
+    <div class="reviewShell">
+      <div class="celebrate">✨ NICE! ✨</div><h2 id="reviewTitle">「感」できた！</h2><p class="reviewLead">自分の字と、書き順のお手本を見くらべよう。</p>
+      <div class="compareGrid">
+        <div class="compareCard"><div class="compareLabel">みおりの字</div><img id="userPreview" alt="自分で書いた字"></div>
+        <div class="compareCard sampleCard"><div class="compareLabel">お手本（書き順）</div><div id="sampleGlyph" class="sampleGlyph"></div></div>
+      </div>
+      <div id="judgeBadges" class="judgeBadges"></div><div id="secretMini" class="secretMini"></div>
+      <div class="reviewActions"><button id="reviewStrokeBtn" class="secondaryBtn">↻ お手本をもう一回</button><button id="retryWriteBtnV16" class="secondaryBtn" type="button">✏️ もう一回書く</button><button id="reviewNextBtn" class="primaryBtn">つぎへ →</button></div>
+    </div>
+  </section>
+
+  <section id="okuriScreen" class="screen">
+    <div class="okuriShell">
+      <div class="eyebrow">OKURIGANA CHECK</div>
+      <h2>送り仮名をえらぼう</h2>
+      <p id="okuriPrompt" class="okuriLead">「ととのえる」の送り仮名はどれ？</p>
+      <div class="okuriWordBuild"><span id="okuriKanji" class="okuriKanji">整</span><span id="okuriSlot" class="okuriSlot">？</span></div>
+      <div id="okuriChoices" class="okuriChoices"></div>
+      <div id="okuriFeedback" class="okuriFeedback"></div>
+      <button id="okuriNextBtn" class="primaryBtn" hidden>ミッションクリア →</button>
+    </div>
+  </section>
+
+  <section id="strokeScreen" class="screen">
+    <header class="playTop"><button id="closeStrokeBtn" class="backBtn">← おさらいにもどる</button><div class="playTitle"><span>STROKE REVIEW</span><b id="strokeCharLabel">感</b></div><div></div></header>
+    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div id="strokeMsg" class="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
+  </section>
+
+  <section id="resultScreen" class="screen">
+    <div class="resultShell"><div id="resultIcon" class="resultIcon">🚀</div><div class="eyebrow">MISSION CLEAR</div><h2 id="resultTitle">路線 クリア！</h2><div id="xpGain" class="xpGain">LEVEL 1</div><div id="masteryMessage" class="masteryMessage"></div><div class="resultActions"><button id="nextRecommendBtn" class="primaryBtn">次のおすすめへ →</button><button id="resultHomeBtn" class="secondaryBtn" type="button">🏝️ 空島に戻る</button></div></div>
+  </section>
+</div>
+<script src="./data-v10.js?v=2030"></script>
+<script src="./data-v11-patch.js?v=2030"></script>
+<script src="./data-packs.js?v=2100"></script>
+<script src="./app-v10.js?v=2030"></script>
+<script src="./app-v11-patch.js?v=2030"></script>
+<script src="./app-v12-patch.js?v=2030"></script>
+<script src="./app-v13-patch.js?v=2030"></script>
+<script src="./app-v14-patch.js?v=2030"></script>
+<script src="./app-v14-fix.js?v=2030"></script>
+<script src="./app-v15-patch.js?v=2030"></script>
+<script src="./app-v15-navfix.js?v=2030"></script>
+<script src="./app-v16-patch.js?v=2030"></script>
+<script src="./app-v17-patch.js?v=2030"></script>
+<script src="./app-v18-patch.js?v=2030"></script>
+<script src="./app-v201-patch.js?v=2030"></script>
+<script src="./app-v203-patch.js?v=2030"></script>
+<script src="./app-v204-patch.js?v=2040"></script>
+<script src="./app-v210-patch.js?v=2100"></script>
+<!-- github-pages-release: v2.1.0 cache-bypass -->
+</body>
+</html>
