@@ -1,242 +1,250 @@
-// v2.2.0: worksheet-style single-question practice.
-// Keep the proven per-kanji judge/review flow, but place the writing canvas directly
-// inside a print-like answer column so multi-kanji words are seen together.
+// v2.2.1: worksheet-style single-question practice.
+// One vertical sentence, per-cell readings, and batch judgement for multi-kanji words.
 (() => {
-  const VERSION='v2.2.0';
-  const prevStartStageV220=startStage;
-  const prevRenderCharV220=renderChar;
-  const prevOpenReviewV220=openReview;
-  const prevRenderHomeV220=renderHome;
+  const VERSION='v2.2.1';
+  const prevStartStageV221=startStage;
+  const prevRenderCharV221=renderChar;
+  const prevRenderHomeV221=renderHome;
+  const prevJudgeCurrentV221=judgeCurrent;
 
-  let paperSnapshotsV220=[];
-  let paperStageKeyV220='';
+  let paperStageKeyV221='';
+  let batchActiveV221=false;
+  let batchCreditedV221=new Set();
+  let batchResultsV221=[];
 
-  function installStylesV220(){
-    if(document.getElementById('styleV220'))return;
-    const style=document.createElement('style');
-    style.id='styleV220';
-    style.textContent=`/* v2.2.0 — print-like practice sheet */
+  const READING_PARTS_V221={
+    '路線':['ろ','せん'],
+    '感':['かん'],
+    '対':['たい'],
+    '区':['く'],
+    '太陽':['たい','よう'],
+    '整':['ととの'],
+    '一部':['いち','ぶ'],
+    '家路':['いえ','じ'],
+    '整理':['せい','り'],
+    '表':['あらわ']
+  };
+
+  function readingPartsV221(stage){
+    if(Array.isArray(stage.readingParts)&&stage.readingParts.length===stage.chars.length)return stage.readingParts;
+    const mapped=READING_PARTS_V221[stage.answer];
+    if(mapped&&mapped.length===stage.chars.length)return mapped;
+    if(stage.chars.length===1)return [stage.reading||''];
+    return stage.chars.map((_,i)=>i===0?(stage.reading||''):'');
+  }
+
+  function fullReadingV221(stage){return `${stage.reading||''}${stage.okuri||''}`;}
+  function stageKeyV221(i=stageIndex){
+    const pack=(typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID)||'default';
+    return `${pack}:${i}`;
+  }
+
+  function installStylesV221(){
+    let style=document.getElementById('styleV220');
+    if(!style){style=document.createElement('style');style.id='styleV220';document.head.appendChild(style);}
+    style.textContent=`
 body.paperModeV220 #challengeScreen{background:#eef4f8}
 body.paperModeV220 .challengeLayout{display:block;width:min(900px,96vw);padding:16px 0 28px}
 body.paperModeV220 .writingPane{background:transparent;box-shadow:none;padding:0;overflow:visible}
 body.paperModeV220 #challengeScreen .questionPaper{display:none!important}
 body.paperModeV220 .wordProgress{display:none}
-body.paperModeV220 .charPrompt{margin:10px 0 7px;font-size:16px;color:#4b5b70}
-
-.paperPracticeV220{width:min(760px,95vw);background:#fffdf7;border:1px solid #ddd2bd;border-radius:10px;padding:20px 22px 18px;box-shadow:0 12px 34px rgba(71,78,91,.12);position:relative;overflow:hidden}
-.paperPracticeV220:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(95,120,130,.035) 39px 40px)}
-.paperTopV220{position:relative;z-index:1;display:flex;align-items:center;gap:12px;border-bottom:2px solid #4b87ba;padding-bottom:10px;margin-bottom:12px}
-.paperNoV220{width:34px;height:34px;border:2px solid #69727f;border-radius:50%;display:grid;place-items:center;font-family:"Yu Mincho","Noto Serif JP",serif;font-size:20px;font-weight:900;background:#fff}
-.paperTopV220>div{display:flex;flex-direction:column}.paperTopV220 b{font-size:17px}.paperTopV220 small{font-size:11px;color:#7c8792;margin-top:2px}
-.paperBodyV220{position:relative;z-index:1;min-height:340px;display:flex;flex-direction:row-reverse;justify-content:center;align-items:flex-start;gap:12px;padding:12px 4px 8px}
-.paperTextV220,.paperReadingV220{writing-mode:vertical-rl;text-orientation:upright;font-family:"Yu Mincho","Noto Serif JP",serif;font-weight:700;letter-spacing:.08em;white-space:pre-wrap}
-.paperTextV220{font-size:28px;line-height:1.45;min-height:120px;padding-top:6px;color:#24272c}
-.paperReadingV220{font-size:17px;line-height:1.2;padding:10px 2px 0;color:#3e4652;min-width:28px}
-.paperReadingV220::before{content:"よみ";font-family:system-ui,sans-serif;font-size:9px;color:#9a8d79;letter-spacing:.06em;margin-bottom:7px}
-.paperAnswerV220{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;border:2px solid #7d96a8;background:#fff;box-shadow:inset 0 0 0 1px #ffffff}
-.paperAnswerSlotV220{position:relative;width:var(--sheet-cell,220px);height:var(--sheet-cell,220px);background:#fff;border-bottom:1.5px solid #7d96a8;overflow:hidden}
-.paperAnswerSlotV220:last-child{border-bottom:0}
-.paperAnswerSlotV220:before,.paperOkuriBoxV220:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(111,128,139,.24);z-index:0;pointer-events:none}
-.paperAnswerSlotV220:after{content:"";position:absolute;top:50%;left:0;right:0;border-top:1px dashed rgba(111,128,139,.16);z-index:0;pointer-events:none}
-.paperAnswerSlotV220.active{box-shadow:inset 0 0 0 5px rgba(255,198,62,.75);background:#fffdf3}
-.paperAnswerSlotV220.done{background:#fbfffc}
-.paperAnswerSlotV220.done:after{border-top-color:rgba(82,151,104,.14)}
-.paperAnswerSlotV220 img{position:absolute;inset:5%;width:90%;height:90%;object-fit:contain;z-index:2}
-.paperCanvasMountV220,.okuriCanvasMountV220{position:absolute;inset:0;z-index:3}
-.paperAnswerSlotV220 .canvasShell,.paperOkuriBoxV220 .canvasShell{width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
-.paperAnswerSlotV220 .canvasShell .guideLine,.paperOkuriBoxV220 .canvasShell .guideLine{display:none}
-.paperAnswerSlotV220 .hintBubble,.paperOkuriBoxV220 .hintBubble{left:8px;right:8px;bottom:8px;max-width:none}
-
-.paperAnswerV220.count1{--sheet-cell:min(300px,42vh,58vw)}
-.paperAnswerV220.count2{--sheet-cell:min(225px,28vh,43vw)}
-.paperAnswerV220.count3,.paperAnswerV220.count4{--sheet-cell:min(170px,20vh,34vw)}
-.paperAnswerV220.okuri{border:0;background:transparent;box-shadow:none}
-.paperOkuriBoxV220{position:relative;width:min(230px,44vw);height:min(390px,49vh);border:2px solid #7d96a8;background:#fff;overflow:hidden;box-shadow:inset 0 0 0 5px rgba(255,198,62,.55)}
-.paperOkuriBoxV220:after{content:"";position:absolute;left:0;right:0;top:58%;border-top:1px dotted rgba(112,126,136,.18);pointer-events:none}
-.okuriCanvasMountV220{left:0;right:0;top:0;height:58%;bottom:auto}
-.okuriSpaceV220{position:absolute;left:0;right:0;top:58%;bottom:0;display:grid;place-items:center;text-align:center;color:#9aa2a8;font-size:11px;font-weight:800;letter-spacing:.04em;pointer-events:none}
-.okuriSpaceV220 span{background:#fffdf7dd;padding:6px 8px;border-radius:8px}
-.paperOkuriBoxV220 .canvasShell{height:100%!important}
-
-.paperFootV220{position:relative;z-index:1;margin-top:10px;padding-top:10px;border-top:1px dashed #c7bca9;display:flex;justify-content:center;gap:12px;align-items:center;flex-wrap:wrap;font-size:12px;color:#78828c}
-.paperFootV220 b{color:#4c6073}.paperFootV220 span{background:#fff3bf;border:1px solid #efd66f;border-radius:999px;padding:4px 9px;color:#695817;font-weight:850}
-body.paperModeV220 .statusLine{width:min(720px,94vw);margin-top:10px}
+body.paperModeV220 .charPrompt{margin:9px 0 7px;font-size:16px;color:#4b5b70}
+.paperPracticeV221{width:min(760px,95vw);background:#fffdf7;border:1px solid #ddd2bd;border-radius:10px;padding:18px 22px 16px;box-shadow:0 12px 34px rgba(71,78,91,.12);position:relative;overflow:hidden}
+.paperPracticeV221:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 39px,rgba(95,120,130,.035) 39px 40px)}
+.paperTopV221{position:relative;z-index:1;display:flex;align-items:center;gap:12px;border-bottom:2px solid #4b87ba;padding-bottom:9px;margin-bottom:10px}
+.paperNoV221{width:34px;height:34px;border:2px solid #69727f;border-radius:50%;display:grid;place-items:center;font-family:"Yu Mincho","Noto Serif JP",serif;font-size:20px;font-weight:900;background:#fff}
+.paperTopV221>div{display:flex;flex-direction:column}.paperTopV221 b{font-size:17px}.paperTopV221 small{font-size:11px;color:#7c8792;margin-top:2px}
+.paperBodyV221{position:relative;z-index:1;display:flex;justify-content:center;padding:8px 4px 5px;min-height:430px}
+.paperSentenceV221{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:"Yu Mincho","Noto Serif JP",serif;font-weight:700;color:#24272c}
+.paperTextRunV221{display:flex;flex-direction:column;align-items:center;font-size:28px;line-height:1.18;letter-spacing:.02em}
+.paperTextRunV221 span{display:block;min-height:33px}
+.paperAnswerUnitV221{position:relative;margin:4px 0;display:flex;flex-direction:column;align-items:center}
+.paperAnswerStackV221{position:relative;border:2px solid #7d96a8;background:#fff;overflow:visible}
+.paperAnswerCellV221{position:relative;width:var(--cell,190px);height:var(--cell,190px);border-bottom:1.5px solid #7d96a8;background:#fff;overflow:visible}
+.paperAnswerCellV221:last-child{border-bottom:0}
+.paperAnswerCellV221:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(111,128,139,.20);pointer-events:none}
+.paperAnswerCellV221:after{content:"";position:absolute;top:50%;left:0;right:0;border-top:1px dashed rgba(111,128,139,.14);pointer-events:none}
+.paperReadingPartV221{position:absolute;right:-42px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;text-orientation:upright;font-size:15px;line-height:1.05;letter-spacing:.04em;color:#3f4650;font-family:"Yu Mincho","Noto Serif JP",serif;font-weight:700;white-space:nowrap}
+.paperAnswerCellV221.pass{box-shadow:inset 0 0 0 5px rgba(85,181,113,.25)}
+.paperAnswerCellV221.fail{box-shadow:inset 0 0 0 5px rgba(226,98,83,.32)}
+.paperCanvasMountV221{position:absolute;inset:0;z-index:4;overflow:hidden}
+.paperCanvasMountV221 .canvasShell{width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.paperCanvasMountV221 .guideLine{display:none!important}
+body.batchWriteV221 .paperCanvasMountV221 .hintSvg{display:none!important}
+.paperAnswerStackV221.count1{--cell:min(285px,40vh,57vw)}
+.paperAnswerStackV221.count2{--cell:min(205px,26vh,41vw)}
+.paperAnswerStackV221.count3,.paperAnswerStackV221.count4{--cell:min(150px,18vh,31vw)}
+.paperOkuriUnitV221{position:relative;margin:4px 0}
+.paperOkuriBoxV221{position:relative;width:min(220px,43vw);height:min(340px,45vh);border:2px solid #7d96a8;background:#fff;overflow:visible}
+.paperOkuriBoxV221:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(111,128,139,.18)}
+.paperOkuriReadingV221{position:absolute;right:-43px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;text-orientation:upright;font-size:15px;font-family:"Yu Mincho","Noto Serif JP",serif;letter-spacing:.04em;white-space:nowrap}
+.paperOkuriBoxV221 .paperCanvasMountV221{inset:0}
+.paperFootV221{position:relative;z-index:1;margin-top:8px;padding-top:9px;border-top:1px dashed #c7bca9;display:flex;justify-content:center;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:#78828c}
+.paperFootV221 b{color:#4c6073}.paperFootV221 span{background:#fff3bf;border:1px solid #efd66f;border-radius:999px;padding:4px 9px;color:#695817;font-weight:850}
+body.paperModeV220 .statusLine{width:min(720px,94vw);margin-top:9px}
 body.paperModeV220 .writeActions{margin-top:2px}
 body.paperModeV220 .helpDock{width:min(720px,94vw);background:#fff;border-color:#dfe6ed;box-shadow:0 6px 18px rgba(66,76,91,.06)}
-
-@media (max-width:700px){
-  .paperPracticeV220{padding:14px 12px 13px}
-  .paperBodyV220{gap:7px;min-height:300px}
-  .paperTextV220{font-size:23px}
-  .paperReadingV220{font-size:15px;min-width:22px}
-  .paperAnswerV220.count1{--sheet-cell:min(260px,38vh,58vw)}
-  .paperAnswerV220.count2{--sheet-cell:min(190px,25vh,42vw)}
-  .paperOkuriBoxV220{width:min(205px,46vw);height:min(350px,48vh)}
-}
-
-@media (max-height:720px) and (orientation:landscape){
-  .paperPracticeV220{padding-top:12px;padding-bottom:10px}
-  .paperTopV220{margin-bottom:5px;padding-bottom:6px}
-  .paperBodyV220{min-height:250px;padding-top:5px}
-  .paperAnswerV220.count1{--sheet-cell:min(245px,39vh)}
-  .paperAnswerV220.count2{--sheet-cell:min(175px,27vh)}
-  .paperOkuriBoxV220{height:min(310px,49vh);width:190px}
-  body.paperModeV220 .helpDock{margin-top:7px}
-}
+body.batchWriteV221 .helpDock{display:none}
+.batchReviewV221{position:fixed;inset:0;z-index:9999;background:rgba(25,37,52,.48);display:grid;place-items:center;padding:18px}
+.batchReviewCardV221{width:min(680px,94vw);max-height:90vh;overflow:auto;background:#fff;border-radius:28px;padding:22px;box-shadow:0 28px 70px rgba(0,0,0,.25);text-align:center}
+.batchReviewCardV221 h2{font-size:34px;margin:4px 0 6px}.batchReviewCardV221 p{color:#66758b;margin:0 0 14px;font-weight:800}
+.batchCompareV221{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.batchCharV221{background:#f8fbff;border:1px solid #dfe8f2;border-radius:20px;padding:10px}.batchCharV221 b{display:block;font-size:13px;color:#65748a;margin-bottom:7px}
+.batchCharPairV221{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:center}.batchCharPairV221 img{width:100%;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:12px;border:1px solid #e4e9ee}.batchSampleV221{aspect-ratio:1;display:grid;place-items:center;background:#fff;border-radius:12px;border:1px solid #e4e9ee;font-family:"Yu Mincho","Noto Serif JP",serif;font-size:72px;font-weight:900}
+.batchReviewCardV221 button{margin-top:16px;background:linear-gradient(135deg,#4c7dff,#6d8cff);color:white;font-weight:950;border-radius:16px;padding:13px 22px}
+@media(max-width:700px){.paperPracticeV221{padding:13px 11px}.paperBodyV221{min-height:360px}.paperTextRunV221{font-size:23px}.paperTextRunV221 span{min-height:28px}.paperAnswerStackV221.count1{--cell:min(250px,37vh,55vw)}.paperAnswerStackV221.count2{--cell:min(175px,23vh,38vw)}.paperReadingPartV221,.paperOkuriReadingV221{right:-36px;font-size:13px}.paperOkuriBoxV221{width:min(195px,43vw);height:min(310px,43vh)}}
+@media(max-height:720px) and (orientation:landscape){.paperBodyV221{min-height:300px}.paperTextRunV221{font-size:22px}.paperAnswerStackV221.count1{--cell:min(230px,36vh)}.paperAnswerStackV221.count2{--cell:min(150px,23vh)}.paperOkuriBoxV221{height:min(270px,43vh);width:170px}}
 `;
-    document.head.appendChild(style);
   }
 
-  function setVersionV220(){
+  function setVersionV221(){
     const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;
     const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${VERSION}`;
     document.title=`Miori Kanji Quest ${VERSION}`;
   }
-  function keepVersionV220(){
-    setVersionV220();
-    [80,320,950,1600].forEach(ms=>setTimeout(setVersionV220,ms));
-  }
+  function keepVersionV221(){setVersionV221();[80,320,950,1600].forEach(ms=>setTimeout(setVersionV221,ms));}
 
-  function stageKeyV220(i=stageIndex){
-    const pack=(typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID)||'default';
-    return `${pack}:${i}`;
-  }
+  function charsHtmlV221(text){return [...String(text||'')].map(ch=>`<span>${esc(ch)}</span>`).join('');}
 
-  function fullReadingV220(stage){return `${stage.reading||''}${stage.okuri||''}`;}
-
-  function ensurePaperV220(){
-    const pane=document.querySelector('#challengeScreen .writingPane');
-    if(!pane)return null;
+  function ensurePaperV221(){
+    const pane=document.querySelector('#challengeScreen .writingPane');if(!pane)return null;
     let paper=$('paperPracticeV220');
-    if(!paper){
-      paper=document.createElement('section');
-      paper.id='paperPracticeV220';
-      paper.className='paperPracticeV220';
-      paper.innerHTML=`
-        <div class="paperTopV220">
-          <span class="paperNoV220"></span>
-          <div><b>漢字プリントれんしゅう</b><small>学校のテストみたいに、答えの場所へ直接書こう</small></div>
-        </div>
-        <div class="paperBodyV220">
-          <div class="paperBeforeV220 paperTextV220"></div>
-          <div class="paperReadingV220"></div>
-          <div class="paperAnswerV220"></div>
-          <div class="paperAfterV220 paperTextV220"></div>
-        </div>
-        <div class="paperFootV220"></div>`;
-      pane.insertBefore(paper,pane.firstChild);
-    }
+    if(!paper){paper=document.createElement('section');paper.id='paperPracticeV220';pane.insertBefore(paper,pane.firstChild);}
+    paper.className='paperPracticeV221';
     return paper;
   }
 
-  function parkCanvasV220(){
+  function parkCanvasV221(){
     const pane=document.querySelector('#challengeScreen .writingPane');
     const shell=document.querySelector('#challengeScreen .canvasShell');
     const status=$('statusLine');
-    if(pane&&shell&&status&&shell.parentElement!==pane) pane.insertBefore(shell,status);
+    if(pane&&shell&&status&&shell.parentElement!==pane)pane.insertBefore(shell,status);
     return shell;
   }
 
-  function restoreLegacyV220(){
+  function resetCanvasSizeV221(){
+    const c=$('writeCanvas');if(!c)return;
+    if(c.width!==760||c.height!==760){c.width=760;c.height=760;userStrokes=[];currentStroke=null;}
+  }
+
+  function restoreLegacyV221(){
     const pane=document.querySelector('#challengeScreen .writingPane');
-    const shell=parkCanvasV220();
-    const prompt=$('charPrompt');
-    if(pane&&shell&&prompt) prompt.insertAdjacentElement('afterend',shell);
-    document.body.classList.remove('paperModeV220');
+    const shell=parkCanvasV221();const prompt=$('charPrompt');
+    resetCanvasSizeV221();
+    if(pane&&shell&&prompt)prompt.insertAdjacentElement('afterend',shell);
+    document.body.classList.remove('paperModeV220','batchWriteV221');
     const paper=$('paperPracticeV220');if(paper)paper.hidden=true;
+    const help=$('helpDock');if(help)help.hidden=false;
   }
 
-  function makeSlotsV220(stage){
+  function answerHtmlV221(stage){
     if(stage.okuri){
-      return `<div class="paperOkuriBoxV220 ${charIndex===0?'active':''}">
-        <div class="okuriCanvasMountV220" data-active-mount="1"></div>
-        <div class="okuriSpaceV220"><span>送り仮名は<br>このあと</span></div>
-      </div>`;
+      return `<div class="paperOkuriUnitV221"><div class="paperOkuriBoxV221"><div class="paperCanvasMountV221" data-canvas-mount="1"></div></div><span class="paperOkuriReadingV221">${esc(fullReadingV221(stage))}</span></div>`;
     }
-    return stage.chars.map((c,i)=>{
-      const done=i<charIndex;
-      const active=i===charIndex;
-      const snap=paperSnapshotsV220[i];
-      return `<div class="paperAnswerSlotV220 ${done?'done':''} ${active?'active':''}" data-slot="${i}">
-        ${done&&snap?`<img src="${snap}" alt="${esc(c.char)}を書いた字">`:''}
-        ${active?'<div class="paperCanvasMountV220" data-active-mount="1"></div>':''}
-      </div>`;
-    }).join('');
+    const parts=readingPartsV221(stage);
+    return `<div class="paperAnswerUnitV221"><div class="paperAnswerStackV221 count${Math.max(1,stage.chars.length)}">${stage.chars.map((c,i)=>`<div class="paperAnswerCellV221" data-cell="${i}"><span class="paperReadingPartV221">${esc(parts[i]||'')}</span></div>`).join('')}<div class="paperCanvasMountV221" data-canvas-mount="1"></div></div></div>`;
   }
 
-  function renderPaperV220(){
-    // The weekly test still uses the old one-question controller until its worksheet
-    // redesign is implemented separately.
-    if(document.body.classList.contains('weeklyTestModeV20')){
-      restoreLegacyV220();
+  function renderPaperV221(){
+    if(document.body.classList.contains('weeklyTestModeV20')){restoreLegacyV221();return;}
+    const stage=QUEST_STAGES[stageIndex];if(!stage)return;
+    const key=stageKeyV221();if(key!==paperStageKeyV221){paperStageKeyV221=key;batchCreditedV221=new Set();batchResultsV221=[];}
+    const paper=ensurePaperV221();const shell=parkCanvasV221();if(!paper||!shell)return;
+    document.body.classList.add('paperModeV220');paper.hidden=false;
+    batchActiveV221=stage.chars.length>1&&!stage.okuri;
+    document.body.classList.toggle('batchWriteV221',batchActiveV221);
+
+    paper.innerHTML=`<div class="paperTopV221"><span class="paperNoV221">${stageIndex+1}</span><div><b>漢字プリントれんしゅう</b><small>文を上から読みながら、答えの場所へ直接書こう</small></div></div><div class="paperBodyV221"><div class="paperSentenceV221"><div class="paperTextRunV221">${charsHtmlV221(stage.before)}</div>${answerHtmlV221(stage)}<div class="paperTextRunV221">${charsHtmlV221(stage.after)}</div></div></div><div class="paperFootV221">${stage.okuri?'<b>長い答え欄は区切らない</b><span>漢字のあとに送り仮名クイズ</span>':stage.chars.length>1?'<b>全部の文字を続けて書こう</b><span>最後にまとめて判定</span>':'<b>読みの左のマスへ書こう</b>'}</div>`;
+    const mount=paper.querySelector('[data-canvas-mount="1"]');if(mount)mount.appendChild(shell);
+
+    const c=$('writeCanvas');
+    if(batchActiveV221){
+      const n=stage.chars.length;
+      if(c.width!==760||c.height!==760*n){c.width=760;c.height=760*n;userStrokes=[];currentStroke=null;}
+      charIndex=0;helpLevel=0;checkAttempts=0;checkPassed=false;
+      const check=$('checkBtn');if(check)check.textContent='まとめて判定';
+      const prompt=$('charPrompt');if(prompt)prompt.textContent=`「${stage.reading}」を上から続けて書こう ✏️`;
+      const status=$('statusLine');if(status)status.textContent='全部書けたら「まとめて判定」を押そう！';
+      stage.chars.slice(1).forEach(info=>{statFor(info.char).seen++;});persist();
+    }else{
+      resetCanvasSizeV221();
+      const check=$('checkBtn');if(check)check.textContent='できた！判定';
+      const prompt=$('charPrompt');if(prompt)prompt.textContent=stage.okuri?'長い答え欄に、まず漢字を書こう ✏️':'読みの左のマスへ書こう ✏️';
+    }
+    const title=$('wordTitle');if(title)title.textContent='プリントれんしゅう';
+    const label=$('stageLabel');if(label&&!document.body.classList.contains('historyReviewV210'))label.textContent=`PRINT PRACTICE ${stageIndex+1} / ${QUEST_STAGES.length}`;
+  }
+
+  function occupancyV221(user,exp,grid=6){
+    const cells=strokes=>{const set=new Set();normalizeSet(strokes).forEach(s=>resample(s,30).forEach(p=>{const x=clamp(Math.floor(p.x/109*grid),0,grid-1),y=clamp(Math.floor(p.y/109*grid),0,grid-1);set.add(`${x},${y}`);}));return set;};
+    const a=cells(user),b=cells(exp);let inter=0;a.forEach(k=>{if(b.has(k))inter++;});return Math.round(100*(2*inter)/Math.max(1,a.size+b.size));
+  }
+  function aspectV221(user,exp){const ub=bbox(user),eb=bbox(exp),ur=ub.w/Math.max(1,ub.h),er=eb.w/Math.max(1,eb.h);return Math.round(clamp(100-Math.abs(Math.log(Math.max(.05,ur)/Math.max(.05,er)))*90));}
+
+  function splitStrokesV221(index,n){
+    const c=$('writeCanvas'),cellH=c.height/n,y0=index*cellH,y1=(index+1)*cellH;
+    return userStrokes.filter(s=>s.length&&((s.reduce((a,p)=>a+p.y,0)/s.length)>=y0)&&((s.reduce((a,p)=>a+p.y,0)/s.length)<y1)).map(s=>s.map(p=>({x:p.x/c.width*109,y:(p.y-y0)/cellH*109})));
+  }
+
+  function snapshotCellV221(index,n){
+    const c=$('writeCanvas'),cellH=c.height/n,t=document.createElement('canvas');t.width=760;t.height=760;
+    const x=t.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,760,760);x.drawImage(c,0,index*cellH,c.width,cellH,0,0,760,760);return t.toDataURL('image/png');
+  }
+
+  async function judgeBatchV221(){
+    const stage=QUEST_STAGES[stageIndex],n=stage.chars.length;
+    if(!userStrokes.length){$('statusLine').textContent='まだ白紙だよ。上から順に全部書いてみよう！';return;}
+    checkAttempts++;$('statusLine').textContent='全部の字をまとめて見ています…';
+    const results=[];
+    for(let i=0;i<n;i++){
+      const info=stage.chars[i],user=splitStrokesV221(i,n),st=statFor(info.char);
+      if(!user.length){results.push({i,info,pass:false,empty:true,shape:0});continue;}
+      try{
+        const paths=await getKanjiData(info.char),exp=paths.map(p=>p.pts);
+        const base=chamferScore(user,exp),occ=occupancyV221(user,exp),asp=aspectV221(user,exp),order=orderScore(user,exp),diff=Math.abs(user.length-exp.length);
+        const shape=Math.round(base*.58+occ*.29+asp*.13),count=diff===0?100:diff===1?68:diff===2?38:8,total=Math.round(shape*.77+count*.18+order*.05);
+        let countOK;if(exp.length<=5)countOK=diff===0||(diff===1&&shape>=76);else if(exp.length<=11)countOK=diff<=1||(diff===2&&shape>=82&&occ>=67);else countOK=diff<=2||(diff===3&&shape>=84&&occ>=70);
+        const pass=base>=57&&occ>=51&&asp>=49&&shape>=62&&total>=65&&countOK;
+        results.push({i,info,pass,shape,count,order,total,expected:exp.length,actual:user.length,occ,asp});
+        if(pass&&!batchCreditedV221.has(i)){
+          batchCreditedV221.add(i);st.correct++;st.noHelp++;const gain=Math.max(6,30-(checkAttempts>1?4:0)),mg=Math.max(4,22-(checkAttempts>1?3:0));st.mastery=Math.round(clamp((st.mastery||0)+mg));st.last=Date.now();save.xp=(save.xp||0)+gain;
+        }else if(!pass){st.wrong++;st.mastery=Math.round(clamp((st.mastery||0)-2));st.last=Date.now();}
+      }catch(e){results.push({i,info,pass:false,error:true,shape:0});}
+    }
+    persist();batchResultsV221=results;
+    document.querySelectorAll('.paperAnswerCellV221').forEach((cell,i)=>{cell.classList.remove('pass','fail');cell.classList.add(results[i]?.pass?'pass':'fail');});
+    const bad=results.filter(r=>!r.pass);
+    if(bad.length){
+      const labels=bad.map(r=>`${r.i+1}文字目`).join('・');
+      $('statusLine').innerHTML=`✏️ <b>おしい！</b> ${labels}をもう一度見てみよう。必要なら「消す」で全部書き直してOK！`;
       return;
     }
+    batchResultsV221=results.map(r=>({...r,snapshot:snapshotCellV221(r.i,n)}));
+    showBatchReviewV221(stage);
+  }
 
-    const stage=QUEST_STAGES[stageIndex];
-    if(!stage)return;
-    const key=stageKeyV220();
-    if(key!==paperStageKeyV220){paperStageKeyV220=key;paperSnapshotsV220=Array(stage.chars.length).fill('');}
-
-    const paper=ensurePaperV220();if(!paper)return;
-    const shell=parkCanvasV220();
-    document.body.classList.add('paperModeV220');
-    paper.hidden=false;
-
-    const no=paper.querySelector('.paperNoV220');if(no)no.textContent=`${stageIndex+1}`;
-    const before=paper.querySelector('.paperBeforeV220');if(before)before.textContent=stage.before||'';
-    const after=paper.querySelector('.paperAfterV220');if(after)after.textContent=stage.after||'';
-    const reading=paper.querySelector('.paperReadingV220');if(reading)reading.textContent=fullReadingV220(stage);
-    const answer=paper.querySelector('.paperAnswerV220');
-    if(answer){
-      answer.className=`paperAnswerV220 count${Math.max(1,stage.chars.length)} ${stage.okuri?'okuri':''}`;
-      answer.innerHTML=makeSlotsV220(stage);
-    }
-    const foot=paper.querySelector('.paperFootV220');
-    if(foot)foot.innerHTML=stage.okuri
-      ? '<b>① まず漢字を書く</b><span>② 正解したら、送り仮名を選ぶ</span>'
-      : `<b>${stage.chars.length>1?`${stage.chars.length}つのマスが1つの答えだよ`:'答えのマスに直接書こう'}</b><span>黄色のマスが、いま書く場所</span>`;
-
-    const mount=paper.querySelector('[data-active-mount="1"]');
-    if(mount&&shell)mount.appendChild(shell);
-
-    const prompt=$('charPrompt');
-    if(prompt)prompt.textContent=stage.chars.length>1
-      ? `${charIndex+1}文字目。上から順に、そのマスへ書こう ✏️`
-      : stage.okuri?'まず漢字をこの答え欄に書こう ✏️':'答えのマスに直接書こう ✏️';
-    const title=$('wordTitle');if(title)title.textContent='プリントれんしゅう';
-    const label=$('stageLabel');
-    if(label&&!document.body.classList.contains('historyReviewV210'))label.textContent=`PRINT PRACTICE ${stageIndex+1} / ${QUEST_STAGES.length}`;
+  function showBatchReviewV221(stage){
+    document.getElementById('batchReviewV221')?.remove();
+    const ov=document.createElement('div');ov.id='batchReviewV221';ov.className='batchReviewV221';
+    ov.innerHTML=`<div class="batchReviewCardV221"><div class="eyebrow">まとめて判定 OK!</div><h2>「${esc(stage.answer)}」できた！</h2><p>続けて書けたね。自分の字とお手本を見くらべよう。</p><div class="batchCompareV221">${batchResultsV221.map(r=>`<div class="batchCharV221"><b>${r.i+1}文字目　形 ${r.shape}</b><div class="batchCharPairV221"><img src="${r.snapshot}" alt="自分で書いた${esc(r.info.char)}"><div class="batchSampleV221">${esc(r.info.char)}</div></div></div>`).join('')}</div><button id="batchContinueV221" type="button">${stage.okuri?'送り仮名へ →':'ミッションクリア →'}</button></div>`;
+    document.body.appendChild(ov);
+    $('batchContinueV221').onclick=()=>{ov.remove();charIndex=stage.chars.length-1;batchActiveV221=false;document.body.classList.remove('batchWriteV221');nextAfterReview();};
   }
 
   startStage=function(i){
-    paperStageKeyV220=stageKeyV220(Number(i));
-    paperSnapshotsV220=[];
-    prevStartStageV220(i);
-    const s=QUEST_STAGES[stageIndex];
-    paperStageKeyV220=stageKeyV220();
-    paperSnapshotsV220=Array(s?.chars?.length||1).fill('');
-    renderPaperV220();
-    keepVersionV220();
+    paperStageKeyV221='';batchCreditedV221=new Set();batchResultsV221=[];batchActiveV221=false;
+    prevStartStageV221(i);renderPaperV221();keepVersionV221();
   };
 
   renderChar=function(){
-    prevRenderCharV220();
-    renderPaperV220();
+    if(batchActiveV221)return;
+    prevRenderCharV221();renderPaperV221();
   };
 
-  openReview=function(gain){
-    if(!document.body.classList.contains('weeklyTestModeV20') && currentSnapshot){
-      paperSnapshotsV220[charIndex]=currentSnapshot;
-    }
-    prevOpenReviewV220(gain);
-  };
+  judgeCurrent=async function(){if(batchActiveV221)return judgeBatchV221();return prevJudgeCurrentV221();};
+  $('checkBtn').onclick=judgeCurrent;
 
-  renderHome=function(){
-    restoreLegacyV220();
-    prevRenderHomeV220();
-    keepVersionV220();
-  };
+  renderHome=function(){restoreLegacyV221();prevRenderHomeV221();keepVersionV221();};
 
-  installStylesV220();
-  keepVersionV220();
+  installStylesV221();keepVersionV221();
 })();
