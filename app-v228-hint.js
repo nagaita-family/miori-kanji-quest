@@ -6,10 +6,12 @@
   const prevRenderHomeV228=renderHome;
   const prevNextHelpV228=nextHelp;
 
+  function activeVersionV228(){return window.MioriReleaseVersion||VERSION;}
   function setVersionV228(){
-    const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;
-    const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${VERSION}`;
-    document.title=`Miori Kanji Quest ${VERSION}`;
+    const version=activeVersionV228();
+    const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=version;
+    const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${version}`;
+    document.title=`Miori Kanji Quest ${version}`;
   }
   function keepVersionV228(){setVersionV228();[80,320,900,1600].forEach(ms=>setTimeout(setVersionV228,ms));}
 
