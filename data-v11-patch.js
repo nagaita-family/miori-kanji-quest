@@ -7,20 +7,25 @@ Object.assign(QUEST_STAGES[1], {
   after: "。"
 });
 
-// 「区切る」は、区の読みだけを問う元の形式に合わせる。
+// 返却された漢字テスト13を踏まえ、「区」だけでなく「区切」を本命語として練習する。
 Object.assign(QUEST_STAGES[3], {
-  reading: "く",
-  after: "切る。"
+  reading: "くぎ",
+  readingParts: ["く", "ぎ"],
+  answer: "区切",
+  after: "る。",
+  returnedNeedsReview: true
 });
 
 Object.assign(QUEST_STAGES[5], {
   okuri: "える",
   okuriChoices: ["える", "る", "え"],
-  after: "。"
+  after: "。",
+  returnedNeedsReview: true
 });
 
 Object.assign(QUEST_STAGES[9], {
   okuri: "す",
   okuriChoices: ["す", "る", "し"],
-  after: "。"
+  after: "。",
+  returnedNeedsReview: true
 });
