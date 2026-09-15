@@ -44,7 +44,7 @@
       const b=document.createElement('button');
       b.type='button';b.className='cellEraseV252';b.dataset.cell=String(i);
       b.setAttribute('aria-label',`${i+1}文字目だけ消す`);
-      b.innerHTML='<span>↺</span><b>消す</b>';
+      b.innerHTML='<span class="eraserIconV252" aria-hidden="true"><i></i></span><b>消す</b>';
       b.addEventListener('pointerdown',e=>e.stopPropagation());
       b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();clearOneV252(i);});
       cell.appendChild(b);
@@ -64,8 +64,8 @@
 
   if(!document.getElementById('styleV252CellErase')){
     const s=document.createElement('style');s.id='styleV252CellErase';s.textContent=`
-.paperAnswerCellV221 .cellEraseV252{position:absolute;left:-66px;top:50%;transform:translateY(-50%);z-index:12;min-width:52px;min-height:42px;border:1px solid #d5dde5;border-radius:14px;background:rgba(255,255,255,.97);box-shadow:0 4px 12px rgba(54,72,92,.10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;color:#69798b;font-family:system-ui,-apple-system,sans-serif;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.cellEraseV252 span{font-size:16px;line-height:15px}.cellEraseV252 b{font-size:10px;line-height:13px}.cellEraseV252:active{transform:translateY(-50%) scale(.95);background:#f2f6f9}.paperFootV221 .cellEraseHintV252{background:#eef6ff;border-color:#c9ddef;color:#59738a}.paperAnswerCellV221.fail .cellEraseV252{border-color:#efb7af;background:#fff7f5;color:#a9574c}.paperAnswerCellV221.pass .cellEraseV252{opacity:.72}
-@media(max-width:700px){.paperAnswerCellV221 .cellEraseV252{left:-55px;min-width:44px;min-height:40px;border-radius:12px}.cellEraseV252 span{font-size:15px}.cellEraseV252 b{font-size:9px}}
+.paperAnswerCellV221 .cellEraseV252{position:absolute;left:-66px;top:50%;transform:translateY(-50%);z-index:12;min-width:52px;min-height:42px;border:1px solid #d5dde5;border-radius:14px;background:rgba(255,255,255,.97);box-shadow:0 4px 12px rgba(54,72,92,.10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#69798b;font-family:system-ui,-apple-system,sans-serif;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.cellEraseV252 .eraserIconV252{position:relative;display:block;width:21px;height:12px;border:1.5px solid #718092;border-radius:3px;background:linear-gradient(135deg,#f29aaa 0 56%,#e7edf2 56% 100%);transform:rotate(-18deg);box-shadow:0 1px 2px rgba(54,72,92,.10)}.cellEraseV252 .eraserIconV252 i{position:absolute;left:10px;top:-1px;bottom:-1px;width:1.5px;background:#718092;opacity:.55}.cellEraseV252 b{font-size:10px;line-height:12px}.cellEraseV252:active{transform:translateY(-50%) scale(.95);background:#f2f6f9}.paperFootV221 .cellEraseHintV252{background:#eef6ff;border-color:#c9ddef;color:#59738a}.paperAnswerCellV221.fail .cellEraseV252{border-color:#efb7af;background:#fff7f5;color:#a9574c}.paperAnswerCellV221.pass .cellEraseV252{opacity:.72}
+@media(max-width:700px){.paperAnswerCellV221 .cellEraseV252{left:-55px;min-width:44px;min-height:40px;border-radius:12px}.cellEraseV252 .eraserIconV252{width:19px;height:11px}.cellEraseV252 b{font-size:9px}}
 @media(max-width:390px){.paperAnswerCellV221 .cellEraseV252{left:-48px;min-width:38px}.cellEraseV252 b{font-size:8px}}
 `;
     document.head.appendChild(s);
