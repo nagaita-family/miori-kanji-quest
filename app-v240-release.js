@@ -8,5 +8,5 @@
   const oldHome=renderHome;renderHome=function(){oldHome();refresh();setTimeout(refresh,90);};
   function load(src,done){if(document.querySelector(`script[data-v270="${src}"]`)){done?.();return;}const s=document.createElement('script');s.src=src;s.dataset.v270=src;s.onload=()=>done?.();s.onerror=()=>console.error('Kanji Quest: failed to load',src);document.body.appendChild(s);}
   refresh();
-  load('./app-v250-island.js?v=2700',()=>load('./app-v250-study.js?v=2700',()=>load('./app-v252-cell-erase.js?v=2700',()=>load('./app-v260-target-first.js?v=2700',()=>load('./app-v270-practice-note.js?v=2700',()=>{refresh();window.MioriV250?.polishIsland?.();})))));
+  load('./app-v250-island.js?v=2700',()=>load('./app-v250-study.js?v=2700',()=>load('./app-v252-cell-erase.js?v=2700',()=>load('./app-v260-target-first.js?v=2700',()=>load('./app-v270-practice-note.js?v=2700',()=>load('./app-v270-pencil-guard.js?v=2701',()=>{refresh();window.MioriV250?.polishIsland?.();}))))));
 })();
