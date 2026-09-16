@@ -4,7 +4,7 @@ Miori向けの漢字学習Webアプリです。iPad + Apple Pencil / Chromebook 
 
 ## Current
 
-- App version: **v2.6.0**
+- App version: **v2.6.1**
 - Canonical repository: **`nagaita-family/miori-kanji-quest`**
 - Main development branch: **`main`**
 - Primary hosting: **GitHub Pages**
@@ -43,6 +43,20 @@ Family向けアプリは個人GitHubアカウント配下から分離し、GitHu
 - XP・習熟度・空島・コレクション
 - 10問の週テスト
 - 今週の範囲をpackとして管理し、過去範囲・テスト記録を残せるデータ構造
+- **Parent Test Mode** — 現在の本番学習データをコピーし、テスト中の進行を別保存領域に隔離して安全に端末・Apple Pencil・判定・空島・10問テスト等を確認できる
+
+## Parent Test Mode
+
+ホーム画面下部の **Parent Test Mode** から開始します。
+
+- 開始時に美織の現在の本番データをテスト領域へコピー
+- Test Mode中の練習、XP、習熟度、空島、テスト結果、リセット操作はテスト用データだけに保存
+- 効果音設定と3問集中の一時状態もテスト用に分離
+- Safariを閉じてもTest Modeは継続
+- **本番データからやり直す** でテスト領域を現在の本番状態へ再コピー
+- **Test Mode終了・破棄** でテスト中の変更だけを削除し、本番データへ戻る
+
+Test Modeの保存分離は `test-mode-v261.js` が、通常アプリが学習データを読み込む前にStorageアクセスを切り替えることで実現しています。
 
 ## Learning design
 
