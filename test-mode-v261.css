@@ -1,0 +1,9 @@
+/* PARENT_TEST_MODE_V261_20260916 */
+body.kanji-test-mode-v261 #app{box-shadow:inset 0 0 0 3px #9a70bd}
+#kanjiTestBannerV261{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));z-index:30000;pointer-events:none;display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:16px;background:#4f3d5fef;color:#fff;box-shadow:0 8px 24px #32253e38;font:800 10px/1.2 system-ui,-apple-system,'Noto Sans JP',sans-serif;backdrop-filter:blur(10px)}
+#kanjiTestBannerV261 b{font-size:10.5px;letter-spacing:.04em;white-space:nowrap}#kanjiTestBannerV261 span{color:#f4eafa;font-weight:750}
+.kanjiTestPanelV261{margin:18px 0 14px;padding:16px 18px;border:1px solid #e4d9ed;border-radius:22px;background:linear-gradient(135deg,#f8f2ff,#fff9f1);box-shadow:0 8px 22px #5d477415;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.kanjiTestPanelV261.active{border:2px solid #9f7abd;background:linear-gradient(135deg,#eee2fa,#fff2df);box-shadow:0 10px 24px #5d477420}
+.kanjiTestCopyV261{max-width:720px}.kanjiTestCopyV261>span{display:block;color:#886aa2;font-size:9px;font-weight:950;letter-spacing:.12em}.kanjiTestCopyV261 h3{margin:3px 0 7px;font-size:18px;color:#4c3b59}.kanjiTestCopyV261 p{margin:0;color:#6c626e;font-size:11px;line-height:1.65;font-weight:700}.kanjiTestCopyV261 small{display:block;margin-top:7px;color:#88798e;font-size:9.5px;font-weight:800;line-height:1.45}
+.kanjiTestActionsV261{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;flex:0 0 auto}.kanjiTestActionsV261 button{white-space:nowrap}.kanjiTestPanelV261.active .kanjiTestActionsV261 .primaryBtn{background:#76538f}
+@media(max-width:760px){.kanjiTestPanelV261{align-items:flex-start;flex-direction:column}.kanjiTestActionsV261{width:100%;justify-content:flex-start}#kanjiTestBannerV261{left:12px;right:12px;justify-content:center;flex-wrap:wrap;text-align:center}}
