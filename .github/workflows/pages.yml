@@ -45,12 +45,14 @@ jobs:
           node --check kanken9-interaction-fix-v284.js
           node --check kanken9-inline-v286.js
           node --check kanken9-paper-guard-v287.js
+          node --check kanken9-layout-v288.js
           node --check app-v240-release.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
           node kanken9-v284-smoke-test.cjs
           node kanken9-v285-smoke-test.cjs
           node kanken9-v287-smoke-test.cjs
+          node kanken9-v288-smoke-test.cjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
