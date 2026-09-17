@@ -1,5 +1,5 @@
-// v2.8.9: keep handwriting controls beside vertical text without inventing extra blanks.
-// Reorganize freshly rendered question DOM once; never replace the live Pencil canvas.
+// v2.9.1: keep live Pencil controls beside vertical questions; give section VI its own example panel.
+// Reorganize each freshly rendered question exactly once, without recreating canvas or answer state.
 (() => {
 'use strict';
 const E='kankenPaperV283', D='kankenDailyV287';
@@ -40,6 +40,9 @@ function exam(){
   q.replaceWith(layout);
   layout.append(q,host);
   host.classList.add('k9v8Answer');
+  // VI: the example explains how to read the question; it must not interrupt or overlap the question text.
+  const example=q.querySelector('.k9cPaperExample');
+  if(example){example.classList.add('k9v10ExamplePanel');layout.classList.add('k9v10HasExample');layout.append(example);}
   const bank=work.querySelector('.k9ExamWordBank');if(bank)host.prepend(bank);
   if(!host.querySelector('.k9v8AnswerLabel')){
     const label=document.createElement('span');label.className='k9v8AnswerLabel';
@@ -59,11 +62,13 @@ function daily(){
   const svg=q.querySelector('#k9cStroke');
   const reading=!!q.querySelector('u')&&slot.classList.contains('wide');
   const selecting=slot.classList.contains('k9cChoices');
-  // The previous build printed an unrelated square after every reading, choice and stroke prompt.
   if(!reading&&!selecting&&!svg)slot.replaceWith(marker());else slot.remove();
   const layout=document.createElement('div');layout.className='k9v8DailyPaper';
   const answer=document.createElement('div');answer.className='k9v8DailyAnswer';
   q.replaceWith(layout);layout.append(q,answer);
+  // Daily section VI uses the same separate-example rule as the practice test.
+  const example=q.querySelector('.k9cExample');
+  if(example){example.classList.add('k9v10ExamplePanel');layout.classList.add('k9v10HasExample');layout.append(example);}
   const label=document.createElement('span');label.className='k9v8AnswerLabel';
   label.textContent=selecting?'正しい答えをえらぼう':'✏️ ここに書こう';
   answer.append(label);
@@ -74,7 +79,7 @@ function daily(){
 function apply(){exam();daily();}
 let pending=false;
 function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply();});}
-// The question renderers replace their DOM on navigation; one animation-frame pass is enough.
+// Renderers recreate the DOM on navigation; a single animation-frame pass is enough.
 window.addEventListener('click',schedule,true);
 window.addEventListener('change',schedule,true);
 window.addEventListener('input',schedule,true);
