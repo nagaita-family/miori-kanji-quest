@@ -1,0 +1,80 @@
+/* v2.8.9: annotated iPad screenshots are the visual spec.
+   In vertical Japanese the answer is immediately to the RIGHT of the prompt,
+   not in a far-away left column. Keep the whole pair at the upper-right of one page. */
+#kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper{
+  grid-template-columns:minmax(0,210px) minmax(0,156px)!important;
+  justify-content:end!important;align-content:start!important;
+  gap:clamp(7px,1.2vw,13px)!important;
+  padding:clamp(12px,2dvh,22px) clamp(12px,2vw,26px)!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9ExamQuestion{
+  grid-column:1!important;grid-row:1!important;
+  border-right:0!important;border-left:0!important;
+  padding:5px 4px!important;justify-self:stretch!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9v8Answer{
+  grid-column:2!important;grid-row:1!important;
+  width:100%!important;max-width:156px!important;
+  justify-self:stretch!important;align-self:start!important;
+  margin:0!important;padding:5px 4px!important;gap:5px!important;
+  border:1px solid #c0cbd3!important;background:#fff!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9v8Answer:has(.k9ExamOptions){padding:5px!important}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Answer>.k9ExamCanvasBox.wide{
+  width:min(112px,100%)!important;height:min(26dvh,216px)!important;
+  max-width:100%!important;aspect-ratio:auto!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Answer>.k9ExamCanvasBox:not(.wide){
+  width:min(142px,100%)!important;height:min(142px,18dvh)!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8AnswerLabel{
+  font-size:11px!important;line-height:1.25!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Answer .k9ExamWordBank{
+  max-height:min(23dvh,180px)!important;
+}
+/* Daily exercise has a different root but the same visual grammar. */
+#kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper{
+  grid-template-columns:minmax(0,210px) minmax(0,156px)!important;
+  justify-content:end!important;align-content:start!important;
+  gap:clamp(7px,1.2vw,13px)!important;
+  padding:clamp(12px,2dvh,22px) clamp(12px,2vw,26px)!important;
+}
+#kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyPaper>.k9cColumns{
+  grid-column:1!important;grid-row:1!important;
+  border:0!important;padding:5px 4px!important;
+  justify-self:stretch!important;align-self:stretch!important;
+}
+#kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyPaper>.k9v8DailyAnswer{
+  grid-column:2!important;grid-row:1!important;
+  width:100%!important;max-width:156px!important;
+  justify-self:stretch!important;align-self:start!important;
+  margin:0!important;padding:5px 4px!important;gap:5px!important;
+  border:1px solid #c0cbd3!important;background:#fff!important;
+}
+#kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyAnswer>.k9cSlot.wide{
+  width:min(112px,100%)!important;height:min(26dvh,216px)!important;
+  max-width:100%!important;aspect-ratio:auto!important;
+}
+#kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyAnswer>.k9cSlot:not(.wide){
+  width:min(142px,100%)!important;height:min(142px,18dvh)!important;
+}
+#kankenDailyV287 .k9cWork.k9v8Fixed .k9v8AnswerLabel{
+  font-size:11px!important;line-height:1.25!important;
+}
+/* On a small screen, never force a horizontal scroll to reach Pencil or the eraser. */
+@media(max-width:570px){
+  #kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper,
+  #kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper{
+    grid-template-columns:minmax(0,1fr) minmax(0,125px)!important;
+    justify-content:stretch!important;gap:5px!important;padding:7px 4px!important;
+  }
+  #kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9v8Answer,
+  #kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyPaper>.k9v8DailyAnswer{
+    max-width:125px!important;
+  }
+  #kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Answer>.k9ExamCanvasBox.wide,
+  #kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyAnswer>.k9cSlot.wide{
+    width:min(100px,100%)!important;height:min(25dvh,190px)!important;
+  }
+}
