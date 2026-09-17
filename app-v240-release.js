@@ -34,6 +34,7 @@
     './kanken9-exam-finalize-v283.js?v=2830',
     './kanken9-quality-v285.js?v=2850',
     './kanken9-philosophy-v286.js?v=2860',
+    './kanken9-write-blank-v287.js?v=2871',
     './kanken9-exam-screen-v283.js?v=2830',
     './kanken9-exam-v283.js?v=2830',
     './kanken9-exam-parent-v284.js?v=2840',
