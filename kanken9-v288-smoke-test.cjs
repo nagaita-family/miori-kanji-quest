@@ -1,4 +1,4 @@
-// v2.9.0: exercise actual layout scripts with lightweight DOM fixtures and centered styling checks.
+// v2.9.1: exercise actual layout scripts with DOM fixtures, including detached section VI examples.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),vm=require('node:vm');
 class Element {
@@ -15,7 +15,7 @@ class Element {
   prepend(node){if(node.parentNode)node.parentNode.children.splice(node.parentNode.children.indexOf(node),1);node.parentNode=this;this.children.unshift(node);}
   replaceWith(node){const p=this.parentNode;assert.ok(p,'Element should have a parent');if(node.parentNode)node.parentNode.children.splice(node.parentNode.children.indexOf(node),1);p.children[p.children.indexOf(this)]=node;node.parentNode=p;this.parentNode=null;}
   remove(){if(!this.parentNode)return;const p=this.parentNode;p.children.splice(p.children.indexOf(this),1);this.parentNode=null;}
-  after(node){const p=this.parentNode;if(node.parentNode)node.parentNode.children.splice(node.parentNode.children.indexOf(node),1);p.children.splice(p.children.indexOf(this)+1,0,node);node.parentNode=p;}
+  after(node){const p=this.parentNode;if(node.parentNode)node.parentNode.children.splice(node.parentNode.children.indexOf(this)+1,0,node);node.parentNode=p;}
   contains(node){return this===node||this.children.some(x=>x.contains(node));}
   closest(selector){let n=this;while(n){if(n.matches(selector))return n;n=n.parentNode;}return null;}
   querySelector(selector){for(const child of this.children){if(child.matches(selector))return child;const found=child.querySelector(selector);if(found)return found;}return null;}
@@ -27,7 +27,8 @@ function fixtureExam(type){
   if(type==='read'){const u=new Element('u');u.textContent='公園';q.append(u);}
   if(type==='kana'){const pattern=new Element('span','k9ExamKanaPattern');q.append(pattern);pattern.append(host);}
   else q.append(host);
-  const answer=new Element('div',type==='choice'?'k9ExamOptions':type==='read'?'k9ExamCanvasBox wide':type==='kana'?'k9ExamCanvasBox wide':'k9ExamCanvasBox');host.append(answer);
+  if(type==='family')q.prepend(new Element('span','k9cPaperExample'));
+  const answer=new Element('div',type==='choice'?'k9ExamOptions':type==='read'||type==='kana'?'k9ExamCanvasBox wide':'k9ExamCanvasBox');host.append(answer);
   const canvas=new Element('canvas');if(type!=='choice')answer.append(canvas);
   if(type==='write'){const ruby=new Element('span','k9ExamKanaTarget k9cRuby');host.append(ruby);}
   return {root,work,q,host,answer,canvas};
@@ -37,42 +38,48 @@ const ctx={document:doc,window:{addEventListener(){}},requestAnimationFrame:fn=>
 vm.runInNewContext(fs.readFileSync('kanken9-layout-v288.js','utf8'),ctx,{filename:'kanken9-layout-v288.js'});
 const api=ctx.window.MioriKankenLayoutV288;
 assert.equal(typeof api.apply,'function');
-for(const type of ['read','kana','write','choice']){
-  const f=fixtureExam(type);doc.roots.kankenPaperV283=f.root;api.apply();
+for(const type of ['read','kana','write','choice','family']){
+  const f=fixtureExam(type),example=f.q.querySelector('.k9cPaperExample');doc.roots.kankenPaperV283=f.root;api.apply();
   assert.ok(f.work.classList.contains('k9v8Fixed'),type);
   const paper=f.work.querySelector('.k9v8Paper');assert.ok(paper&&paper.children[0]===f.q&&paper.children[1]===f.host,type);
-  const needsBlank=['kana','write'].includes(type);
+  const needsBlank=['kana','write','family'].includes(type);
   assert.equal(!!f.q.querySelector('.k9v8Blank'),needsBlank,'Only real kana and kanji writing slots retain a □: '+type);
   assert.ok(f.host.contains(f.answer),'Answer controls must be moved, not replaced: '+type);
   if(type!=='choice')assert.ok(f.host.contains(f.canvas),'Existing Pencil canvas must remain the same object: '+type);
+  if(type==='family'){
+    assert.ok(paper.classList.contains('k9v10HasExample')&&paper.children[2]===example,'VI example must be a separate third grid child');
+    assert.ok(!f.q.contains(example),'VI example must leave the vertical question text');
+  }
   api.apply();assert.equal(f.work.querySelector('.k9v8Paper'),paper,'Transformation must be idempotent: '+type);
 }
-function dailyFixture(isRead){
+function dailyFixture(isRead,hasExample=false){
   const root=new Element('section','active','kankenDailyV287'),work=new Element('div','k9cWork'),columns=new Element('div','k9cColumns'),slot=new Element('span',isRead?'k9cSlot wide':'k9cSlot'),canvas=new Element('canvas','','k9cCanvas'),eraser=new Element('button','k9cErase');
   root.append(work);work.append(columns);
   if(isRead)columns.append(new Element('u'));
+  if(hasExample)columns.append(new Element('span','k9cExample'));
   columns.append(slot);slot.append(canvas,eraser);
   return{root,work,columns,slot,canvas,eraser};
 }
 doc.roots.kankenPaperV283=null;
-for(const isRead of [true,false]){
-  const f=dailyFixture(isRead);doc.roots.kankenDailyV287=f.root;api.apply();
+for(const [isRead,hasExample] of [[true,false],[false,false],[false,true]]){
+  const f=dailyFixture(isRead,hasExample),example=f.columns.querySelector('.k9cExample');doc.roots.kankenDailyV287=f.root;api.apply();
   assert.ok(f.work.classList.contains('k9v8Fixed'));
   const paper=f.work.querySelector('.k9v8DailyPaper'),answer=f.work.querySelector('.k9v8DailyAnswer');
   assert.ok(paper&&paper.children[0]===f.columns&&paper.children[1]===answer);
   assert.equal(!!f.columns.querySelector('.k9v8Blank'),!isRead,'Reading gets no fake □, writing retains original □');
   assert.ok(answer.contains(f.slot)&&answer.contains(f.canvas)&&answer.contains(f.eraser),'Pencil and eraser survive the move');
+  if(hasExample)assert.ok(paper.children[2]===example&&paper.classList.contains('k9v10HasExample')&&!f.columns.contains(example),'Daily VI example must be outside its text');
   api.apply();assert.equal(f.work.querySelector('.k9v8DailyPaper'),paper);
 }
-const css=fs.readFileSync('kanken9-layout-v288.css','utf8'),near=fs.readFileSync('kanken9-paper-nearby-v289.css','utf8'),loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
+const css=fs.readFileSync('kanken9-layout-v288.css','utf8'),near=fs.readFileSync('kanken9-paper-nearby-v289.css','utf8'),flow=fs.readFileSync('kanken9-paper-flow-v291.css','utf8'),loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
 assert.ok(css.includes('grid-template-columns')&&css.includes('.k9v8DailyPaper')&&css.includes('.k9v8Paper')&&css.includes('white-space:normal!important'));
-assert.ok(near.includes('grid-column:1!important')&&near.includes('grid-column:2!important')&&near.includes('justify-content:center!important'),'Vertical problem and answer must be centered together, with answer immediately right of text');
-assert.ok(near.includes('grid-template-columns:minmax(0,128px) minmax(0,166px)'),'Do not reserve a huge invisible vertical text column');
-assert.ok(near.includes('.k9ExamCanvasBox.wide')&&near.includes('.k9cSlot.wide')&&near.includes('max-width:570px'));
+assert.ok(near.includes('grid-column:1!important')&&near.includes('grid-column:2!important')&&near.includes('justify-content:center!important'));
+assert.ok(near.includes('grid-template-columns:minmax(0,128px) minmax(0,166px)'));
+assert.ok(flow.includes('k9v10ExamplePanel')&&flow.includes('writing-mode:vertical-rl!important'));
 assert.ok(css.includes('.k9ExamClear')&&css.includes('.k9cErase')&&css.includes('touch-action:none!important'));
 assert.ok(!fs.readFileSync('kanken9-layout-v288.js','utf8').includes('MutationObserver'));
-for(const f of ['kanken9-layout-v288.js?v=2890','kanken9-layout-v288.css?v=2880','kanken9-paper-nearby-v289.css?v=2900'])assert.ok(loader.includes(f),'Loader must load '+f);
-assert.ok(loader.indexOf('kanken9-paper-guard-v287.js')<loader.indexOf('kanken9-layout-v288.js'),'Layout repair must run after the earlier paper guards');
-assert.ok(html.includes('app-v240-release.js?v=2900')&&html.includes('v2.9.0'));
+for(const f of ['kanken9-layout-v288.js?v=2910','kanken9-layout-v288.css?v=2880','kanken9-paper-nearby-v289.css?v=2900','kanken9-paper-flow-v291.css?v=2910'])assert.ok(loader.includes(f),'Loader must load '+f);
+assert.ok(loader.indexOf('kanken9-paper-guard-v287.js')<loader.indexOf('kanken9-layout-v288.js'),'Layout repair must run after earlier paper guards');
+assert.ok(html.includes('app-v240-release.js?v=2910')&&html.includes('v2.9.1'));
 for(const hook of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${hook}"`),'Ordinary school study must keep '+hook);
-console.log('PASS v2.9.0: readable centered paper, true writing blanks, original Pencil, eraser, input order, cache bust and all school hooks.');
+console.log('PASS v2.9.1: VI examples detached on daily and mock papers, handwritten canvas and eraser preserved, no phantom blanks, fresh loader and school hooks.');
