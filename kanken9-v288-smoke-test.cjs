@@ -6,6 +6,8 @@ class Element {
     this.tag=tag;this.classes=new Set(cls.split(' ').filter(Boolean));this.id=id;this.children=[];this.parentNode=null;this.textContent='';this.attrs={};
     this.classList={contains:c=>this.classes.has(c),add:c=>this.classes.add(c)};
   }
+  set className(value){this.classes=new Set(String(value).split(/\s+/).filter(Boolean));}
+  get className(){return [...this.classes].join(' ');}
   matches(sel){return sel.split(',').some(s=>{s=s.trim();return s[0]==='.'?this.classes.has(s.slice(1)):s[0]==='#'?this.id===s.slice(1):this.tag===s;});}
   get nextElementSibling(){if(!this.parentNode)return null;return this.parentNode.children[this.parentNode.children.indexOf(this)+1]||null;}
   append(...nodes){for(const node of nodes){if(node.parentNode)node.parentNode.children.splice(node.parentNode.children.indexOf(node),1);node.parentNode=this;this.children.push(node);}}
