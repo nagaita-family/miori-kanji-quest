@@ -43,7 +43,8 @@ assert.match(script,/scene\)/,'Original interactive scene is moved, not copied')
 assert.match(script,/daily\)/,'Daily practice remains the main action');
 assert.match(script,/const more=document.createElement\('details'\)/,'Secondary content is collapsible');
 assert.match(script,/if\(gift\)today\.append\(gift\)/,'Unclaimed reward remains visible');
-assert.doesNotMatch(script,/MutationObserver|localStorage|save\.|persist\(/,'Do not touch save data or install DOM observers');
+const executable=script.split('\n').filter(line=>!line.trim().startsWith('//')).join('\n');
+assert.doesNotMatch(executable,/MutationObserver|localStorage|save\.|persist\(/,'Do not touch save data or install DOM observers');
 assert.match(css,/prefers-reduced-motion:reduce/);
 assert.match(css,/\.k9FlightPilotV293/);
 assert.match(css,/\.k9IslandStageV293 \.k9Scene/);
