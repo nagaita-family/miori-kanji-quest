@@ -26,7 +26,7 @@ assert.ok(selected.qs.slice(0,3).every(q=>q.kind==='write'&&q.focus),'First thre
 assert.ok(selected.qs.slice(0,3).every(q=>!q.text.includes(q.answer)),'Answers must not leak from writing prompts');
 assert.ok(selected.qs.slice(3,5).every(q=>q.kind==='read'&&!selected.focus.includes(q.target)),'Reading follows writing, no answer leakage');
 assert.ok(['stroke','kana','shape','bank','pair'].includes(selected.qs[5].kind),'One rotating test format');
-assert.ok(selected.qs.every(q=>B.chars.includes(q.target)),'Only 9級 targets');
+assert.ok(selected.qs.every(q=>!q.target||B.chars.includes(q.target)),'All defined targets belong to 9級; kana-fill has no kanji target');
 for(let n=1;n<=12;n++){
   const candidate=daily.select(`2026-09-${String(n).padStart(2,'0')}`);
   assert.equal(candidate.qs.length,6);
