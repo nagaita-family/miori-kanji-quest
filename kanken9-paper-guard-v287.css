@@ -1,0 +1,6 @@
+/* v2.8.7: preserve pencil input inside the printed box, with ruby alongside it. */
+#kankenPaperV283 .k9ExamQuestion .k9cRuby{position:absolute;right:-22px;top:2px;display:block!important;writing-mode:vertical-rl!important;text-orientation:mixed;font-family:'Yu Mincho',serif;font-size:11px!important;line-height:1.2;color:#344d62;background:#fffef8;max-height:90%;overflow:hidden;white-space:nowrap}
+#kankenPaperV283 .k9ExamQuestion .k9cPaperExample{display:inline-block;writing-mode:vertical-rl;font-family:'Yu Mincho','Hiragino Mincho ProN',serif;font-size:clamp(14px,2dvh,20px);line-height:1.6;color:#3f5367;background:#f1f5f4;border:1px solid #b8c9ce;margin:4px 13px;padding:10px 7px;vertical-align:top}
+#kankenPaperV283 .k9ExamWork:has(.k9InlineAnswerV286) .k9ExamQuestion .k9ExamStroke{width:min(25dvh,200px);height:min(25dvh,200px);display:inline-block;vertical-align:middle;margin:9px;border:1px solid #b5bec6;writing-mode:horizontal-tb}
+#kankenPaperV283 .k9ExamWork:has(.k9InlineAnswerV286) .k9ExamQuestion .k9InlineAnswerV286:has(.k9ExamOptions){min-width:125px;min-height:60px;vertical-align:middle}
+#kankenPaperV283 .k9ExamQuestion .k9ExamCanvasBox.wide{background:#fff!important}
