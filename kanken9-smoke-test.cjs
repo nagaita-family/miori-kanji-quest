@@ -17,13 +17,14 @@ for(const entry of data.entries){
 }
 const loader=fs.readFileSync('app-v240-release.js','utf8');
 const html=fs.readFileSync('index.html','utf8');
-for(const name of ['kanken9-data-v280.js','kanken9-island-v280.js','kanken9-ui-fix-v281.js'])assert.ok(loader.includes(name),`${name} must be loaded`);
-assert.ok(html.includes('app-v240-release.js?v=2810'),'The iPad must request the fresh release loader');
-assert.ok(!html.includes('<script src="./app-v233-polish.js'), 'Known-observer-loop file must not be loaded');
-for(const path of ['kanken9-island-v280.js','kanken9-ui-fix-v281.js'])assert.ok(!fs.readFileSync(path,'utf8').includes('MutationObserver'),`Do not add an observer to ${path}`);
+const patch=fs.readFileSync('kanken9-viewport-v282.js','utf8');
+for(const name of ['kanken9-data-v280.js','kanken9-island-v280.js','kanken9-ui-fix-v281.js','kanken9-viewport-v282.js'])assert.ok(loader.includes(name),`${name} must be loaded`);
+assert.ok(html.includes('app-v240-release.js?v=2820'),'The iPad must request the fresh release loader');
+assert.ok(html.includes('id="helpPips"')&&html.includes('id="strokeMsg"'),'School practice must retain its legacy DOM hooks');
+assert.ok(!html.includes('<script src="./app-v233-polish.js'),'Known-observer-loop file must not be loaded');
+for(const path of ['kanken9-island-v280.js','kanken9-ui-fix-v281.js','kanken9-viewport-v282.js'])assert.ok(!fs.readFileSync(path,'utf8').includes('MutationObserver'),`Do not add an observer to ${path}`);
 assert.ok(fs.existsSync('kanken9-island-v280.css'),'Island CSS must exist');
-// Regression: v2.8.0 passed entry objects into Map.has(char) in the 40-minute mock,
-// resulting in ZERO questions for children without any previously weak characters.
+// v2.8.0 regression: mock candidate arrays mistakenly held entries instead of characters.
 ctx.window.MioriKanken9V280={open(){},home(){}};
 ctx.document={readyState:'loading',addEventListener(){}};
 ctx.renderHome=function(){};
@@ -35,4 +36,14 @@ for(const offset of [0,7,117,233]){
   assert.ok(mock.every(ch=>typeof ch==='string'&&byChar.has(ch)),'Mock IDs must be kanji strings');
 }
 assert.equal(typeof data.entries[0],'object','Regular learning entries must stay intact');
-console.log('PASS: 240 unique questions, correct mock 20-character selection, stable school-mode loader and observer safety.');
+assert.ok(patch.includes('.k9WriteActions[hidden]{display:none!important}'),'Safari must truly hide answered controls');
+assert.ok(patch.includes('height:100dvh'),'Training should use the visual viewport height');
+assert.ok(patch.includes('compare.appendChild(written)')&&patch.includes('compare.appendChild(answer)'),'Actual writing and answer must appear side by side');
+// Boot the UI patch against minimal DOM to verify it does not touch the school save.
+let injectedStyle=null;
+const doc={getElementById(){return null;},createElement(){return {id:'',textContent:''};},head:{appendChild(el){injectedStyle=el;}},addEventListener(){}};
+const browserCtx={document:doc,window:{},console};
+vm.runInNewContext(patch,browserCtx);
+assert.ok(injectedStyle?.textContent.includes('#kankenIslandV280.isTraining'),'The viewport styling must be restricted to the Kanken screen');
+assert.equal(typeof browserCtx.window.MioriKankenViewportV282?.adapt,'function','A review layout callback must initialize');
+console.log('PASS: 240 entries, mock 20, compact writing and side-by-side review, school hooks and separate module safety.');
