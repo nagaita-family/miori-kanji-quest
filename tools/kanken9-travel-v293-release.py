@@ -43,6 +43,6 @@ readme_path.write_text(readme,encoding='utf-8')
 # Older smoke tests contain literal release-version/cache strings; refresh only those assertions.
 for path in Path('.').glob('*.test.cjs'):
     content=path.read_text(encoding='utf-8')
-    updated=content.replace('app-v240-release.js?v=2920','app-v240-release.js?v=2930').replace("html.includes('v2.9.2')","html.includes('v2.9.3')")
+    updated=content.replace('app-v240-release.js?v=2920','app-v240-release.js?v=2930').replace('v2.9.2','v2.9.3')
     if updated!=content:path.write_text(updated,encoding='utf-8')
 print('v2.9.3 integrated: airplane + island landing, safe cache bust, smoke suite and README; save untouched.')
