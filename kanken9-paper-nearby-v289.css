@@ -1,10 +1,10 @@
-/* v2.8.9: annotated iPad screenshots are the visual spec.
-   In vertical Japanese the answer is immediately to the RIGHT of the prompt,
-   not in a far-away left column. Keep the whole pair at the upper-right of one page. */
+/* v2.9.0: Center the VERTICAL TEXT + ANSWER as one compact unit on the paper.
+   The v2.8.9 end alignment caused a large dead area on the left of iPad landscape.
+   Keep the answer to the right of the text (vertical Japanese), never detached. */
 #kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper{
-  grid-template-columns:minmax(0,210px) minmax(0,156px)!important;
-  justify-content:end!important;align-content:start!important;
-  gap:clamp(7px,1.2vw,13px)!important;
+  grid-template-columns:minmax(0,128px) minmax(0,166px)!important;
+  justify-content:center!important;align-content:start!important;
+  gap:clamp(7px,1.2vw,12px)!important;
   padding:clamp(12px,2dvh,22px) clamp(12px,2vw,26px)!important;
 }
 #kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9ExamQuestion{
@@ -14,7 +14,7 @@
 }
 #kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper>.k9v8Answer{
   grid-column:2!important;grid-row:1!important;
-  width:100%!important;max-width:156px!important;
+  width:100%!important;max-width:166px!important;
   justify-self:stretch!important;align-self:start!important;
   margin:0!important;padding:5px 4px!important;gap:5px!important;
   border:1px solid #c0cbd3!important;background:#fff!important;
@@ -33,11 +33,18 @@
 #kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Answer .k9ExamWordBank{
   max-height:min(23dvh,180px)!important;
 }
-/* Daily exercise has a different root but the same visual grammar. */
+/* Section II needs a readable stroke diagram, unlike the one-line reading questions. */
+#kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper:has(.k9ExamStroke){
+  grid-template-columns:minmax(0,210px) minmax(0,166px)!important;
+}
+#kankenPaperV283 .k9ExamWork.k9v8Fixed .k9v8Paper:has(.k9ExamStroke)>.k9ExamQuestion .k9ExamStroke{
+  width:min(21dvh,175px)!important;height:min(21dvh,175px)!important;max-width:95%!important;
+}
+/* Daily exercise: identical centered question-answer geometry. */
 #kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper{
-  grid-template-columns:minmax(0,210px) minmax(0,156px)!important;
-  justify-content:end!important;align-content:start!important;
-  gap:clamp(7px,1.2vw,13px)!important;
+  grid-template-columns:minmax(0,128px) minmax(0,166px)!important;
+  justify-content:center!important;align-content:start!important;
+  gap:clamp(7px,1.2vw,12px)!important;
   padding:clamp(12px,2dvh,22px) clamp(12px,2vw,26px)!important;
 }
 #kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyPaper>.k9cColumns{
@@ -47,7 +54,7 @@
 }
 #kankenDailyV287 .k9cWork.k9v8Fixed .k9v8DailyPaper>.k9v8DailyAnswer{
   grid-column:2!important;grid-row:1!important;
-  width:100%!important;max-width:156px!important;
+  width:100%!important;max-width:166px!important;
   justify-self:stretch!important;align-self:start!important;
   margin:0!important;padding:5px 4px!important;gap:5px!important;
   border:1px solid #c0cbd3!important;background:#fff!important;
@@ -62,10 +69,16 @@
 #kankenDailyV287 .k9cWork.k9v8Fixed .k9v8AnswerLabel{
   font-size:11px!important;line-height:1.25!important;
 }
-/* On a small screen, never force a horizontal scroll to reach Pencil or the eraser. */
+/* A daily stroke question has a diagram and handwriting box: allow both to be legible. */
+#kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper:has(#k9cStroke){
+  grid-template-columns:minmax(0,195px) minmax(0,166px)!important;
+}
+/* Narrow phones: use available width instead of introducing sideways scrolling. */
 @media(max-width:570px){
   #kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper,
-  #kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper{
+  #kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper,
+  #kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper:has(.k9ExamStroke),
+  #kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper:has(#k9cStroke){
     grid-template-columns:minmax(0,1fr) minmax(0,125px)!important;
     justify-content:stretch!important;gap:5px!important;padding:7px 4px!important;
   }
