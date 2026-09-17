@@ -22,6 +22,7 @@
     './kanken9-ui-fix-v281.js?v=2810',
     './kanken9-viewport-v282.js?v=2820',
     './kanken9-exam-data-v283.js?v=2830',
+    './kanken9-exam-finalize-v283.js?v=2830',
     './kanken9-exam-screen-v283.js?v=2830',
     './kanken9-exam-v283.js?v=2830'
   ],()=>{refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();});
