@@ -28,6 +28,7 @@ const loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync(
 assert.ok(loader.indexOf('kanken9-quality-v285.js')<loader.indexOf('kanken9-exam-v283.js'));
 assert.ok(loader.indexOf('kanken9-exam-finalize-v283.js')<loader.indexOf('kanken9-quality-v285.js'));
 assert.ok(loader.includes('kanken9-paper-layout-v285.css?v=2850'));
-assert.ok(html.includes('app-v240-release.js?v=2850'));
+const releaseAsset=html.match(/app-v240-release\.js\?v=(\d+)/);
+assert.ok(releaseAsset&&Number(releaseAsset[1])>=2850,'Current or newer release must refresh iPad loader');
 assert.ok(html.includes('id="okuriPrompt"')&&html.includes('id="strokeMsg"'),'Keep school DOM hooks');
 console.log('PASS v2.8.5: 105 / 150 original items, mixed on/kun, grade-2 strokes, actual same-component VI, 25 answer-safe writing items and side-by-side vertical Pencil paper.');
