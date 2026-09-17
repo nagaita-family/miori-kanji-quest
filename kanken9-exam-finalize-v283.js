@@ -10,4 +10,11 @@
       q.point=section.point;
     });
   }
+  // The word 工作 includes the answer 作: never give away a written answer in
+  // the surrounding sentence. Apply to both the short-bank and full paper.
+  const replacement='紙で船を（つく）る。';
+  const short=data.groups.VIII.find(q=>q.id==='VIII-22');
+  const full=data.questions.find(q=>q.id==='VIII-22');
+  if(short)short.text=replacement;
+  if(full)full.text=replacement;
 })();
