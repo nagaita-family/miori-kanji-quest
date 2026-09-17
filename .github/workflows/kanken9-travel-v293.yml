@@ -34,8 +34,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add app-v240-release.js index.html README.md .github/workflows/pages.yml '*.test.cjs'
+          git add app-v240-release.js index.html README.md .github/workflows/pages.yml '*test.cjs'
           git diff --cached --quiet && exit 0
           git commit -m 'Release Moko airplane journey and island-first Kanken home (v2.9.3)'
           git push
-# Re-trigger with version assertions refreshed in the helper.
+# Re-trigger after including dash-named historical tests.
