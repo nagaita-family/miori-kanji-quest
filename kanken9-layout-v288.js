@@ -24,7 +24,7 @@ function exam(){
     if(modes){const dock=document.createElement('span');dock.className='k9InlineModesV286';dock.append(modes);host.append(dock);}
     host.append(answer);q.append(host);
   }
-  // Moving a 200px-tall horizontal canvas *inside* a vertical line pushed the sentence off screen.
+  // Moving a 200px-tall horizontal canvas inside a vertical line pushed the sentence off screen.
   // Preserve a real blank at its original point, while placing Pencil immediately beside the line.
   const mark=marker(host);
   if(q.contains(host))host.replaceWith(mark);
@@ -41,7 +41,7 @@ function exam(){
     host.prepend(label);
   }
   work.classList.add('k9v8Fixed');
-  // Never touch canvas pixels: existing handlers and per-question save state remain responsible.
+  // Existing handlers and per-question save state remain responsible for ink pixels.
 }
 function daily(){
   const root=document.getElementById(D);
@@ -65,7 +65,7 @@ function daily(){
 function apply(){exam();daily();}
 let pending=false;
 function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply();});}
-// Prior renderers recreate their question DOM on navigation; no polling or MutationObserver.
+// Prior renderers recreate their question DOM on navigation; no polling or page-wide observers.
 window.addEventListener('click',schedule,true);
 window.addEventListener('change',schedule,true);
 window.addEventListener('input',schedule,true);
