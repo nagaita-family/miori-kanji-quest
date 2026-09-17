@@ -39,6 +39,7 @@ assert.ok(css.includes('touch-action:none!important'),'Apple Pencil canvas must 
 assert.ok(css.includes('.k9ParentRows')&&css.includes('.k9ParentFooter'),'Parent grading must show grouped answers and stable navigation');
 const loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
 for(const filename of ['kanken9-exam-parent-v284.js','kanken9-daily-v284.js','kanken9-interaction-fix-v284.js','kanken9-paper-ux-v284.css'])assert.ok(loader.includes(filename),`Missing ${filename}`);
-assert.ok(html.includes('app-v240-release.js?v=2840'),'Fresh loader cache bust is required on iPad');
+const releaseAsset=html.match(/app-v240-release\.js\?v=(\d+)/);
+assert.ok(releaseAsset&&Number(releaseAsset[1])>=2840,'Fresh loader cache bust is required on iPad');
 assert.ok(!loader.includes('app-v233-polish.js'),'Never restore the old observer loop');
 console.log('PASS v2.8.4: vertical paper, reachable eraser, grouped parent grading, 6 mixed daily tasks, answer leakage checks and fresh iPad assets.');
