@@ -38,3 +38,4 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m 'Release Moko airplane journey and island-first Kanken home (v2.9.3)'
           git push
+# Re-trigger with version assertions refreshed in the helper.
