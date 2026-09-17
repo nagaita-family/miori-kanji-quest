@@ -44,7 +44,7 @@ assert.ok(events.some(e=>e.type==='click'&&e.capture===true),'New daily handler 
 const loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
 for(const f of ['kanken9-write-blank-v287.js','kanken9-coverage-daily-v287.js','kanken9-paper-guard-v287.js','kanken9-coverage-daily-v287.css','kanken9-paper-guard-v287.css'])assert.ok(loader.includes(f),`Missing asset ${f}`);
 assert.ok(loader.indexOf('kanken9-write-blank-v287.js')<loader.indexOf('kanken9-exam-v283.js'));
-assert.ok(html.includes('app-v240-release.js?v=2870'),'iPad must receive new loader');
+const match=html.match(/app-v240-release\.js\?v=(\d+)/);assert.ok(match&&Number(match[1])>=2870,'iPad must receive loader v2.8.7 or newer');
 assert.ok(!loader.includes('app-v233-polish.js'),'Do not reintroduce the old observer loop');
 const css=fs.readFileSync('kanken9-coverage-daily-v287.css','utf8');
 assert.ok(css.includes('writing-mode:vertical-rl')&&css.includes('touch-action:none!important')&&css.includes('.k9cErase'));
