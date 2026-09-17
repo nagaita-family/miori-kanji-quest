@@ -1,14 +1,15 @@
-// v2.8.2 release loader: school practice stays home; Kanken handwriting fits one viewport.
+// v2.8.3 release loader: school practice stays home; official-style independent mock is optional.
 (() => {
-  const VERSION='v2.8.2';
+  const VERSION='v2.8.3';
   function setVersion(){const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${VERSION}`;document.title=`Miori Kanji Quest ${VERSION}`;window.MioriReleaseVersion=VERSION;}
   function polishWeekly(){const n=document.querySelector('.weeklyStaticNoteV202');if(n)n.textContent='10問をプリントみたいにまとめて書いて、最後に採点！';const s=document.querySelector('.weeklyCardCopyV20 small');if(s)s.textContent='学校のテストに近い形で今週の漢字をチェック！';}
   function wirePrint(){const old=document.getElementById('weeklyStaticOpenV202');if(!old||old.dataset.v270wired==='1')return;const b=old.cloneNode(true);b.dataset.v204wired='1';b.dataset.v240wired='1';b.dataset.v250wired='1';b.dataset.v251wired='1';b.dataset.v252wired='1';b.dataset.v260wired='1';b.dataset.v261wired='1';b.dataset.v270wired='1';b.textContent='プリントでテスト';old.replaceWith(b);b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(typeof window.openPrintTestV230==='function')window.openPrintTestV230();});}
+  function paperStyles(){if(document.getElementById('k9ExamStyleV283'))return;const css=document.createElement('link');css.id='k9ExamStyleV283';css.rel='stylesheet';css.href='./kanken9-exam-v283.css?v=2830';document.head.appendChild(css);}
   function refresh(){setVersion();polishWeekly();wirePrint();}
   const oldHome=renderHome;renderHome=function(){oldHome();refresh();setTimeout(refresh,90);};
   function load(src,done){if(document.querySelector(`script[data-v270="${src}"]`)){done?.();return;}const s=document.createElement('script');s.src=src;s.dataset.v270=src;s.onload=()=>done?.();s.onerror=()=>console.error('Kanji Quest: failed to load',src);document.body.appendChild(s);}
   function loadSequence(queue,done){if(!queue.length){done?.();return;}const [head,...tail]=queue;load(head,()=>loadSequence(tail,done));}
-  refresh();
+  refresh();paperStyles();
   loadSequence([
     './app-v250-island.js?v=2700',
     './app-v250-study.js?v=2700',
@@ -19,6 +20,9 @@
     './kanken9-data-v280.js?v=2800',
     './kanken9-island-v280.js?v=2800',
     './kanken9-ui-fix-v281.js?v=2810',
-    './kanken9-viewport-v282.js?v=2820'
-  ],()=>{refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();window.MioriKankenViewportV282?.adapt?.();});
+    './kanken9-viewport-v282.js?v=2820',
+    './kanken9-exam-data-v283.js?v=2830',
+    './kanken9-exam-screen-v283.js?v=2830',
+    './kanken9-exam-v283.js?v=2830'
+  ],()=>{refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();});
 })();
