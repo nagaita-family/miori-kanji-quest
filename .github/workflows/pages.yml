@@ -38,7 +38,7 @@ jobs:
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
 
-      - name Setup Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
