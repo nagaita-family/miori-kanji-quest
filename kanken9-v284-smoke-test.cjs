@@ -1,0 +1,44 @@
+// Run after legacy exam smoke tests. No browser, network or dependencies.
+const assert=require('node:assert/strict');
+const fs=require('node:fs'),vm=require('node:vm');
+const ctx={window:{},console,Date,Math,setTimeout,clearTimeout};
+vm.runInNewContext(fs.readFileSync('kanken9-data-v280.js','utf8'),ctx);
+vm.runInNewContext(fs.readFileSync('kanken9-exam-data-v283.js','utf8'),ctx);
+vm.runInNewContext(fs.readFileSync('kanken9-exam-finalize-v283.js','utf8'),ctx);
+const D=ctx.window.MioriKankenPaperV283Data,B=ctx.window.MioriKanken9DataV280;
+assert.equal(D.questions.length,105);
+const day={date:'2026-09-17',items:['学','校','春','海','花'],done:[],goal:5,rewardIssued:false};
+ctx.save={kanken9V280:{day,records:{},sets:0,badges:[],mockHistory:[]}};
+ctx.persist=()=>{};ctx.showScreen=()=>{};
+ctx.window.MioriKanken9V280={day:()=>day,open:()=>{}};
+ctx.window.MioriKankenPaperV283={selectQuestions:mode=>mode==='full'?D.questions:D.sections.flatMap(s=>D.groups[s.key].slice(0,({I:4,II:1,III:1,IV:2,V:1,VI:1,VII:1,VIII:4})[s.key])),decorate:()=>{}};
+const listeners={};ctx.document={readyState:'loading',addEventListener(name,fn){(listeners[name]||(listeners[name]=[])).push(fn);},querySelector(){return null;},getElementById(){return null;}};
+vm.runInNewContext(fs.readFileSync('kanken9-exam-parent-v284.js','utf8'),ctx);
+vm.runInNewContext(fs.readFileSync('kanken9-daily-v284.js','utf8'),ctx);
+vm.runInNewContext(fs.readFileSync('kanken9-interaction-fix-v284.js','utf8'),ctx);
+assert.equal(ctx.window.MioriKankenParentV284.pageSize,6,'Parents mark six answers at a time');
+assert.equal(ctx.window.MioriKankenParentV284.ready(),true);
+const daily=ctx.window.MioriKankenDailyV284;
+const selected=daily.select('2026-09-17');
+assert.equal(selected.qs.length,6,'Daily includes 6 questions');
+assert.deepEqual(Array.from(selected.focus),['学','校','春']);
+assert.ok(selected.qs.slice(0,3).every(q=>q.kind==='write'&&q.focus),'First three are independent written recall');
+assert.ok(selected.qs.slice(0,3).every(q=>!q.text.includes(q.answer)),'Answers must not leak from writing prompts');
+assert.ok(selected.qs.slice(3,5).every(q=>q.kind==='read'&&!selected.focus.includes(q.target)),'Reading follows writing, no answer leakage');
+assert.ok(['stroke','kana','shape','bank','pair'].includes(selected.qs[5].kind),'One rotating test format');
+assert.ok(selected.qs.every(q=>B.chars.includes(q.target)),'Only 9級 targets');
+for(let n=1;n<=12;n++){
+  const candidate=daily.select(`2026-09-${String(n).padStart(2,'0')}`);
+  assert.equal(candidate.qs.length,6);
+  assert.ok(candidate.qs.slice(0,3).every(q=>!q.text.includes(q.answer)));
+}
+const css=fs.readFileSync('kanken9-paper-ux-v284.css','utf8');
+assert.ok(css.includes('writing-mode:vertical-rl'),'Both mocks and daily must use vertical writing');
+assert.ok(css.includes('#kankenPaperV283 .k9ExamClear{right:7px!important;bottom:7px!important;transform:none!important'),'Erase control must remain inside visible writing box');
+assert.ok(css.includes('touch-action:none!important'),'Apple Pencil canvas must not scroll/select');
+assert.ok(css.includes('.k9ParentRows')&&css.includes('.k9ParentFooter'),'Parent grading must show grouped answers and stable navigation');
+const loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
+for(const filename of ['kanken9-exam-parent-v284.js','kanken9-daily-v284.js','kanken9-interaction-fix-v284.js','kanken9-paper-ux-v284.css'])assert.ok(loader.includes(filename),`Missing ${filename}`);
+assert.ok(html.includes('app-v240-release.js?v=2840'),'Fresh loader cache bust is required on iPad');
+assert.ok(!loader.includes('app-v233-polish.js'),'Never restore the old observer loop');
+console.log('PASS v2.8.4: vertical paper, reachable eraser, grouped parent grading, 6 mixed daily tasks, answer leakage checks and fresh iPad assets.');
