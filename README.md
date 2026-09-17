@@ -4,7 +4,7 @@ Miori向けの漢字学習Webアプリです。iPad + Apple Pencil / Chromebook 
 
 ## Current
 
-- App version: **v2.8.0** — 漢検9級「漢検島」遠征
+- App version: **v2.9.3** — モコの飛行機で漢検島へ遠征・島が主役のホーム画面
 - Canonical repository: **`nagaita-family/miori-kanji-quest`**
 - Main development branch: **`main`**
 - Primary hosting: **GitHub Pages**
@@ -57,6 +57,12 @@ Family向けアプリは個人GitHubアカウント配下から分離し、GitHu
 - 端末間同期は未実装。学校の練習方法が判明したら、出題内容・復習順序を合わせる拡張を想定。
 
 実装ファイル：`kanken9-data-v280.js`／`kanken9-island-v280.js`／`kanken9-island-v280.css`。`app-v240-release.js` の順序付きローダーで既存のv2.7.0モジュールの後に読み込む。`index.html` のローダーURLを `?v=2800` に更新済み（古いiPadキャッシュ対策）。**禁止：`app-v233-polish.js` を読み込まない。MutationObserverでのDOM更新ループを再導入しない。**
+
+## 漢検島の旅行・ホーム（v2.9.3）
+
+- 空島の「✈️ 漢検島へ」から、**モコが機内に乗っている飛行機**で約1.5秒の移動演出。スキップ可で、動きを減らす端末設定では即座に移動。
+- 到着後は島とモコを大きく表示し、「きょうの10分遠征」を主導線にする。その他の練習・家具・着せ替え・パスポートは開閉メニューへ。受け取れるプレゼントは隠さない。
+- 漢検島の出題・Apple Pencil・学習記録・報酬や空島への帰り道は変更せず、元のインタラクティブな画面要素を移動して見せ方だけ変える。
 
 ## Adaptive practice notebook
 
