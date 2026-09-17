@@ -1,0 +1,37 @@
+/* v2.8.7: The sentence itself is the answer sheet; nothing to scroll between a prompt and its answer. */
+#kankenDailyV287{height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:contain;background:#edf2f3;color:#253f55;font-family:'Yu Gothic','Hiragino Kaku Gothic ProN',sans-serif}
+#kankenDailyV287 *{box-sizing:border-box}#kankenDailyV287 button{font:inherit;touch-action:manipulation;cursor:pointer}
+#kankenDailyV287 .k9cShell{height:100%;width:min(860px,100%);min-height:0;margin:auto;padding:env(safe-area-inset-top,0px) max(9px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(9px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:6px}
+#kankenDailyV287 .k9cHead{min-height:48px;flex:0 0 auto;display:grid;grid-template-columns:110px 1fr 53px;align-items:center;gap:5px}
+#kankenDailyV287 .k9cHead button{border:1px solid #b0c2cf;color:#37536d;background:white;border-radius:8px;min-height:43px;font-weight:900;font-size:13px}
+#kankenDailyV287 .k9cHead strong{font-size:clamp(14px,2.5dvh,19px);text-align:center}#kankenDailyV287 .k9cHead span{text-align:right;font-size:12px;font-weight:900}
+#kankenDailyV287 .k9cPaper{min-height:0;flex:1;background:#fffefa;border:2px solid #c5c9c9;display:flex;flex-direction:column;gap:7px;padding:clamp(8px,1.6dvh,16px);box-shadow:0 5px 19px #27415918}
+#kankenDailyV287 .k9cTitle{min-height:40px;flex:0 0 auto;border-bottom:2px solid #364f63;display:flex;align-items:center;justify-content:space-between;gap:10px}
+#kankenDailyV287 .k9cTitle b{font-family:'Yu Mincho','Hiragino Mincho ProN',serif;font-size:clamp(15px,2.5dvh,20px)}#kankenDailyV287 .k9cTitle small{font-size:11px;color:#687984;max-width:65%;text-align:right}
+#kankenDailyV287 .k9cWork{min-height:0;flex:1;border:1px solid #d4d6d2;background:#fff;box-shadow:inset 0 0 0 5px #faf9f4;overflow:hidden}
+#kankenDailyV287 .k9cColumns{width:100%;height:100%;writing-mode:vertical-rl;text-orientation:mixed;white-space:nowrap;overflow-x:auto;overflow-y:hidden;padding:clamp(15px,2.3dvh,27px) clamp(13px,2.8vw,33px);font-family:'Yu Mincho','Hiragino Mincho ProN',serif;font-size:clamp(20px,3.1dvh,28px);line-height:1.85;text-align:start}
+#kankenDailyV287 .k9cColumns u{text-decoration-thickness:2px;text-underline-offset:5px;font-weight:900}
+#kankenDailyV287 .k9cSlot{display:inline-flex;position:relative;isolation:isolate;writing-mode:horizontal-tb;vertical-align:middle;width:clamp(112px,18dvh,160px);height:clamp(112px,18dvh,160px);border:2px solid #657d92;background:linear-gradient(90deg,transparent calc(50% - .5px),#e4e9ea 50%,transparent calc(50% + .5px)),linear-gradient(0deg,transparent calc(50% - .5px),#e4e9ea 50%,transparent calc(50% + .5px)),white;margin:5px 11px;align-items:center;justify-content:center}
+#kankenDailyV287 .k9cSlot.wide{width:clamp(85px,14dvh,115px);height:clamp(182px,31dvh,246px);background:white}
+#kankenDailyV287 .k9cSlot canvas{width:100%;height:100%;display:block;touch-action:none!important;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#kankenDailyV287 .k9cErase{position:absolute;z-index:15;right:3px;bottom:3px;min-width:49px;min-height:42px;padding:6px 7px;font-size:12px!important;font-weight:950;border:2px solid #7a8c9a;border-radius:8px;color:#28475d;background:#fffefa;box-shadow:0 2px 10px #1b394a29}
+#kankenDailyV287 .k9cExample{font-size:clamp(15px,2.2dvh,19px);padding:8px;margin-left:12px;background:#f3f6f3;border:1px solid #b5c4cb}
+#kankenDailyV287 .k9cChoices{display:inline-flex;writing-mode:horizontal-tb;vertical-align:middle;gap:8px;margin:10px}
+#kankenDailyV287 .k9cChoices button{min-height:54px;min-width:80px;border:2px solid #a7b7c4;border-radius:8px;background:white;font-size:24px;font-weight:900}
+#kankenDailyV287 .k9cChoices button.selected{border-color:#315e92;background:#dcecff}
+#kankenDailyV287 #k9cStroke{width:clamp(130px,23dvh,220px);height:clamp(130px,23dvh,220px);vertical-align:middle;display:inline-block;margin:10px;border:1px solid #aab7c3;background:#fff}
+#kankenDailyV287 .k9cNote{font-size:11px;color:#657a88;min-height:15px;text-align:center;margin:0;flex:0 0 auto}
+#kankenDailyV287 .k9cActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:0 0 auto}
+#kankenDailyV287 .k9cActions button,#kankenDailyV287 .k9cReview>button,#kankenDailyV287 .k9cEnd button{min-height:49px;padding:10px 5px;border-radius:9px;border:1px solid #acc0cc;background:white;color:#28495e;font-weight:900}
+#kankenDailyV287 .primary{background:#315f94!important;color:white!important;border-color:#315f94!important}
+#kankenDailyV287 .k9cReview{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:space-around;gap:8px;text-align:center;overflow-y:auto}
+#kankenDailyV287 .k9cReview h2{font-size:clamp(18px,2.9dvh,24px);margin:0}#kankenDailyV287 .k9cReview p{font-size:12px;margin:0;color:#657888}
+#kankenDailyV287 .k9cCompare{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%;min-height:0;max-height:43dvh;flex:1}
+#kankenDailyV287 .k9cCompare>div{min-width:0;border:1px solid #c8d0d6;background:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+#kankenDailyV287 .k9cCompare small{font-size:11px;color:#557080}#kankenDailyV287 .k9cCompare img{max-width:96%;max-height:calc(100% - 28px);object-fit:contain}
+#kankenDailyV287 .k9cCompare strong{font-family:'Yu Mincho',serif;font-size:clamp(31px,7dvh,60px);overflow-wrap:anywhere}
+#kankenDailyV287 .k9cReview .k9cActions{width:100%}#kankenDailyV287 .k9cReview>button{width:min(360px,100%)}
+#kankenDailyV287 .k9cEnd{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+#kankenDailyV287 .k9cEnd h1{font-size:25px}#kankenDailyV287 .k9cEnd p{font-size:15px}
+#kankenIslandV280 .k9cCoverage{border-radius:9px;border:1px solid #b5d3cf;background:#eefbf5;padding:9px 12px;font-size:13px!important;font-weight:900;color:#296451}
+@media(max-height:640px){#kankenDailyV287 .k9cShell{gap:3px}#kankenDailyV287 .k9cPaper{padding:6px;gap:3px}#kankenDailyV287 .k9cColumns{font-size:19px;padding:10px}#kankenDailyV287 .k9cSlot{width:100px;height:100px}#kankenDailyV287 .k9cSlot.wide{width:80px;height:170px}#kankenDailyV287 .k9cNote{font-size:10px}}
