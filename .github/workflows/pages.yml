@@ -31,10 +31,14 @@ jobs:
           node --check kanken9-island-v280.js
           node --check kanken9-ui-fix-v281.js
           node --check kanken9-viewport-v282.js
+          node --check kanken9-exam-data-v283.js
+          node --check kanken9-exam-screen-v283.js
+          node --check kanken9-exam-v283.js
           node --check app-v240-release.js
           node kanken9-smoke-test.cjs
+          node kanken9-exam-smoke-test.cjs
 
-      - name: Setup Pages
+      - name Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
