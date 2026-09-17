@@ -32,11 +32,16 @@ jobs:
           node --check kanken9-ui-fix-v281.js
           node --check kanken9-viewport-v282.js
           node --check kanken9-exam-data-v283.js
+          node --check kanken9-exam-finalize-v283.js
           node --check kanken9-exam-screen-v283.js
           node --check kanken9-exam-v283.js
+          node --check kanken9-exam-parent-v284.js
+          node --check kanken9-daily-v284.js
+          node --check kanken9-interaction-fix-v284.js
           node --check app-v240-release.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
+          node kanken9-v284-smoke-test.cjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
