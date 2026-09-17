@@ -5,6 +5,7 @@ const vm=require('node:vm');
 const ctx={window:{},console};
 vm.runInNewContext(fs.readFileSync('kanken9-data-v280.js','utf8'),ctx);
 vm.runInNewContext(fs.readFileSync('kanken9-exam-data-v283.js','utf8'),ctx);
+vm.runInNewContext(fs.readFileSync('kanken9-exam-finalize-v283.js','utf8'),ctx);
 const source=ctx.window.MioriKanken9DataV280,exam=ctx.window.MioriKankenPaperV283Data;
 assert.ok(exam,'Paper questions must load');
 const expected=[['I',26,1],['II',10,1],['III',8,1],['IV',10,1],['V',6,1],['VI',10,2],['VII',10,2],['VIII',25,2]];
@@ -13,7 +14,7 @@ assert.equal(exam.total,150);
 assert.equal(new Set(exam.questions.map(q=>q.id)).size,105,'Unique question IDs');
 for(const [key,count,point] of expected){
   const items=exam.groups[key];assert.equal(items.length,count,`Section ${key} question count`);
-  assert.ok(items.every(q=>q.point===point),`Section ${key} point value`);
+  assert.ok(items.every(q=>q.point===point&&q.id&&q.number>0),`Section ${key} point value and number`);
 }
 assert.equal(exam.questions.reduce((sum,q)=>sum+q.point,0),150,'Sample section distribution must total 150');
 assert.equal(new Set(exam.questions.filter(q=>q.section==='VIII').map(q=>q.target)).size,25,'25 distinct writing targets');
@@ -42,7 +43,7 @@ assert.ok(exam.questions.filter(q=>q.kind==='write').every(q=>!readTargets.has(q
 const css=fs.readFileSync('kanken9-exam-v283.css','utf8');
 assert.ok(css.includes('100dvh')&&css.includes('touch-action:none')&&css.includes('.k9ExamFooter'),'Responsive Pencil view and stable navigation are required');
 const loader=fs.readFileSync('app-v240-release.js','utf8');
-for(const name of ['kanken9-exam-data-v283.js','kanken9-exam-screen-v283.js','kanken9-exam-v283.js'])assert.ok(loader.includes(name),`Loader is missing ${name}`);
+for(const name of ['kanken9-exam-data-v283.js','kanken9-exam-finalize-v283.js','kanken9-exam-screen-v283.js','kanken9-exam-v283.js'])assert.ok(loader.includes(name),`Loader is missing ${name}`);
 assert.ok(!fs.readFileSync('kanken9-exam-v283.js','utf8').includes('MutationObserver'),'Avoid previous observer-loop bug');
 assert.ok(fs.existsSync('kanken9-exam-v283.css'));
 const nodes={};const deferred=[];
