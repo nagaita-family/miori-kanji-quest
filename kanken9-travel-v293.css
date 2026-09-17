@@ -1,0 +1,56 @@
+/* v2.9.3 — Only the Kanken-island landing and optional flight are restyled. */
+#kankenIslandV280.k9LandingReadyV293 .k9Wrap{width:min(1060px,95vw)}
+#kankenIslandV280 .k9ShowcaseV293{display:grid;gap:12px;margin-bottom:12px}
+#kankenIslandV280 .k9ShowcaseV293 .k9Hero{box-shadow:none;padding:12px 19px;background:#ffffffb8;border-radius:21px}
+#kankenIslandV280 .k9ShowcaseV293 .k9Hero h1{font-size:clamp(24px,4vw,34px);margin:2px 0 4px}
+#kankenIslandV280 .k9ShowcaseV293 .k9Hero p{font-size:11px}
+#kankenIslandV280 .k9IslandStageV293{position:relative;overflow:hidden;border-radius:30px;padding:12px;background:linear-gradient(160deg,#e6f9ff,#fffef1 78%);border:2px solid #fff;box-shadow:0 16px 38px #577eab24}
+#kankenIslandV280 .k9StageLabelV293{position:relative;z-index:2;display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:0 4px 7px;color:#37637b;font-weight:950;font-size:12px}
+#kankenIslandV280 .k9StageLabelV293 span{color:#67838e;font-size:10px}
+#kankenIslandV280 .k9IslandStageV293 .k9Scene{width:100%;height:clamp(370px,53dvh,520px);min-height:0;margin:0;border-radius:24px}
+#kankenIslandV280 .k9IslandStageV293 .k9Land{left:5%;right:5%;bottom:8%;height:59%}
+#kankenIslandV280 .k9IslandStageV293 .k9Tree{left:42%;bottom:25%;transform:translateX(-50%) scale(1.25);transform-origin:bottom center}
+#kankenIslandV280 .k9IslandStageV293 .k9Lighthouse{font-size:clamp(62px,8vw,83px)}
+#kankenIslandV280 .k9IslandStageV293 .k9Moko{width:clamp(73px,9vw,90px);height:clamp(73px,9vw,90px);font-size:clamp(47px,6vw,58px);left:56%;bottom:22%}
+#kankenIslandV280 .k9IslandStageV293 .k9MokoTalk{bottom:51%;left:45%;max-width:190px;padding:9px 12px;font-size:12px}
+#kankenIslandV280 .k9IslandStageV293 .k9Zone{font-size:clamp(9px,1.5vw,12px);padding:6px 9px}
+#kankenIslandV280 .k9IslandStageV293 .k9Slot{min-width:40px;min-height:40px;font-size:24px;touch-action:manipulation}
+#kankenIslandV280 .k9IslandStageV293 .k9SceneCaption{margin:9px 5px 1px;text-align:center}
+#kankenIslandV280 .k9TodayV293{display:grid;gap:10px;margin-bottom:14px}
+#kankenIslandV280 .k9TodayV293>.k9Panel{border:2px solid #bfdce7;box-shadow:0 11px 26px #588baa1a}
+#kankenIslandV280 .k9TodayV293>.k9Panel>h2{font-size:clamp(20px,3vw,24px)}
+#kankenIslandV280 .k9TodayV293 .k9Action[data-k9="daily"]{min-height:52px;font-size:clamp(14px,2vw,17px)}
+#kankenIslandV280 .k9TodayV293 .k9Summary{margin:0;gap:8px}
+#kankenIslandV280 .k9TodayV293 .k9Stat{box-shadow:none;padding:8px 11px;border-radius:15px}
+#kankenIslandV280 .k9TodayV293 .k9Stat b{font-size:21px}
+#kankenIslandV280 .k9TodayV293 .k9Track{height:6px;margin-top:5px}
+#kankenIslandV280 .k9MoreV293{margin:12px 0 15px;border:1px solid #d4e2e7;border-radius:22px;background:#fffef6d9;overflow:hidden}
+#kankenIslandV280 .k9MoreV293>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 21px;color:#345b76;font-weight:950;cursor:pointer;touch-action:manipulation}
+#kankenIslandV280 .k9MoreV293>summary::-webkit-details-marker{display:none}
+#kankenIslandV280 .k9MoreV293>summary::after{content:'＋';font-size:22px;line-height:1}
+#kankenIslandV280 .k9MoreV293[open]>summary::after{content:'−'}
+#kankenIslandV280 .k9MoreV293>summary:focus-visible{outline:3px solid #526acc;outline-offset:-4px}
+#kankenIslandV280 .k9MoreV293 .k9Grid{padding:0 13px 15px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#kankenIslandV280 .k9MoreV293 .k9Panel{box-shadow:none}
+#kankenIslandV280 .k9MoreV293 .k9Panel:first-child>h2:first-child{font-size:16px}
+/* Flight overlay is created only when the existing sky-island button is used. */
+.k9FlightOverlayV293{position:fixed;inset:0;z-index:2147483000;isolation:isolate;background:linear-gradient(180deg,#81c8f0 0%,#bceafe 60%,#f8f9e8 100%);display:grid;place-items:center;overflow:hidden;color:#244e74;font-family:'Noto Sans JP','Yu Gothic',system-ui,sans-serif}
+.k9FlightOverlayV293 *{box-sizing:border-box}
+.k9FlightCloudsV293{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 110px 38px at 18% 25%,#ffffffb8 0 95%,transparent 100%),radial-gradient(ellipse 90px 33px at 76% 45%,#ffffffe3 0 95%,transparent 100%),radial-gradient(ellipse 135px 43px at 44% 73%,#ffffffbb 0 95%,transparent 100%);animation:k9CloudTravelV293 1.6s linear both}
+.k9FlightCenterV293{position:relative;width:min(92vw,650px);display:grid;justify-items:center;gap:10px;transform:translateY(-3vh)}
+.k9FlightCenterV293 h2{margin:0;font-size:clamp(20px,4.3vw,29px);letter-spacing:.04em;text-align:center;text-shadow:0 2px #ffffffa8}
+.k9FlightCenterV293 p{margin:0;font-size:13px;font-weight:850;color:#53728b}
+.k9FlightPlaneV293{position:relative;width:clamp(250px,65vw,450px);height:auto;aspect-ratio:480/220;filter:drop-shadow(0 16px 9px #3e718843);animation:k9TakeoffV293 1.55s cubic-bezier(.18,.6,.7,1) both;transform-origin:55% 60%}
+.k9FlightPlaneV293 svg{display:block;width:100%;height:100%}
+.k9FlightPilotV293{position:absolute;left:64%;top:16%;width:15%;height:40%;display:grid;place-items:center;font-size:clamp(38px,8vw,66px);line-height:1;z-index:2;transform:rotate(-8deg);animation:k9WaveV293 .48s ease-in-out infinite alternate}
+.k9FlightDestinationV293{position:absolute;bottom:-8%;right:-12%;font-size:clamp(90px,22vw,190px);opacity:0;transform:translate(20%,25%) scale(.55);transition:opacity .3s,transform .45s ease-out;pointer-events:none}
+.k9FlightOverlayV293.is-arriving .k9FlightDestinationV293{opacity:1;transform:translate(0,0) scale(1)}
+.k9FlightOverlayV293.is-arriving .k9FlightPlaneV293{opacity:0;transition:opacity .2s}
+.k9FlightSkipV293{position:absolute;right:max(15px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));border:2px solid #ffffffc9;background:#ffffffdb;border-radius:999px;padding:11px 17px;color:#315a7e;font-size:13px;font-weight:900;cursor:pointer;touch-action:manipulation}
+.k9FlightSkipV293:focus-visible{outline:3px solid #243e98;outline-offset:3px}
+@keyframes k9TakeoffV293{0%{transform:translate(-105vw,10vh) rotate(-8deg) scale(.76)}42%{transform:translate(-1vw,0) rotate(0) scale(1.05)}75%{transform:translate(5vw,-2vh) rotate(1deg) scale(1)}100%{transform:translate(110vw,-6vh) rotate(7deg) scale(.82)}}
+@keyframes k9CloudTravelV293{to{transform:translateX(-32vw)}}
+@keyframes k9WaveV293{to{transform:rotate(7deg) translateY(-3px)}}
+@media(max-width:740px){#kankenIslandV280 .k9ShowcaseV293 .k9Hero{padding:12px;grid-template-columns:1fr auto}#kankenIslandV280 .k9ShowcaseV293 .k9Hero p{display:none}#kankenIslandV280 .k9IslandStageV293{padding:8px;border-radius:22px}#kankenIslandV280 .k9IslandStageV293 .k9Scene{height:clamp(330px,50dvh,460px)}#kankenIslandV280 .k9IslandStageV293 .k9Tree{transform:translateX(-50%) scale(1.08)}#kankenIslandV280 .k9IslandStageV293 .k9MokoTalk{max-width:125px;font-size:10px}#kankenIslandV280 .k9MoreV293 .k9Grid{grid-template-columns:1fr;padding:0 9px 12px}#kankenIslandV280 .k9TodayV293 .k9Summary{gap:5px}#kankenIslandV280 .k9TodayV293 .k9Stat{padding:7px}#kankenIslandV280 .k9TodayV293 .k9Stat b{font-size:18px}#kankenIslandV280 .k9TodayV293 .k9Stat span{font-size:9px}}
+@media(max-width:390px){#kankenIslandV280 .k9IslandStageV293 .k9Scene{height:315px}#kankenIslandV280 .k9IslandStageV293 .k9MokoTalk{bottom:55%;left:44%}#kankenIslandV280 .k9TodayV293 .k9Summary{grid-template-columns:1fr 1fr}#kankenIslandV280 .k9TodayV293 .k9Stat:last-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){.k9FlightCloudsV293,.k9FlightPlaneV293,.k9FlightPilotV293{animation:none!important}#kankenIslandV280 .k9IslandStageV293 .k9Moko,#kankenIslandV280 .k9IslandStageV293 .k9Cloud{animation:none!important}}
