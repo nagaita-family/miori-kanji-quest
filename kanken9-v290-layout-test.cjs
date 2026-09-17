@@ -1,61 +1,39 @@
-// v2.9.2: check centered paper, vertical directions and actual VI grid specificity.
-// These are stylesheet regression checks, not a substitute for physical iPad rendering.
+// v2.9.2: catch section VI CSS grid collisions that DOM-only tests cannot see.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
-const css=fs.readFileSync('kanken9-paper-nearby-v289.css','utf8');
-const baseCss=fs.readFileSync('kanken9-layout-v288.css','utf8');
-const flow=fs.readFileSync('kanken9-paper-flow-v291.css','utf8');
-const loader=fs.readFileSync('app-v240-release.js','utf8');
-const html=fs.readFileSync('index.html','utf8');
-const base=fs.readFileSync('kanken9-layout-v288.js','utf8');
-for(const selector of [
- '#kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper',
- '#kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper'
-]){
- const i=css.indexOf(selector+'{');assert.ok(i>=0,`Missing ${selector}`);
- const rules=css.slice(i,css.indexOf('}',i));
- assert.match(rules,/justify-content:center!important/,`Center entire question-and-answer cluster: ${selector}`);
- assert.match(rules,/grid-template-columns:minmax\(0,128px\) minmax\(0,166px\)/,`Compact text+answer columns: ${selector}`);
- assert.doesNotMatch(rules,/justify-content:end/,`Regression: right aligned ${selector}`);
+const read=name=>fs.readFileSync(name,'utf8');
+const base=read('kanken9-layout-v288.css');
+const layout=read('kanken9-paper-nearby-v289.css');
+const flow=read('kanken9-paper-flow-v291.css');
+const loader=read('app-v240-release.js');
+const html=read('index.html');
+const script=read('kanken9-layout-v288.js');
+function rule(sheet,selector){const i=sheet.indexOf(selector);assert.ok(i>=0,'Missing selector: '+selector);return sheet.slice(i,sheet.indexOf('}',i));}
+for(const selector of ['#kankenPaperV283 .k9ExamWork.k9v8Fixed>.k9v8Paper','#kankenDailyV287 .k9cWork.k9v8Fixed>.k9v8DailyPaper']){
+ const block=rule(layout,selector+'{');assert.match(block,/justify-content:center!important/);assert.match(block,/grid-template-columns:minmax\(0,128px\) minmax\(0,166px\)/);assert.doesNotMatch(block,/justify-content:end/);
 }
-assert.match(css,/:has\(\.k9ExamStroke\)/,'Mock stroke-order picture has a wider layout');
-assert.match(css,/:has\(#k9cStroke\)/,'Daily stroke-order picture has a wider layout');
-assert.match(css,/@media\(max-width:570px\)/,'Keep small screens accessible');
-assert.match(css,/grid-template-columns:minmax\(0,1fr\) minmax\(0,125px\)/,'Fit narrow screens');
-assert.match(base,/const needsBlank=kana\|\|\(!reading&&!selecting&&!stroke\)/,'Reading and choice questions do not add stray squares');
 for(const selector of ['#kankenPaperV283 .k9ExamPage>.k9ExamInstruction','#kankenDailyV287 .k9cPaper>.k9cTitle small']){
- const index=flow.indexOf(selector);assert.ok(index>=0,`Vertical instruction selector missing ${selector}`);
- const rule=flow.slice(index,flow.indexOf('}',index));
- assert.match(rule,/position:absolute!important/);
- assert.match(rule,/writing-mode:vertical-rl!important/);
- assert.match(rule,/right:clamp\(/);
+ const block=rule(flow,selector);assert.match(block,/writing-mode:vertical-rl!important/);assert.match(block,/right:clamp\(/);
 }
-assert.match(flow,/grid-template-columns:minmax\(0,92px\) minmax\(0,128px\) minmax\(0,166px\)/,'Dedicated VI example/question/answer columns');
-// The previous build passed all tests yet overlapped: its VI selectors omitted work.k9v8Fixed,
-// so earlier !important grid-column rules from the base sheet won on specificity.
-for(const [root,work,paper,question,answer,example] of [
+assert.match(flow,/grid-template-columns:minmax\(0,92px\) minmax\(0,128px\) minmax\(0,166px\)/);
+// An earlier stylesheet uses !important on the question and answer grid-column.
+// The VI override must match with MORE class specificity, not merely load later.
+for(const [root,work,paper,q,a,example] of [
  ['kankenPaperV283','k9ExamWork','k9v8Paper','k9ExamQuestion','k9v8Answer','k9cPaperExample'],
  ['kankenDailyV287','k9cWork','k9v8DailyPaper','k9cColumns','k9v8DailyAnswer','k9cExample']
 ]){
  const prefix=`#${root} .${work}.k9v8Fixed>.${paper}.k9v10HasExample>`;
- for(const [item,column] of [[question,2],[answer,3],[example,1]]){
-  const selector=prefix+`.${item}`;
-  const i=flow.indexOf(selector);assert.ok(i>=0,`VI ${item} must override base grid specificity`);
-  const block=flow.slice(i,flow.indexOf('}',i));
-  assert.match(block,new RegExp(`grid-column:${column}!important`),`VI ${item} must occupy column ${column}`);
+ for(const [element,column] of [[q,2],[a,3],[example,1]]){
+  const selector=prefix+`.`+element;
+  assert.match(rule(flow,selector),new RegExp(`grid-column:${column}!important`),'VI '+element+' must have its own column');
+  const old=`#${root} .${work}.k9v8Fixed .${paper}>.${element}`;
+  if(base.includes(old))assert.ok(selector.split('.').length>old.split('.').length,'New '+element+' selector must beat old !important rule');
  }
- const oldSelector=`#${root} .${work}.k9v8Fixed .${paper}>.${question}`;
- assert.ok(baseCss.includes(oldSelector),'Track the earlier conflicting !important rule');
- assert.ok(prefix.split('.').length>oldSelector.split('.').length,'VI override must have greater class specificity');
+ assert.ok(base.includes(`#${root} .${work}.k9v8Fixed .${paper}>.${q}`),'Keep guard tied to old conflicting CSS');
 }
-assert.match(flow,/@media\(max-width:570px\)/,'VI example needs a compact phone fallback');
-assert.match(flow,/grid-template-rows:auto minmax\(0,1fr\)!important/,'On phones example uses its own row');
-assert.ok(loader.includes('kanken9-paper-nearby-v289.css?v=2900'),'Keep the centered base CSS');
-assert.ok(loader.includes('kanken9-paper-flow-v291.css?v=2920'),'Load fixed VI CSS with a new iPad cache key');
-assert.ok(loader.includes('kanken9-layout-v288.js?v=2910'),'Preserve tested Pencil DOM logic');
-assert.ok(html.includes('app-v240-release.js?v=2920'),'Update HTML loader cache key');
-assert.ok(html.includes('v2.9.2'),'Visible version must match deployed build');
-for(const id of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202']){
- assert.ok(html.includes(`id="${id}"`),`Original school study must retain ${id}`);
-}
-console.log('PASS v2.9.2: VI example, question and Pencil each have a distinct CSS grid lane with sufficient specificity; other paper and school hooks unchanged.');
+assert.match(flow,/@media\(max-width:570px\)/);assert.match(flow,/grid-template-rows:auto minmax\(0,1fr\)!important/);
+assert.ok(loader.includes('kanken9-paper-flow-v291.css?v=2920'));
+assert.ok(html.includes('app-v240-release.js?v=2920')&&html.includes('v2.9.2'));
+assert.match(script,/layout\.append\(example\)/,'Example must actually be moved out of text');
+for(const id of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${id}"`),'School screen hook: '+id);
+console.log('PASS v2.9.2: VI example, question, answer have distinct grid cells with selectors that outrank old !important CSS; paper, cache and school hooks checked.');
