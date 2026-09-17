@@ -1,4 +1,4 @@
-// v2.8.9: exercise the actual layout scripts with lightweight DOM fixtures.
+// v2.9.0: exercise actual layout scripts with lightweight DOM fixtures and centered styling checks.
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),vm=require('node:vm');
 class Element {
@@ -66,12 +66,13 @@ for(const isRead of [true,false]){
 }
 const css=fs.readFileSync('kanken9-layout-v288.css','utf8'),near=fs.readFileSync('kanken9-paper-nearby-v289.css','utf8'),loader=fs.readFileSync('app-v240-release.js','utf8'),html=fs.readFileSync('index.html','utf8');
 assert.ok(css.includes('grid-template-columns')&&css.includes('.k9v8DailyPaper')&&css.includes('.k9v8Paper')&&css.includes('white-space:normal!important'));
-assert.ok(near.includes('grid-column:1!important')&&near.includes('grid-column:2!important')&&near.includes('justify-content:end!important'),'Vertical text must sit directly to the LEFT of its writing box near the paper right edge');
+assert.ok(near.includes('grid-column:1!important')&&near.includes('grid-column:2!important')&&near.includes('justify-content:center!important'),'Vertical problem and answer must be centered together, with answer immediately right of text');
+assert.ok(near.includes('grid-template-columns:minmax(0,128px) minmax(0,166px)'),'Do not reserve a huge invisible vertical text column');
 assert.ok(near.includes('.k9ExamCanvasBox.wide')&&near.includes('.k9cSlot.wide')&&near.includes('max-width:570px'));
 assert.ok(css.includes('.k9ExamClear')&&css.includes('.k9cErase')&&css.includes('touch-action:none!important'));
 assert.ok(!fs.readFileSync('kanken9-layout-v288.js','utf8').includes('MutationObserver'));
-for(const f of ['kanken9-layout-v288.js?v=2890','kanken9-layout-v288.css?v=2880','kanken9-paper-nearby-v289.css?v=2890'])assert.ok(loader.includes(f),'Loader must load '+f);
+for(const f of ['kanken9-layout-v288.js?v=2890','kanken9-layout-v288.css?v=2880','kanken9-paper-nearby-v289.css?v=2900'])assert.ok(loader.includes(f),'Loader must load '+f);
 assert.ok(loader.indexOf('kanken9-paper-guard-v287.js')<loader.indexOf('kanken9-layout-v288.js'),'Layout repair must run after the earlier paper guards');
-assert.ok(html.includes('app-v240-release.js?v=2890')&&html.includes('v2.8.9'));
+assert.ok(html.includes('app-v240-release.js?v=2900')&&html.includes('v2.9.0'));
 for(const hook of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${hook}"`),'Ordinary school study must keep '+hook);
-console.log('PASS v2.8.9: reading and choices contain no phantom square; writing blanks, original Pencil, eraser, layout order, cache bust and school hooks remain intact.');
+console.log('PASS v2.9.0: readable centered paper, true writing blanks, original Pencil, eraser, input order, cache bust and all school hooks.');
