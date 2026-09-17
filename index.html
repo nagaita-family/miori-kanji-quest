@@ -91,7 +91,8 @@
         <div id="statusLine" class="statusLine">思い出せたら、そのまま書いてみよう ✏️</div>
         <div class="writeActions"><button id="undoBtn" class="toolBtn">↩ 1画もどす</button><button id="clearBtn" class="toolBtn">消す</button><button id="checkBtn" class="checkBtn">できた！判定</button></div>
         <div class="helpDock">
-          <div class="helpTop"><div><b>💡 HELP</b><span>必要なところだけ、少しずつ見よう</span></div><div class="helpButtons"><button id="helpBtn" class="helpBtn">✏️ 次の1画ヒント</button><button id="fullHintBtn" class="fullHintBtn">👀 ぜんぶ見る</button></div>
+          <div class="helpTop"><div><b>💡 HELP</b><span>必要なところだけ、少しずつ見よう</span></div><div id="helpPips" class="helpPips"></div></div>
+          <div class="helpButtons"><button id="helpBtn" class="helpBtn">✏️ 次の1画ヒント</button><button id="fullHintBtn" class="fullHintBtn">👀 ぜんぶ見る</button></div>
           <div id="shapeHintLine" class="shapeHintLine" hidden></div>
           <div class="helpNote">左は1画ずつ。どうしても分からない時だけ「ぜんぶ見る」でOK！</div>
         </div>
@@ -126,7 +127,7 @@
 
   <section id="strokeScreen" class="screen">
     <header class="playTop"><button id="closeStrokeBtn" class="backBtn">← おさらいにもどる</button><div class="playTitle"><span>STROKE REVIEW</span><b id="strokeCharLabel">感</b></div><div></div></header>
-    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
+    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div id="strokeMsg" class="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
   </section>
 
   <section id="resultScreen" class="screen">
