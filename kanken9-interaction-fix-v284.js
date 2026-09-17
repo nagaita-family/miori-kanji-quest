@@ -1,6 +1,15 @@
-// v2.8.4 compatibility polish: a revealed answer must never strand a child on a disabled self-rating screen.
+// v2.8.4 compatibility polish: safe cold-start navigation, no dead end after revealing an answer.
 (() => {
   'use strict';
+  // app-v10's showScreen expects an existing element; like the exam screen, daily is created lazily.
+  const previousShow=showScreen;
+  showScreen=function(id){
+    if(id==='kankenDailyV284'&&!document.getElementById(id)){
+      queueMicrotask(()=>{if(document.getElementById(id))previousShow(id);});
+      return;
+    }
+    return previousShow(id);
+  };
   function version(){
     document.title='Miori Kanji Quest v2.8.4';window.MioriReleaseVersion='v2.8.4';
     const top=document.querySelector('.hero .eyebrow span'),flag=document.querySelector('.buildFlagV202');
