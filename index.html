@@ -105,8 +105,7 @@
     <div class="reviewShell">
       <div class="celebrate">✨ NICE! ✨</div><h2 id="reviewTitle">「感」できた！</h2><p class="reviewLead">自分の字と、書き順のお手本を見くらべよう。</p>
       <div class="compareGrid">
-        <div class="compareCard"><div class="compareLabel">みおりの字</div><img id="userPreview" alt="自分で書いた字"></div>
-        <div class="compareCard sampleCard"><div class="compareLabel">お手本（書き順）</div><div id="sampleGlyph" class="sampleGlyph"></div></div>
+        <div class="compareCard"><div class="compareLabel">みおりの字</div><img id="userPreview" alt="自分で書いた字"></div><div class="compareCard sampleCard"><div class="compareLabel">お手本（書き順）</div><div id="sampleGlyph" class="sampleGlyph"></div></div>
       </div>
       <div id="judgeBadges" class="judgeBadges"></div><div id="secretMini" class="secretMini"></div>
       <div class="reviewActions"><button id="reviewStrokeBtn" class="secondaryBtn">↻ お手本をもう一回</button><button id="retryWriteBtnV16" class="secondaryBtn" type="button">✏️ もう一回書く</button><button id="reviewNextBtn" class="primaryBtn">つぎへ →</button></div>
@@ -117,6 +116,7 @@
     <div class="okuriShell">
       <div class="eyebrow">OKURIGANA CHECK</div>
       <h2>送り仮名をえらぼう</h2>
+      <p id="okuriPrompt" class="okuriLead">「ととのえる」の送り仮名はどれ？</p>
       <div class="okuriWordBuild"><span id="okuriKanji" class="okuriKanji">整</span><span id="okuriSlot" class="okuriSlot">？</span></div>
       <div id="okuriChoices" class="okuriChoices"></div>
       <div id="okuriFeedback" class="okuriFeedback"></div>
@@ -126,7 +126,7 @@
 
   <section id="strokeScreen" class="screen">
     <header class="playTop"><button id="closeStrokeBtn" class="backBtn">← おさらいにもどる</button><div class="playTitle"><span>STROKE REVIEW</span><b id="strokeCharLabel">感</b></div><div></div></header>
-    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div class="strokeMsg" id="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
+    <div class="strokeBody"><div class="strokeStage"><svg id="strokeSvg" viewBox="0 0 109 109"></svg><div id="pencil" class="pencil">✏️</div></div><div id="strokeMsg" class="strokeMsg">書き順を準備中…</div><div class="strokeActions"><button id="replayStrokeBtn" class="secondaryBtn">▶ もう一回</button><button id="returnReviewBtn" class="primaryBtn">OK、もどる！</button></div></div>
   </section>
 
   <section id="resultScreen" class="screen">
