@@ -40,8 +40,8 @@ new_section='''## 漢検島の旅行・ホーム（v2.9.3）
 readme=one(readme,'## Adaptive practice notebook',new_section+'## Adaptive practice notebook','README travel section')
 readme_path.write_text(readme,encoding='utf-8')
 
-# Older smoke tests contain literal release-version/cache strings; refresh only those assertions.
-for path in Path('.').glob('*.test.cjs'):
+# Both *.test.cjs and *-test.cjs must be refreshed; the latter contains older version assertions.
+for path in Path('.').glob('*test.cjs'):
     content=path.read_text(encoding='utf-8')
     updated=content.replace('app-v240-release.js?v=2920','app-v240-release.js?v=2930').replace('v2.9.2','v2.9.3')
     if updated!=content:path.write_text(updated,encoding='utf-8')
