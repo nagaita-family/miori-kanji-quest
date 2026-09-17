@@ -1,12 +1,12 @@
-// v2.8.8: prevent a horizontal Pencil canvas from becoming an enormous inline glyph in vertical text.
-// Transform each freshly rendered question once; leave answer canvas, controls and saved ink intact.
+// v2.8.9: keep handwriting controls beside vertical text without inventing extra blanks.
+// Reorganize freshly rendered question DOM once; never replace the live Pencil canvas.
 (() => {
 'use strict';
 const E='kankenPaperV283', D='kankenDailyV287';
-function marker(source){
+function marker(){
   const node=document.createElement('span');
   node.className='k9v8Blank';
-  node.textContent=source?.closest('.k9ExamKanaPattern')?'□':'□';
+  node.textContent='□';
   node.setAttribute('aria-hidden','true');
   return node;
 }
@@ -24,12 +24,18 @@ function exam(){
     if(modes){const dock=document.createElement('span');dock.className='k9InlineModesV286';dock.append(modes);host.append(dock);}
     host.append(answer);q.append(host);
   }
-  // Moving a 200px-tall horizontal canvas inside a vertical line pushed the sentence off screen.
-  // Preserve a real blank at its original point, while placing Pencil immediately beside the line.
-  const mark=marker(host);
-  if(q.contains(host))host.replaceWith(mark);
-  else if(q.querySelector('u'))q.querySelector('u').after(mark);
-  else q.append(mark);
+  const kana=!!host.closest('.k9ExamKanaPattern');
+  const reading=!!host.querySelector('.k9ExamCanvasBox.wide,.k9ExamTyping')&&!kana;
+  const selecting=!!host.querySelector('.k9ExamOptions');
+  const stroke=!!q.querySelector('.k9ExamStroke');
+  // Reading and selection questions do NOT contain a printed □. Writing and kana-completion do.
+  const needsBlank=kana||(!reading&&!selecting&&!stroke);
+  if(q.contains(host)){
+    if(needsBlank)host.replaceWith(marker());else host.remove();
+  }else if(needsBlank){
+    const target=q.querySelector('u');
+    if(target)target.after(marker());else q.append(marker());
+  }
   const layout=document.createElement('div');layout.className='k9v8Paper';
   q.replaceWith(layout);
   layout.append(q,host);
@@ -37,11 +43,11 @@ function exam(){
   const bank=work.querySelector('.k9ExamWordBank');if(bank)host.prepend(bank);
   if(!host.querySelector('.k9v8AnswerLabel')){
     const label=document.createElement('span');label.className='k9v8AnswerLabel';
-    label.textContent=host.querySelector('.k9ExamOptions')?'番号・正しい字をえらぼう':'✏️ ここに書こう';
+    label.textContent=selecting?'正しい答えをえらぼう':'✏️ ここに書こう';
     host.prepend(label);
   }
   work.classList.add('k9v8Fixed');
-  // Existing handlers and per-question save state remain responsible for ink pixels.
+  // Canvas pixels, pointer listeners and per-question answer state remain untouched.
 }
 function daily(){
   const root=document.getElementById(D);
@@ -51,12 +57,15 @@ function daily(){
   const slot=q.querySelector('.k9cSlot,.k9cChoices');
   if(!slot)return;
   const svg=q.querySelector('#k9cStroke');
-  const blank=marker(slot);slot.replaceWith(blank);
+  const reading=!!q.querySelector('u')&&slot.classList.contains('wide');
+  const selecting=slot.classList.contains('k9cChoices');
+  // The previous build printed an unrelated square after every reading, choice and stroke prompt.
+  if(!reading&&!selecting&&!svg)slot.replaceWith(marker());else slot.remove();
   const layout=document.createElement('div');layout.className='k9v8DailyPaper';
   const answer=document.createElement('div');answer.className='k9v8DailyAnswer';
   q.replaceWith(layout);layout.append(q,answer);
   const label=document.createElement('span');label.className='k9v8AnswerLabel';
-  label.textContent=slot.classList.contains('k9cChoices')?'正しい字をえらぼう':'✏️ ここに書こう';
+  label.textContent=selecting?'正しい答えをえらぼう':'✏️ ここに書こう';
   answer.append(label);
   if(svg)answer.append(svg);
   answer.append(slot);
@@ -65,7 +74,7 @@ function daily(){
 function apply(){exam();daily();}
 let pending=false;
 function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply();});}
-// Prior renderers recreate their question DOM on navigation; no polling or page-wide observers.
+// The question renderers replace their DOM on navigation; one animation-frame pass is enough.
 window.addEventListener('click',schedule,true);
 window.addEventListener('change',schedule,true);
 window.addEventListener('input',schedule,true);
