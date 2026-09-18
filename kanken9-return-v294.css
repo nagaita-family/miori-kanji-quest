@@ -1,0 +1,23 @@
+/* v2.9.4: return trip is a distinct flight from Kanken Island to Sky Island. */
+.k9FlightOverlayV293.is-returning{
+  background:linear-gradient(180deg,#7fc8ef 0%,#caeeff 62%,#f8f5da 100%);
+}
+.k9FlightOverlayV293.is-returning .k9FlightPlaneV293{
+  animation:k9ReturnFlightV294 1.55s cubic-bezier(.18,.6,.7,1) both;
+}
+.k9FlightOverlayV293.is-returning .k9FlightCloudsV293{
+  animation-direction:reverse;
+}
+.k9FlightOverlayV293.is-returning .k9FlightDestinationV293{
+  right:auto;left:-10%;font-size:clamp(78px,18vw,170px);
+}
+.k9FlightOverlayV293.is-returning .k9FlightCenterV293 p{color:#325d80}
+@keyframes k9ReturnFlightV294{
+  0%{transform:translate(105vw,9vh) scaleX(-1) rotate(-7deg) scale(.76)}
+  42%{transform:translate(1vw,0) scaleX(-1) rotate(0) scale(1.05)}
+  75%{transform:translate(-5vw,-2vh) scaleX(-1) rotate(1deg) scale(1)}
+  100%{transform:translate(-110vw,-6vh) scaleX(-1) rotate(7deg) scale(.82)}
+}
+@media(prefers-reduced-motion:reduce){
+  .k9FlightOverlayV293.is-returning .k9FlightPlaneV293{animation:none!important}
+}
