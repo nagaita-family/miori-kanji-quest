@@ -1,6 +1,6 @@
-// v2.9.2: section VI example is a dedicated CSS grid lane; preserve existing question and Pencil logic.
+// v2.9.4: flights between islands only; practice/test exits go straight to Kanken Island.
 (() => {
-  const VERSION='v2.9.3';
+  const VERSION='v2.9.4';
   function setVersion(){const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${VERSION}`;document.title=`Miori Kanji Quest ${VERSION}`;window.MioriReleaseVersion=VERSION;}
   function polishWeekly(){const n=document.querySelector('.weeklyStaticNoteV202');if(n)n.textContent='10問をプリントみたいにまとめて書いて、最後に採点！';const s=document.querySelector('.weeklyCardCopyV20 small');if(s)s.textContent='学校のテストに近い形で今週の漢字をチェック！';}
   function wirePrint(){const old=document.getElementById('weeklyStaticOpenV202');if(!old||old.dataset.v270wired==='1')return;const b=old.cloneNode(true);b.dataset.v204wired='1';b.dataset.v240wired='1';b.dataset.v250wired='1';b.dataset.v251wired='1';b.dataset.v252wired='1';b.dataset.v260wired='1';b.dataset.v261wired='1';b.dataset.v270wired='1';b.textContent='プリントでテスト';old.replaceWith(b);b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(typeof window.openPrintTestV230==='function')window.openPrintTestV230();});}
@@ -15,7 +15,8 @@
       ['k9LayoutStyleV288','./kanken9-layout-v288.css?v=2880'],
       ['k9NearbyPaperV289','./kanken9-paper-nearby-v289.css?v=2900'],
       ['k9PaperFlowV291','./kanken9-paper-flow-v291.css?v=2920'],
-      ['k9TravelV293','./kanken9-travel-v293.css?v=2930']
+      ['k9TravelV293','./kanken9-travel-v293.css?v=2930'],
+      ['k9ReturnV294','./kanken9-return-v294.css?v=2940']
     ]){if(document.getElementById(id))continue;const css=document.createElement('link');css.id=id;css.rel='stylesheet';css.href=href;document.head.appendChild(css);}
   }
   function refresh(){setVersion();polishWeekly();wirePrint();}
@@ -49,7 +50,7 @@
     './kanken9-coverage-daily-v287.js?v=2870',
     './kanken9-paper-guard-v287.js?v=2870',
     './kanken9-layout-v288.js?v=2910',
-    './kanken9-travel-v293.js?v=2930'
+    './kanken9-travel-v293.js?v=2940'
   ],()=>{
     refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();
     window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();
