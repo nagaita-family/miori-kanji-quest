@@ -1,9 +1,11 @@
-// v2.9.3 — visual-only journey and island-first dashboard. No save, scoring or Pencil changes.
+// v2.9.4 — flights only between Sky Island and Kanken Island; exercise exits are instant.
+// No changes to saved progress, question logic or handwriting.
 (() => {
   'use strict';
   const api=window.MioriKanken9V280;
-  if(!api?.open){console.warn('Kanken travel: island module unavailable');return;}
+  if(!api?.open||!api?.home){console.warn('Kanken travel: island navigation unavailable');return;}
   const originalOpen=api.open;
+  const originalHome=api.home;
   let travelling=false,moreOpen=false;
 
   function decorateIsland(){
@@ -19,8 +21,7 @@
     const scene=decoration?.querySelector('.k9Scene');
     const caption=decoration?.querySelector('.k9SceneCaption');
     if(!nav||!hero||!stats||!grid||!daily||!scene||!decoration)return;
-
-    // Move, never clone, the existing scene: furniture buttons keep their IDs and delegated handlers.
+    // Move, never clone, the existing furniture controls and scene.
     const showcase=document.createElement('section');showcase.className='k9ShowcaseV293';
     const stage=document.createElement('div');stage.className='k9IslandStageV293';
     const label=document.createElement('div');label.className='k9StageLabelV293';
@@ -29,28 +30,25 @@
     label.append(heading,hint);stage.append(label,scene);
     if(caption)stage.append(caption);
     showcase.append(hero,stage);
-
     const today=document.createElement('section');today.className='k9TodayV293';
     today.append(daily);
     const gift=decoration.querySelector('.k9Ticket');
-    if(gift)today.append(gift); // A ready-to-claim reward must not be hidden in More.
+    if(gift)today.append(gift);
     today.append(stats);
-
     const more=document.createElement('details');more.className='k9MoreV293';
     const summary=document.createElement('summary');summary.textContent='🧭 ほかの冒険・もようがえを見る';
     more.append(summary,grid);more.open=moreOpen;
     more.addEventListener('toggle',()=>{moreOpen=more.open;});
-
     nav.after(showcase,today,more);
     root.classList.add('k9LandingReadyV293');
   }
 
-  function flightMarkup(){
-    // The rabbit sits visibly IN the cockpit, not next to a generic airplane icon.
+  function flightMarkup(returning){
+    const heading=returning?'✈️ モコと 空島へ かえろう！':'✈️ モコと 漢検島へ しゅっぱつ！';
+    const sub=returning?'いつもの学校の漢字も、がんばろう。':'雲のむこうに、あたらしい島が見えるよ。';
     return `<div class="k9FlightCloudsV293" aria-hidden="true"></div>
       <div class="k9FlightCenterV293">
-        <h2>✈️ モコと 漢検島へ しゅっぱつ！</h2>
-        <p>雲のむこうに、あたらしい島が見えるよ。</p>
+        <h2>${heading}</h2><p>${sub}</p>
         <div class="k9FlightPlaneV293" role="img" aria-label="モコが操縦席に乗って空を飛ぶ飛行機">
           <svg viewBox="0 0 480 220" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
             <path d="M74 125 24 43 Q19 34 34 37 L104 77 166 108Z" fill="#ed8b8d" stroke="#5686a3" stroke-width="5"/>
@@ -65,41 +63,53 @@
             <circle cx="237" cy="146" r="12" fill="#9cdbed" stroke="#5b94a8" stroke-width="3"/>
             <path d="M446 130 472 103 M445 133 477 143 M444 136 470 172" stroke="#526c84" stroke-width="7" stroke-linecap="round"/>
             <path d="M41 158 Q31 168 46 173 L103 173" fill="none" stroke="#f2c768" stroke-width="7" stroke-linecap="round"/>
-          </svg>
-          <span class="k9FlightPilotV293" aria-hidden="true">🐰</span>
+          </svg><span class="k9FlightPilotV293" aria-hidden="true">🐰</span>
         </div>
       </div>
-      <div class="k9FlightDestinationV293" aria-hidden="true">🏝️</div>
+      <div class="k9FlightDestinationV293" aria-hidden="true">${returning?'☁️🏝️':'🏝️'}</div>
       <button type="button" class="k9FlightSkipV293">スキップ →</button>`;
   }
 
-  api.open=function(...args){
+  function flight(returning,arrive){
     if(travelling)return;
-    const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-    if(reduced){const out=originalOpen.apply(this,args);decorateIsland();return out;}
+    if(window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches){return arrive();}
     travelling=true;
-    const overlay=document.createElement('div');overlay.className='k9FlightOverlayV293';
+    const overlay=document.createElement('div');overlay.className=`k9FlightOverlayV293${returning?' is-returning':''}`;
     overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');
-    overlay.setAttribute('aria-label','モコと漢検島へ移動中');
-    overlay.innerHTML=flightMarkup();
+    overlay.setAttribute('aria-label',returning?'モコと空島へ移動中':'モコと漢検島へ移動中');
+    overlay.innerHTML=flightMarkup(returning);
     const skyHat=document.querySelector('.mokoObjectV15 .k9HatV280');
     const pilot=overlay.querySelector('.k9FlightPilotV293');
     if(skyHat?.textContent&&pilot){const hat=document.createElement('span');hat.textContent=skyHat.textContent;hat.className='k9FlightHatV293';hat.style.cssText='position:absolute;font-size:.42em;top:-.36em;right:-.12em';pilot.append(hat);}
     document.body.append(overlay);
-    let landed=false,departureTimer=null,cleanupTimer=null;
+    let landed=false,departureTimer=null;
     const finish=()=>{
       if(landed)return;landed=true;clearTimeout(departureTimer);
-      // Keep the sky visible during takeoff, then land on the real island screen.
-      try{originalOpen.apply(api,args);decorateIsland();overlay.classList.add('is-arriving');}
-      finally{cleanupTimer=setTimeout(()=>{overlay.remove();travelling=false;},410);}
+      try{arrive();overlay.classList.add('is-arriving');}
+      finally{setTimeout(()=>{overlay.remove();travelling=false;},410);}
     };
     overlay.querySelector('.k9FlightSkipV293').addEventListener('click',finish,{once:true});
     departureTimer=setTimeout(finish,1550);
+  }
+
+  api.open=function(...args){
+    const arrive=()=>{const result=originalOpen.apply(api,args);decorateIsland();return result;};
+    // Exercise/test -> island is INTERNAL navigation: never board a plane again.
+    if(!document.getElementById('homeScreen')?.classList.contains('active'))return arrive();
+    return flight(false,arrive);
   };
   api.open.__v293Travel=true;
 
-  // The existing island renderer replaces its HTML after gifts, outfits and sessions.
-  // Reapply one frame after those existing event handlers, with no MutationObserver or polling.
+  // Intercept ONLY the island's Sky Island button, before the old delegated
+  // handler calls backHome(). Test and daily exit buttons are NOT intercepted.
+  document.addEventListener('click',event=>{
+    const home=event.target.closest?.('#kankenIslandV280 .k9Nav button[data-k9="home"]');
+    if(!home||!document.getElementById('kankenIslandV280')?.classList.contains('active'))return;
+    event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
+    flight(true,()=>originalHome.apply(api));
+  },true);
+
+  // Existing island renderer replaces HTML after gifts, outfits and sessions.
   let scheduled=false;
   function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;decorateIsland();});}
   document.addEventListener('click',event=>{
