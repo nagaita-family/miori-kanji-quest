@@ -1,4 +1,4 @@
-// v2.9.3: catch section VI CSS grid collisions that DOM-only tests cannot see.
+// v2.9.4: catch section VI CSS grid collisions that DOM-only tests cannot see.
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const read=name=>fs.readFileSync(name,'utf8');
@@ -33,7 +33,7 @@ for(const [root,work,paper,q,a,example] of [
 }
 assert.match(flow,/@media\(max-width:570px\)/);assert.match(flow,/grid-template-rows:auto minmax\(0,1fr\)!important/);
 assert.ok(loader.includes('kanken9-paper-flow-v291.css?v=2920'));
-assert.ok(html.includes('app-v240-release.js?v=2930')&&html.includes('v2.9.3'));
+assert.ok(html.includes('app-v240-release.js?v=2940')&&html.includes('v2.9.4'));
 assert.match(script,/layout\.append\(example\)/,'Example must actually be moved out of text');
 for(const id of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${id}"`),'School screen hook: '+id);
-console.log('PASS v2.9.3: VI example, question, answer have distinct grid cells with selectors that outrank old !important CSS; paper, cache and school hooks checked.');
+console.log('PASS v2.9.4: VI example, question, answer have distinct grid cells with selectors that outrank old !important CSS; paper, cache and school hooks checked.');
