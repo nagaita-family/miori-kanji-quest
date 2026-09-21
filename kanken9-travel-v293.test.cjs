@@ -14,12 +14,12 @@ const pilot={append(node){this.hat=node;}};
 const classes=new Set();
 const doc={
  addEventListener(){},
- getElementById(){return null;},
+ getElementById(id){return id==='homeScreen'?{classList:{contains:()=>true}}:null;},
  querySelector(){return null;},
  body:{append(node){overlay=node;}},
  createElement(tag){return{tagName:tag,style:{},setAttribute(){},classList:{add(name){classes.add(name);}},querySelector(selector){if(selector==='.k9FlightSkipV293')return skip;if(selector==='.k9FlightPilotV293')return pilot;return null;},remove(){this.removed=true;}};}
 };
-const api={open(){opened++;}};
+const api={open(){opened++;},home(){}};
 const ctx={window:{MioriKanken9V280:api,matchMedia:()=>({matches:false})},document:doc,console,
  setTimeout(fn){const id=++timeoutNumber;timers.set(id,fn);return id;},
  clearTimeout(id){timers.delete(id);},requestAnimationFrame(fn){fn();}};
@@ -48,9 +48,9 @@ assert.doesNotMatch(executable,/MutationObserver|localStorage|save\.|persist\(/,
 assert.match(css,/prefers-reduced-motion:reduce/);
 assert.match(css,/\.k9FlightPilotV293/);
 assert.match(css,/\.k9IslandStageV293 \.k9Scene/);
-assert.match(loader,/kanken9-travel-v293\.js\?v=2930/);
+assert.match(loader,/kanken9-travel-v293\.js\?v=2940/);
 assert.match(loader,/kanken9-travel-v293\.css\?v=2930/);
-assert.match(loader,/const VERSION='v2\.9\.3'/);
-assert.match(html,/app-v240-release\.js\?v=2930/);
-assert.match(html,/v2\.9\.3/);
+assert.match(loader,/const VERSION='v2\.9\.4'/);
+assert.match(html,/app-v240-release\.js\?v=2940/);
+assert.match(html,/v2\.9\.4/);
 console.log('PASS v2.9.3: Moko in airplane; flight skip and reduced-motion land once; island hero, collapsible secondary menus, gifts, save isolation and version cache.');

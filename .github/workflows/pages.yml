@@ -57,6 +57,17 @@ jobs:
           node kanken9-v290-layout-test.cjs
           node kanken9-v294-navigation-test.cjs
 
+      - name: Validate school weekly pack and remaining regressions
+        run: |
+          node --check data-packs.js
+          node --check app-v10.js
+          node --check app-v11-patch.js
+          node --check app-v231-print-test-fix.js
+          node --check app-v203-patch.js
+          node weekly-p58-test.cjs
+          node kanken9-v286-smoke-test.cjs
+          node kanken9-travel-v293.test.cjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

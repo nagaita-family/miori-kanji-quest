@@ -1,0 +1,48 @@
+# Miori Kanji Quest — 開発引き継ぎ
+
+## 正式環境と開始手順
+- 正式repo: `nagaita-family/miori-kanji-quest`、作業基準: 最新 `main`。
+- 公開先: https://family.nagaita.jp/miori-kanji-quest/
+- 毎回、最新main・本書・README・Actionsの状態と依頼内容を照合し、実施済み作業を繰り返さない。
+- 通常の変更は必要最小限。学校学習・漢検島・既存の進捗を保護し、iPad + Apple Pencilを優先する。
+
+## 今週の学校学習（2026-09-21登録）
+- アプリ本体はv2.9.4。学校パックは `data-packs.js` の `2026-09-21-p58` が現在対象。
+- 教材58ページ上半分「書く」①〜⑩のみ。下半分は対象外。
+- 順序: 泳ぐ、練習、助言、童話、申し〔印刷済み:こむ〕、食品、商品、水泳、練る、助ける。
+- ⑤は `answer:'申'` / `reading:'もう'` / `okuri:'し'` / `after:'こむ。'`。手書きの申＋送り仮名のしを採点し、込は対象にしない。送り仮名は既存の選択方式を維持する。
+- 登録日は `addedAt`。学校のテスト日・締切日は不明で、設定していない。
+- 今後も `KANJI_PACKS` に追記し `CURRENT_KANJI_PACK_ID` を切り替える。既存パックを上書き・削除しない。
+- 過去のテスト13 (`2026-09-previous`、返却65点) は既存の過去週復習から利用できる。
+- ホームの今週問題・おすすめは読みで表示し、テスト直前に正答を見せない。テスト解答中も正答を表示しない。
+
+## 保存互換性
+- 本番キーは `miori-kanji-quest-v10`。保存形式全体の移行・初期化はしない。
+- 漢字単位の `save.stats`、語と送り仮名単位の `save.okuriStats`、週別の `save.printTestsV230[packId]` を維持。
+- `save.completedStages` の旧数値キーはテスト13の履歴。新パックの完了は `kanjiStageCompletionKey(index)` により `packId:index` キーへ保存する。同じオブジェクト内なので、空島報酬の全カウンター合算と互換。旧キーを移行・重複加算しない。
+- 漢検島は `save.kanken9V280` の独立進捗。学校の週追加では触らない。
+- `test-mode-v261.js` をアプリの保存読込より先に読み込み、Parent Test Modeの保存分離を維持。
+- 学習履歴はブラウザのlocalStorageで、端末間同期はない。更新のためにサイトデータを消さない。
+
+## 安定性・PWA
+- `app-v233-polish.js` は読み込み禁止。MutationObserverによるDOM更新ループを再導入しない。
+- スクリプト読み込み順を維持。変更した配信JSのクエリ値を更新し、古いiPadキャッシュを避ける。
+- `sw.js` は旧キャッシュの削除と登録解除用。古いオフラインキャッシュを復活させない。
+- サブパス `/miori-kanji-quest/` 前提の相対パス、manifestの `start_url: './'` / `scope: './'` を維持。
+- 漢検島間の往復のみ飛行演出。漢検島内の練習・テストから島への復帰は直接戻る。
+
+## 検証・公開
+- `.github/workflows/pages.yml` がmainへのpushで検証後にGitHub Pagesへ公開する。
+- テストボタンは `app-v240-release.js` が現行プリントへ接続する。`app-v203-patch.js` の遅延処理で `data-v270wired` 接続済みボタンを上書きしない（旧テストが重なるため）。
+- `app-v231-print-test-fix.js` はトップレベルconstの `QUEST_STAGES` を直接参照する（`window.QUEST_STAGES` ではない）。送り仮名ボタンを手書き欄の横へ配置するために必要。
+- `node --check`、既存の全 `*.cjs`、追加した `node weekly-p58-test.cjs` を実行する。
+- p58テストは10問と順序、⑤の採点、旧週・クリア回数・テスト履歴・漢検島の保存保護を検証する。手書き字形の認識精度そのものはこの単体テストの範囲外。
+- 古いv2.8.6/v2.9.3テストの版番号と飛行テスト用DOM/APIを現行v2.9.4に整合させている。漢検島本体は変更していない。
+- 実ブラウザ回帰は `node tools/weekly-p58-browser.cjs`（PlaywrightとChromiumが必要）。`CHROMIUM_EXECUTABLE` でブラウザを指定可。KanjiVGのSVGを `KANJI_SVG_DIR` に置けば外部通信なしで手書き・消去・採点・画面遷移を確認できる。
+- Actions成功と公開URLの実ファイル反映を確認するまで公開完了としない。iPad実機検証は自動テストと区別して報告する。
+
+## 2026-09-21の検証記録
+- 全JS/CJSの構文チェックと、ルートの自動テスト11本が成功。
+- Chromiumで10問にKanjiVGの参照筆跡を入力し、⑤の送り仮名を誤った9点→正しい10点を確認。入力・消去、旧週から今週への復帰、旧テスト結果・漢検島データの保持を検証。
+- 1024×768、744×1133、390×844で入力欄・操作ボタンの表示確認。520px以下だけ操作欄を下へ配置する。
+- iPad / Apple Pencil実機は未確認。

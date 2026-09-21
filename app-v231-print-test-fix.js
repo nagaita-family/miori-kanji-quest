@@ -55,6 +55,21 @@
  .integratedBlankV231 .focusCanvasV230{width:clamp(120px,20vh,175px)!important;height:clamp(120px,20vh,175px)!important}
  .integratedBlankV231.singleV231 .focusCanvasV230{width:clamp(180px,29vh,240px)!important;height:clamp(180px,29vh,240px)!important}
 }
+/* Keep the same worksheet usable on narrow phones without shrinking iPad ink. */
+@media(max-width:520px){
+ .testFocusV230{padding:6px!important}
+ .testFocusCardV230.integratedV231{width:calc(100vw - 12px)!important;height:calc(100dvh - 12px)!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr) auto!important;padding:8px!important;gap:8px!important}
+ .focusProblemV230.integratedProblemV231{padding:6px 24px!important;min-height:0}
+ .focusProblemV230.integratedProblemV231 .focusProblemSentenceV230{font-size:19px!important}
+ .integratedBlankV231 .focusCanvasV230{width:120px!important;height:120px!important}
+ .integratedBlankV231.singleV231 .focusCanvasV230,.integratedBlankV231.okuri .focusOkuriFrameV230 .focusCanvasV230{width:150px!important;height:150px!important}
+ .integratedBlankV231.okuri .focusOkuriFrameV230{width:170px!important;height:190px!important}
+ .focusControlsV230{grid-column:1!important;grid-row:2;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px!important;padding:8px!important}
+ .focusControlsV230>h3,.focusControlsV230>p,.focusControlsV230>.focusNoHintV230,.focusControlsV230>.pencilModeBadgeV231{display:none!important}
+ .focusControlsV230>button{margin:0!important;padding:9px 5px!important;font-size:12px!important}
+ .focusControlsV230 .okuriChoicesHostV231{grid-column:1/-1;margin:0!important;padding:5px!important}
+ .focusControlsV230 .focusDoneV230{grid-column:1/-1}
+}
 `;
     document.head.appendChild(s);
   }
@@ -75,7 +90,7 @@
     if(!card||!problem||!writing||!controls||!stack||!blank)return;
 
     const qi=questionIndexFromModal(root);
-    const stage=(qi>=0&&window.QUEST_STAGES)?QUEST_STAGES[qi]:null;
+    const stage=(qi>=0&&typeof QUEST_STAGES!=='undefined')?QUEST_STAGES[qi]:null;
     card.classList.add('integratedV231');
     problem.classList.add('integratedProblemV231');
     writing.classList.add('integratedSourceV231');

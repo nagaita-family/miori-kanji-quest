@@ -69,7 +69,7 @@
       if(r) r.textContent=fullReadingV11(s);
     });
     const rec=Number($("recommendBtn").dataset.stage), s=QUEST_STAGES[rec];
-    if(s) $("recommendWord").textContent=`${s.icon} ${fullWordV11(s)}`;
+    if(s) $("recommendWord").textContent=`${s.icon} ${fullReadingV11(s)}`;
   };
 
   startStage = function(i){

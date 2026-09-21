@@ -35,7 +35,7 @@
     }
 
     const weekly=document.getElementById('weeklyStaticOpenV202');
-    if(weekly){
+    if(weekly && weekly.dataset.v270wired !== '1'){
       weekly.onclick=(e)=>{
         e.preventDefault();e.stopPropagation();
         const target=document.getElementById('weeklyOpenV201');

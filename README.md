@@ -4,7 +4,7 @@ Miori向けの漢字学習Webアプリです。iPad + Apple Pencil / Chromebook 
 
 ## Current
 
-- App version: **v2.9.3** — モコの飛行機で漢検島へ遠征・島が主役のホーム画面
+- App version: **v2.9.4** — 島間の往復飛行・島内練習からの直接復帰
 - Canonical repository: **`nagaita-family/miori-kanji-quest`**
 - Main development branch: **`main`**
 - Primary hosting: **GitHub Pages**
@@ -14,6 +14,13 @@ Miori向けの漢字学習Webアプリです。iPad + Apple Pencil / Chromebook 
 - Publish source: **`main` branch / repository root**
 
 `main` が「いま触って確認する最新版」です。`main` へのpush後、GitHub ActionsからGitHub Pagesへ自動デプロイします。`pages.yml` では新たに `node --check` と `kanken9-smoke-test.cjs` を実行し、失敗時は公開を停止します。
+
+## Current school pack
+
+- 2026-09-21登録: **教材58ページ・上半分「書く」①〜⑩**。学校の実施日・締切日は未設定。
+- ⑤は「申」＋送り仮名「し」を解答し、「こむ」は印刷済み。下半分は含めません。
+- テスト13の範囲・返却結果・学習履歴を残し、過去週の復習を維持しています。
+- 開発ルールと保存互換性は [HANDOFF.md](HANDOFF.md) を参照。
 
 ## Repository / hosting rules
 

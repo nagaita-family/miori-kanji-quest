@@ -27,6 +27,28 @@ const KANJI_PACKS = [
       note: '返却答案では本命漢字の取りこぼしが中心。区切るは旧アプリが「区」だけを練習対象にしていたため「切」も本命に修正。'
     },
     stages: cloneKanjiStages(QUEST_STAGES)
+  },
+  {
+    // Registration date only; the school test date is not specified.
+    id: '2026-09-21-p58',
+    label: '58ページ・上半分（書く①〜⑩）',
+    shortLabel: '58ページ',
+    source: '教材58ページ・上半分「書く」',
+    addedAt: '2026-09-21',
+    status: 'current',
+    // Q5: write 申 + choose し; こむ is printed in after, never graded as 込.
+    stages: [
+      {"reading": "およ", "readingParts": ["およ"], "before": "海で", "after": "。", "answer": "泳", "icon": "🏊", "targetType": "core", "okuri": "ぐ", "okuriChoices": ["ぐ", "よぐ", "およぐ"], "chars": [{"char": "泳", "secret": "左は「さんずい」、右は「永」。", "memory": "左は「さんずい」、右は「永」。", "clue": "左は「さんずい」、右は「永」。"}]},
+      {"reading": "れんしゅう", "readingParts": ["れん", "しゅう"], "before": "サッカーの", "after": "をする。", "answer": "練習", "icon": "⚽", "targetType": "core", "chars": [{"char": "練", "secret": "左は「糸へん」。右の形もよく見よう。", "memory": "左は「糸へん」。右の形もよく見よう。", "clue": "左は「糸へん」。右の形もよく見よう。"}, {"char": "習", "secret": "上は「羽」、下は「白」。", "memory": "上は「羽」、下は「白」。", "clue": "上は「羽」、下は「白」。"}]},
+      {"reading": "じょげん", "readingParts": ["じょ", "げん"], "before": "兄の", "after": "を聞く。", "answer": "助言", "icon": "💬", "targetType": "core", "chars": [{"char": "助", "secret": "左は「且」、右は「力」。", "memory": "左は「且」、右は「力」。", "clue": "左は「且」、右は「力」。"}, {"char": "言", "secret": "横線と、下の「口」をよく見よう。", "memory": "横線と、下の「口」をよく見よう。", "clue": "横線と、下の「口」をよく見よう。"}]},
+      {"reading": "どうわ", "readingParts": ["どう", "わ"], "before": "", "after": "の絵本を読む。", "answer": "童話", "icon": "📖", "targetType": "core", "chars": [{"char": "童", "secret": "上は「立」、下は「里」。", "memory": "上は「立」、下は「里」。", "clue": "上は「立」、下は「里」。"}, {"char": "話", "secret": "左は「言へん」、右は「舌」。", "memory": "左は「言へん」、右は「舌」。", "clue": "左は「言へん」、右は「舌」。"}]},
+      {"reading": "もう", "readingParts": ["もう"], "before": "手紙で", "after": "こむ。", "answer": "申", "icon": "✉️", "targetType": "core", "okuri": "し", "okuriChoices": ["し", "うし", "もうし"], "chars": [{"char": "申", "secret": "真ん中の縦線が、上にも下にも出るよ。", "memory": "真ん中の縦線が、上にも下にも出るよ。", "clue": "真ん中の縦線が、上にも下にも出るよ。"}]},
+      {"reading": "しょくひん", "readingParts": ["しょく", "ひん"], "before": "", "after": "を売る。", "answer": "食品", "icon": "🍎", "targetType": "core", "chars": [{"char": "食", "secret": "上の屋根の形と、下の形をよく見よう。", "memory": "上の屋根の形と、下の形をよく見よう。", "clue": "上の屋根の形と、下の形をよく見よう。"}, {"char": "品", "secret": "三つの「口」があるよ。", "memory": "三つの「口」があるよ。", "clue": "三つの「口」があるよ。"}]},
+      {"reading": "しょうひん", "readingParts": ["しょう", "ひん"], "before": "", "after": "を買う。", "answer": "商品", "icon": "🛍️", "targetType": "core", "chars": [{"char": "商", "secret": "上の点と横線、下の「口」をよく見よう。", "memory": "上の点と横線、下の「口」をよく見よう。", "clue": "上の点と横線、下の「口」をよく見よう。"}, {"char": "品", "secret": "三つの「口」があるよ。", "memory": "三つの「口」があるよ。", "clue": "三つの「口」があるよ。"}]},
+      {"reading": "すいえい", "readingParts": ["すい", "えい"], "before": "", "after": "教室に通う。", "answer": "水泳", "icon": "🏊", "targetType": "core", "chars": [{"char": "水", "secret": "真ん中の縦画と、左右にのびる画をよく見よう。", "memory": "真ん中の縦画と、左右にのびる画をよく見よう。", "clue": "真ん中の縦画と、左右にのびる画をよく見よう。"}, {"char": "泳", "secret": "左は「さんずい」、右は「永」。", "memory": "左は「さんずい」、右は「永」。", "clue": "左は「さんずい」、右は「永」。"}]},
+      {"reading": "ね", "readingParts": ["ね"], "before": "アイデアを", "after": "。", "answer": "練", "icon": "💡", "targetType": "core", "okuri": "る", "okuriChoices": ["る", "ねる"], "chars": [{"char": "練", "secret": "左は「糸へん」。右の形もよく見よう。", "memory": "左は「糸へん」。右の形もよく見よう。", "clue": "左は「糸へん」。右の形もよく見よう。"}]},
+      {"reading": "たす", "readingParts": ["たす"], "before": "子ねこを", "after": "。", "answer": "助", "icon": "🐱", "targetType": "core", "okuri": "ける", "okuriChoices": ["る", "ける", "すける"], "chars": [{"char": "助", "secret": "左は「且」、右は「力」。", "memory": "左は「且」、右は「力」。", "clue": "左は「且」、右は「力」。"}]}
+    ]
   }
 ];
 
@@ -48,7 +70,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-09-previous';
+let CURRENT_KANJI_PACK_ID = '2026-09-21-p58';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
@@ -75,7 +97,11 @@ function kanjiTestHistory(){
   return KANJI_TEST_HISTORY.slice();
 }
 
-// Until the next range photo arrives, Test 13 remains available as the active
-// practice set. When a new weekly pack is added, only CURRENT_KANJI_PACK_ID changes;
-// Test 13 remains preserved in KANJI_PACKS/KANJI_TEST_HISTORY.
+// Preserve legacy numeric completion counters for Test 13. New packs use a
+// namespaced key in the same map; island rewards still sum every counter.
+function kanjiStageCompletionKey(index){
+  return ACTIVE_KANJI_PACK_ID === '2026-09-previous' ? String(index) : `${ACTIVE_KANJI_PACK_ID}:${index}`;
+}
+
+// Append packs and change only the current pointer; never remove old records.
 useKanjiPack(CURRENT_KANJI_PACK_ID);

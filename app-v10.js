@@ -66,16 +66,16 @@ function recommendStage(){
 function renderHome(){
   const lv=levelInfo();document.body.dataset.world=lv.world;
   $("levelNum").textContent=lv.level;$("worldName").textContent=lv.name;$("xpText").textContent=`${lv.inLevel} / ${XP_PER_LEVEL} XP`;
-  $("xpFill").style.width=`${lv.inLevel}%`;$("altitudeLabel").textContent=lv.alt;
+  $("xpFill").style.width=`${lv.inLevel}%`;if($("altitudeLabel"))$("altitudeLabel").textContent=lv.alt;
   const rec=recommendStage(),rs=QUEST_STAGES[rec],m=avgMastery(rs);
-  $("recommendWord").textContent=`${rs.icon} ${rs.answer}`;
+  $("recommendWord").textContent=`${rs.icon} ${rs.reading}${rs.okuri||''}`;
   $("recommendReason").textContent=m===0?"まだ練習していない問題。ここから始めよう！":m<45?"今いちばん伸びしろがある問題だよ。":m<78?"もう少しでマスター。もう一度やってみよう！":"忘れないように、ときどき復習しよう。";
   $("recommendBtn").dataset.stage=rec;
   $("missionGrid").innerHTML=QUEST_STAGES.map((s,i)=>{
     const m=avgMastery(s),[tag,state]=stageState(s),nh=noHelpWins(s);
-    return `<button class="missionCard" data-stage="${i}" aria-label="${esc(s.answer)}を練習">
+    return `<button class="missionCard" data-stage="${i}" aria-label="${esc(s.reading+(s.okuri||''))}を練習">
       ${nh>=2?`<div class="noHelpBadge">ノーヒント ${nh}回 ✓</div>`:""}
-      <div class="missionIcon">${s.icon}</div><div class="missionWord">${esc(s.answer)}</div><div class="missionReading">${esc(s.reading)}</div>
+      <div class="missionIcon">${s.icon}</div><div class="missionWord">${esc(s.reading+(s.okuri||''))}</div><div class="missionReading">${esc(s.reading)}</div>
       <div class="masteryRow"><div class="masteryBar"><span style="width:${m}%"></span></div><div class="masteryTag">${tag}</div></div>
     </button>`;
   }).join("");
@@ -236,7 +236,7 @@ function openReview(gain){
 }
 function nextAfterReview(){if(charIndex<QUEST_STAGES[stageIndex].chars.length-1){charIndex++;showScreen("challengeScreen");renderChar()}else finishStage()}
 function finishStage(){
-  const s=QUEST_STAGES[stageIndex];save.completedStages[stageIndex]=(save.completedStages[stageIndex]||0)+1;persist();const m=avgMastery(s),[tag]=stageState(s);
+  const s=QUEST_STAGES[stageIndex];const key=typeof kanjiStageCompletionKey==='function'?kanjiStageCompletionKey(stageIndex):stageIndex;save.completedStages[key]=(save.completedStages[key]||0)+1;persist();const m=avgMastery(s),[tag]=stageState(s);
   $("resultIcon").textContent=s.icon;$("resultTitle").textContent=`${s.answer} クリア！`;$("xpGain").textContent=`LEVEL ${levelInfo().level}`;
   $("masteryMessage").innerHTML=`習熟度 <b>${m}%</b>　${tag}<br>${m>=78?"かなり覚えてきた！おすすめ練習では出る回数が少しずつ減るよ。":"またおすすめ練習に出てくるよ。ノーヒント正解を重ねると出題頻度が下がるよ。"}`;
   showScreen("resultScreen");
