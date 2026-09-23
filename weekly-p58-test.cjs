@@ -51,6 +51,16 @@ for(let i=0;i<10;i++){
 const q5=api.questionHtml(stages[4],4);
 assert.ok(q5.includes('<span>こ</span><span>む</span>'),'Printed こむ stays outside the answer');
 assert.ok(api.focusCanvases(stages[4],4).includes('data-okuri="し"'));
+run(read('app-v235-paper-pdf.js'));
+const sheet=ctx.window.weeklyPaperHtmlV235(stages);
+assert.equal((sheet.match(/<section class="question">/g)||[]).length,10);
+assert.ok(sheet.includes('@page{size:A4 portrait;margin:11mm}'));
+assert.ok(sheet.includes('印刷・PDFとして保存'));
+assert.ok(sheet.includes('手紙で<span class="word">')&&sheet.includes('</span>こむ。'),'Printed こむ stays outside handwritten boxes');
+const paperQuestions=sheet.slice(sheet.indexOf('<div class="questions">'),sheet.indexOf('<div class="foot">'));
+for(const s of stages)assert.ok(!paperQuestions.includes(s.answer),`Paper must not reveal ${s.answer}`);
+assert.ok(read('app-v231-print-test-fix.js').includes('よみ：${stage.reading||\'\'}${stage.okuri||\'\'}'));
+assert.ok(read('index.html').includes('app-v235-paper-pdf.js?v=20260923'));
 const requested=[];
 ctx.expectedStrokes=async ch=>{requested.push(ch);return [[{x:0,y:0},{x:109,y:109}]];};
 ctx.jBBox=()=>({x:0,y:0,w:109,h:109});ctx.jShapeScore=()=>100;ctx.jCountScore=()=>100;ctx.jOrderInfo=()=>({score:100});

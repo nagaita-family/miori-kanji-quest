@@ -19,6 +19,7 @@
   box-shadow:inset 0 0 0 1px rgba(195,76,72,.06)
 }
 .focusProblemV230.integratedProblemV231>h3{font-size:12px!important;color:#7b8694!important;letter-spacing:.04em;margin:0 0 4px!important}
+.focusReadingCueV231{align-self:center;background:#fff2cf;color:#4b3d20;border:1px solid #e9cf84;border-radius:10px;padding:5px 14px;margin:2px 0 5px;font-size:18px;font-weight:900;letter-spacing:.04em;white-space:nowrap}
 .focusProblemV230.integratedProblemV231 .focusProblemSentenceV230{
   flex:1;min-height:0;justify-content:center!important;font-size:clamp(25px,3.0vh,32px)!important;line-height:1.06!important;
 }
@@ -66,6 +67,7 @@
  .integratedBlankV231.okuri .focusOkuriFrameV230{width:170px!important;height:190px!important}
  .focusControlsV230{grid-column:1!important;grid-row:2;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px!important;padding:8px!important}
  .focusControlsV230>h3,.focusControlsV230>p,.focusControlsV230>.focusNoHintV230,.focusControlsV230>.pencilModeBadgeV231{display:none!important}
+ .focusReadingCueV231{font-size:15px!important;margin:0 0 2px;padding:3px 9px}
  .focusControlsV230>button{margin:0!important;padding:9px 5px!important;font-size:12px!important}
  .focusControlsV230 .okuriChoicesHostV231{grid-column:1/-1;margin:0!important;padding:5px!important}
  .focusControlsV230 .focusDoneV230{grid-column:1/-1}
@@ -97,6 +99,13 @@
     blank.classList.add('integratedBlankV231');
     if(stage?.okuri)blank.classList.add('okuri');
     if(stage?.chars?.length===1)blank.classList.add('singleV231');
+
+    if(stage&&!problem.querySelector('.focusReadingCueV231')){
+      const cue=document.createElement('div');
+      cue.className='focusReadingCueV231';
+      cue.textContent=`よみ：${stage.reading||''}${stage.okuri||''}`;
+      problem.insertBefore(cue,problem.querySelector('.focusProblemSentenceV230'));
+    }
 
     if(stage?.okuri){
       const frame=stack.querySelector('.focusOkuriFrameV230');

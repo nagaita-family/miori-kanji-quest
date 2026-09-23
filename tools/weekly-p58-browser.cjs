@@ -70,10 +70,21 @@ async function main(){
   await p.click('#backHomeBtn');await p.waitForFunction(()=>ACTIVE_KANJI_PACK_ID===CURRENT_KANJI_PACK_ID&&document.querySelector('#homeScreen').classList.contains('active'));await p.waitForTimeout(400);
   await p.click('#weeklyStaticOpenV202');
   assert.equal(await p.locator('.testQuestionV230').count(),10);
+  const [paper]=await Promise.all([p.waitForEvent('popup'),p.click('#testPaperV230')]);
+  await paper.waitForLoadState('load');
+  assert.equal(await paper.locator('.question').count(),10);
+  assert.ok((await paper.locator('.question').nth(4).innerText()).includes('こむ。'));
+  assert.equal(await paper.locator('.question').nth(4).locator('.kanji-cell').count(),1);
+  assert.equal(await paper.locator('.question').nth(4).locator('.okuri-cell').count(),1);
+  assert.ok(!(await paper.locator('body').innerText()).includes('練習'),'Paper has no written answers');
+  if(process.env.QA_PDF_PATH)await paper.pdf({path:process.env.QA_PDF_PATH,format:'A4',printBackground:true});
+  await paper.close();
   for(let i=0;i<10;i++){
    console.log(`Browser: question ${i+1}/10`);
    await p.click(`[data-q="${i}"]`);
    await p.waitForTimeout(50);
+   assert.equal(await p.locator('.focusReadingCueV231').innerText(),`よみ：${await p.evaluate(i=>QUEST_STAGES[i].reading+ (QUEST_STAGES[i].okuri||''),i)}`);
+   await visible(p,'.focusReadingCueV231');
    if(i===4){
     assert.equal(await p.locator('.focusControlsV230 [data-okuri="し"]').count(),1,'Suffix controls beside handwriting');
     await visible(p,'.focusCanvasV230');await visible(p,'#focusDoneV230');
@@ -101,7 +112,7 @@ async function main(){
   for(const viewport of [{width:1024,height:768},{width:744,height:1133},{width:390,height:844}]){
    const q=await setup(browser,viewport);await q.click('#weeklyStaticOpenV202');
    await q.click('[data-q="4"]');await q.waitForTimeout(100);
-   await visible(q,'.focusCanvasV230');await visible(q,'#focusDoneV230');await visible(q,'#focusClearV230');
+   await visible(q,'.focusCanvasV230');await visible(q,'#focusDoneV230');await visible(q,'#focusClearV230');await visible(q,'.focusReadingCueV231');
    if(process.env.QA_SCREENSHOT_DIR)await q.screenshot({path:path.join(process.env.QA_SCREENSHOT_DIR,`p58-${viewport.width}.png`)});
    assert.deepEqual(q.errors,[]);await q.close();
   }

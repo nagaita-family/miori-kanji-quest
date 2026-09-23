@@ -84,9 +84,10 @@
   function openTest(){
     document.getElementById('printTestV230')?.remove();
     const root=document.createElement('section');root.id='printTestV230';root.className='printTestV230';
-    root.innerHTML=`<header class="testTopV230"><button id="testCloseV230" class="testCloseV230" type="button">← 空島へ</button><div><small>WEEKLY PRINT TEST</small><h1>今週の10問テスト</h1></div><div id="testProgressV230" class="testProgressV230"></div></header><main class="testDeskV230"><section class="testSheetV230"><div class="testSheetHeadV230"><h2>漢字テスト</h2><span>問題をタップすると、大きく書けるよ</span></div><div id="testGridV230" class="testGridV230"></div><div class="testBottomV230"><span>10問ぜんぶ書いてから</span><button id="testSubmitV230" class="testSubmitV230" type="button">提出して採点</button></div></section></main>`;
+    root.innerHTML=`<header class="testTopV230"><button id="testCloseV230" class="testCloseV230" type="button">← 空島へ</button><div><small>WEEKLY PRINT TEST</small><h1>今週の10問テスト</h1></div><div id="testProgressV230" class="testProgressV230"></div></header><main class="testDeskV230"><section class="testSheetV230"><div class="testSheetHeadV230"><h2>漢字テスト</h2><span>問題をタップすると、大きく書けるよ</span></div><div id="testGridV230" class="testGridV230"></div><div class="testBottomV230"><button id="testPaperV230" class="testPaperV230" type="button">🖨 A4プリント・PDF</button><button id="testSubmitV230" class="testSubmitV230" type="button">提出して採点</button></div></section></main>`;
     document.body.appendChild(root);
     document.getElementById('testCloseV230').onclick=()=>root.remove();
+    document.getElementById('testPaperV230').onclick=()=>window.openWeeklyPaperV235?.();
     document.getElementById('testSubmitV230').onclick=submitTest;
     renderSheet();
   }
