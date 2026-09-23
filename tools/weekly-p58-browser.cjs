@@ -74,24 +74,35 @@ async function main(){
   await paper.waitForLoadState('load');
   assert.equal(await paper.locator('.question').count(),10);
   assert.ok((await paper.locator('.question').nth(4).innerText()).includes('こむ。'));
-  assert.equal(await paper.locator('.question').nth(4).locator('.kanji-cell').count(),1);
-  assert.equal(await paper.locator('.question').nth(4).locator('.okuri-cell').count(),1);
-  assert.equal(await paper.locator('.question').nth(4).locator('.full-reading').innerText(),'もうし');
+  assert.equal(await paper.locator('.answer-box').count(),10,'One continuous writing rectangle per question');
+  assert.equal(await paper.locator('.okuri-cell,.kanji-cell,.okuri-box').count(),0,'No separate writing boxes');
+  assert.equal(await paper.locator('.question').nth(4).locator('.okuri-reading').innerText(),'もうし');
+  assert.equal(await paper.locator('.okuri-reading').count(),4);
+  assert.deepEqual(await paper.locator('.question').nth(4).locator('.okuri-reading').evaluate(el=>{
+   const css=getComputedStyle(el);return [css.color,css.textDecorationLine,css.textDecorationStyle];
+  }),['rgb(182, 75, 71)','underline','wavy']);
   assert.equal(await paper.locator('.question').nth(4).locator('.after').innerText(),'こむ。');
   assert.equal(await paper.locator('.question .before').first().evaluate(el=>getComputedStyle(el).writingMode),'vertical-rl');
   const positions=await Promise.all([0,1,4,5,9].map(i=>paper.locator('.question').nth(i).boundingBox()));
-  assert.ok(positions[0].x>positions[1].x&&positions[1].x>positions[2].x,'Top row runs right to left');
-  assert.ok(positions[3].y>positions[0].y&&Math.abs(positions[3].x-positions[0].x)<2,'Bottom row begins on the right');
-  assert.ok(positions[3].x>positions[4].x,'Bottom row runs right to left');
-  const kanjiBoxes=await Promise.all([0,1].map(i=>paper.locator('.question').nth(1).locator('.box').nth(i).boundingBox()));
-  assert.ok(kanjiBoxes[0].y<kanjiBoxes[1].y&&Math.abs(kanjiBoxes[0].x-kanjiBoxes[1].x)<2,'Two answer boxes stack vertically');
+  assert.ok(positions.every(p=>Math.abs(p.y-positions[0].y)<2),'All ten questions are on one row');
+  assert.ok(positions.every((p,i)=>i===0||p.x<positions[i-1].x),'Questions run right to left');
+  const boxes=await Promise.all([0,1,4].map(i=>paper.locator('.question').nth(i).locator('.answer-box').boundingBox()));
+  assert.ok(boxes.every(b=>b.width>=70&&b.height>=170),'Each rectangle is large enough for handwriting');
+  assert.ok(boxes.every(b=>Math.abs(b.width-boxes[0].width)<2&&Math.abs(b.height-boxes[0].height)<2),'Single and two-character answers share the same box');
+  for(const i of [0,4,8,9]){
+   const card=await paper.locator('.question').nth(i).boundingBox();
+   const reading=await paper.locator('.question').nth(i).locator('.okuri-reading').boundingBox();
+   const box=await paper.locator('.question').nth(i).locator('.answer-box').boundingBox();
+   assert.ok(reading.x>box.x+box.width+4,`Red reading stays clear of answer box ${i+1}`);
+   assert.ok(reading.x+reading.width+2<card.x+card.width,`Red reading stays inside question ${i+1}: ${JSON.stringify({reading,card})}`);
+  }
   assert.ok(!(await paper.locator('body').innerText()).includes('練習'),'Paper has no written answers');
   if(process.env.QA_FONT_DIR){
    const font=fs.readFileSync(path.join(process.env.QA_FONT_DIR,'files/noto-sans-jp-japanese-400-normal.woff2')).toString('base64');
    await paper.addStyleTag({content:`@font-face{font-family:"QA JP";src:url(data:font/woff2;base64,${font}) format("woff2")} .paper,.paper *{font-family:"QA JP",sans-serif!important}`});
    await paper.evaluate(()=>document.fonts.ready);
   }
-  if(process.env.QA_PDF_PATH)await paper.pdf({path:process.env.QA_PDF_PATH,format:'A4',printBackground:true});
+  if(process.env.QA_PDF_PATH)await paper.pdf({path:process.env.QA_PDF_PATH,preferCSSPageSize:true,printBackground:true});
   await paper.close();
   for(let i=0;i<10;i++){
    console.log(`Browser: question ${i+1}/10`);
