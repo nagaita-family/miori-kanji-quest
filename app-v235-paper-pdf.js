@@ -8,9 +8,10 @@
   function question(stage,index){
     const reads=stage.readingParts?.length===stage.chars.length
       ?stage.readingParts:stage.chars.map((_,i)=>i?'' :stage.reading||'');
-    const cells=stage.chars.map((_,i)=>`<span class="kanji-cell"><span class="reading">${escapeHtml(reads[i])}</span><span class="box" aria-label="漢字を記入"></span></span>`).join('');
-    const okuri=stage.okuri?`<span class="okuri-cell"><span class="reading">おくり</span><span class="okuri-box" aria-label="送り仮名を記入"></span></span>`:'';
-    return `<section class="question"><div class="number">${index+1}</div><div class="sentence">${escapeHtml(stage.before)}<span class="word">${cells}${okuri}</span>${escapeHtml(stage.after)}</div></section>`;
+    const cells=stage.chars.map((_,i)=>`<span class="kanji-cell"><span class="box" aria-label="漢字を記入"></span>${stage.okuri?'':`<span class="reading">${escapeHtml(reads[i])}</span>`}</span>`).join('');
+    const okuri=stage.okuri?'<span class="okuri-cell"><span class="okuri-box" aria-label="送り仮名を記入"></span><span class="reading">かな</span></span>':'';
+    const fullRead=stage.okuri?`<span class="reading full-reading">${escapeHtml(stage.reading||'')}${escapeHtml(stage.okuri)}</span>`:'';
+    return `<section class="question"><div class="number">${index+1}</div><div class="sentence"><span class="text-run before">${escapeHtml(stage.before)}</span><span class="word">${cells}${okuri}${fullRead}</span><span class="text-run after">${escapeHtml(stage.after)}</span></div></section>`;
   }
 
   function sheetHtml(stages){
@@ -22,15 +23,20 @@
 .head{height:18mm;display:flex;align-items:end;justify-content:space-between;border-bottom:2px solid #26374e;padding:0 1mm 2mm}
 .head h1{margin:0;font-size:20pt;letter-spacing:.07em}.head small{font-size:10pt}
 .meta{height:10mm;display:flex;align-items:center;justify-content:space-between;font-size:11pt;padding:0 1mm}.meta .line{display:inline-block;vertical-align:bottom;width:32mm;height:6mm;border-bottom:1px solid #44516a}
-.questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(5,46mm);gap:3mm 4mm}
-.question{border:1.2px solid #8493a4;border-radius:3mm;padding:2.4mm;display:flex;gap:2mm;align-items:flex-start;min-width:0;break-inside:avoid}
-.number{flex:0 0 7mm;width:7mm;height:7mm;border:1.5px solid #344053;border-radius:50%;display:grid;place-items:center;font-size:12pt;font-weight:700;line-height:1}
-.sentence{min-width:0;font-size:12pt;line-height:1.9;letter-spacing:.01em;word-break:normal;overflow-wrap:anywhere;padding-top:5mm}
-.word{display:inline-flex;align-items:end;vertical-align:middle;white-space:nowrap;margin:0 1mm}
-.kanji-cell,.okuri-cell{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom}
-.reading{display:flex;align-items:center;justify-content:center;height:5.5mm;font-size:9.5pt;line-height:1;white-space:nowrap}
-.box{width:19mm;height:19mm;border:1.4px solid #354154;background:linear-gradient(to right,transparent calc(50% - .25px),#e5e8ed 50%,transparent calc(50% + .25px)),linear-gradient(to bottom,transparent calc(50% - .25px),#e5e8ed 50%,transparent calc(50% + .25px))}
-.kanji-cell+.kanji-cell .box{border-left:0}.okuri-cell{margin-left:1mm}.okuri-cell .reading{font-size:7.5pt}.okuri-box{width:11mm;height:19mm;border:1px solid #8290a2}
+.questions{display:grid;direction:rtl;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(2,118mm);gap:3mm}
+.question{direction:ltr;position:relative;border:1.2px solid #8493a4;border-radius:3mm;padding:2mm;display:flex;justify-content:center;min-width:0;break-inside:avoid}
+.number{position:absolute;top:2mm;right:2mm;width:7mm;height:7mm;border:1.5px solid #344053;border-radius:50%;display:grid;place-items:center;font-size:12pt;font-weight:700;line-height:1}
+.sentence{display:flex;flex-direction:column;align-items:center;min-width:0;width:100%;padding-top:10mm;font-size:14pt;line-height:1.25}
+.text-run{writing-mode:vertical-rl;text-orientation:mixed;white-space:nowrap}
+.text-run:empty{display:none}
+.word{display:flex;flex-direction:column;align-items:center;position:relative;margin:2mm 0;flex:none}
+.kanji-cell,.okuri-cell{position:relative;display:block;width:19mm;flex:none}
+.kanji-cell{height:19mm}.okuri-cell{height:10mm}
+.reading{position:absolute;top:50%;left:calc(100% + 1mm);transform:translateY(-50%);writing-mode:vertical-rl;text-orientation:upright;font-size:9pt;line-height:1;white-space:nowrap}
+.word>.full-reading{top:0;left:calc(100% + 1mm);transform:none}
+.okuri-cell .reading{font-size:7pt}
+.box{display:block;width:19mm;height:19mm;border:1.4px solid #354154;background:linear-gradient(to right,transparent calc(50% - .25px),#e5e8ed 50%,transparent calc(50% + .25px)),linear-gradient(to bottom,transparent calc(50% - .25px),#e5e8ed 50%,transparent calc(50% + .25px))}
+.kanji-cell+.kanji-cell .box{border-top:0}.okuri-cell .okuri-box{display:block;width:19mm;height:10mm;border:1px solid #8290a2}
 .foot{font-size:9pt;text-align:right;margin-top:3mm;color:#627185}
 @media print{html,body{width:210mm;background:white}.toolbar{display:none}.paper{width:188mm;min-height:0;margin:0;box-shadow:none}.question{border-color:#697583}.foot{color:#454545}}
 @media screen and (max-width:750px){.paper{margin:8px auto}.toolbar{padding:8px}}

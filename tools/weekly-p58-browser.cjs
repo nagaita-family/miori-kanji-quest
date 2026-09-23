@@ -76,7 +76,21 @@ async function main(){
   assert.ok((await paper.locator('.question').nth(4).innerText()).includes('こむ。'));
   assert.equal(await paper.locator('.question').nth(4).locator('.kanji-cell').count(),1);
   assert.equal(await paper.locator('.question').nth(4).locator('.okuri-cell').count(),1);
+  assert.equal(await paper.locator('.question').nth(4).locator('.full-reading').innerText(),'もうし');
+  assert.equal(await paper.locator('.question').nth(4).locator('.after').innerText(),'こむ。');
+  assert.equal(await paper.locator('.question .before').first().evaluate(el=>getComputedStyle(el).writingMode),'vertical-rl');
+  const positions=await Promise.all([0,1,4,5,9].map(i=>paper.locator('.question').nth(i).boundingBox()));
+  assert.ok(positions[0].x>positions[1].x&&positions[1].x>positions[2].x,'Top row runs right to left');
+  assert.ok(positions[3].y>positions[0].y&&Math.abs(positions[3].x-positions[0].x)<2,'Bottom row begins on the right');
+  assert.ok(positions[3].x>positions[4].x,'Bottom row runs right to left');
+  const kanjiBoxes=await Promise.all([0,1].map(i=>paper.locator('.question').nth(1).locator('.box').nth(i).boundingBox()));
+  assert.ok(kanjiBoxes[0].y<kanjiBoxes[1].y&&Math.abs(kanjiBoxes[0].x-kanjiBoxes[1].x)<2,'Two answer boxes stack vertically');
   assert.ok(!(await paper.locator('body').innerText()).includes('練習'),'Paper has no written answers');
+  if(process.env.QA_FONT_DIR){
+   const font=fs.readFileSync(path.join(process.env.QA_FONT_DIR,'files/noto-sans-jp-japanese-400-normal.woff2')).toString('base64');
+   await paper.addStyleTag({content:`@font-face{font-family:"QA JP";src:url(data:font/woff2;base64,${font}) format("woff2")} .paper,.paper *{font-family:"QA JP",sans-serif!important}`});
+   await paper.evaluate(()=>document.fonts.ready);
+  }
   if(process.env.QA_PDF_PATH)await paper.pdf({path:process.env.QA_PDF_PATH,format:'A4',printBackground:true});
   await paper.close();
   for(let i=0;i<10;i++){
