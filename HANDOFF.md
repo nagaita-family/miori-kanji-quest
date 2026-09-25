@@ -63,3 +63,4 @@
 - 10問テスト結果は従来の `save.printTestsV230[packId]` を使用。1問練習は `save.schoolPracticeV236[packId]` に最終日時・問題番号のみ。どちらも `save.stats` / `save.okuriStats` / 漢検島を変更しない。旧週テストは従来のv230画面へ戻る。
 - `app-v235-paper-pdf.js` は同じ `schoolTest` のかな文と線種をA4横へ描画し、複数targetを別々の仕切りのない長方形へ記入。直線は黒、波線は赤。正答・筆跡・採点結果は印刷しない。旧週の印刷は旧形式のまま。
 - 回帰: `school-structure-test.cjs` と既存のルート `*.cjs`。実画面・PDF回帰用 `tools/school-test-browser.cjs` は1024×768と744×1133を確認する。iPad実機は未確認。現在のWork環境に残っていたChromium実行ファイルは起動時SIGSEGVとなったため、ブラウザ回帰の実施結果は別途記録すること。
+- 公開サイトのブラウザ確認（通常のデスクトップ画面）: 10問のかな文と線種、⑧の直線4漢字入力から波線「かよう」への切替、1問練習の入口、A4プレビューを確認。A4画面は右→左10問・計20個の記入欄・直線11・波線9、正答なし。ローカルChromiumが起動できなかったため `tools/school-test-browser.cjs` は未実行で、1024×768・744×1133の自動操作と実際のPDFファイルのページ数確認は今回未完了。
