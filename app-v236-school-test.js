@@ -53,6 +53,7 @@
 .schoolWriteV236{align-items:flex-end;padding-right:4px}
 .schoolWriteV236 h2,.schoolWriteV236 p{align-self:center}
 .schoolCanvasesV236{align-items:flex-end}
+.schoolProblemV236 .schoolSentenceV236{align-self:flex-start;margin-left:2px}
 .schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(520px,60dvh);background:#fff}
 .schoolWavyV236 .schoolCanvasWrapV236 canvas,.schoolFocusV236.schoolWavyV236:not(.schoolFullV236) .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
 .schoolVerifyCardV236 .strokes.wavyV236 img{height:min(32vh,230px);width:auto;max-width:85%}
@@ -98,7 +99,15 @@
     const finish=e=>{if(!drawing||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();drawing=false;pointerId=null;current=null;redrawCanvas(c,a.strokes[ci])};
     c.onpointerup=finish;c.onpointercancel=finish;c.onlostpointercapture=finish;
   }
-  function redrawCanvas(c,strokes){const x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.lineWidth=13;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#17202d';x.fillStyle='#17202d';strokes.forEach(s=>{if(!s.length)return;if(s.length===1){x.beginPath();x.arc(s[0].x,s[0].y,6,0,Math.PI*2);x.fill();return}x.beginPath();x.moveTo(s[0].x,s[0].y);s.slice(1).forEach(p=>x.lineTo(p.x,p.y));x.stroke()})}
+  function redrawCanvas(c,strokes){
+    const x=c.getContext('2d'),r=c.getBoundingClientRect(),w=r.width||c.width,h=r.height||c.height;
+    x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,c.width,c.height);
+    // Draw in displayed pixels so a tall answer box uses the same pen width as a square box.
+    x.setTransform(c.width/w,0,0,c.height/h,0,0);
+    x.lineWidth=3.25;x.lineCap='round';x.lineJoin='round';x.strokeStyle='#17202d';x.fillStyle='#17202d';
+    const point=p=>({x:p.x*w/c.width,y:p.y*h/c.height});
+    strokes.forEach(s=>{if(!s.length)return;const first=point(s[0]);if(s.length===1){x.beginPath();x.arc(first.x,first.y,x.lineWidth/2,0,Math.PI*2);x.fill();return}x.beginPath();x.moveTo(first.x,first.y);s.slice(1).forEach(p=>{const at=point(p);x.lineTo(at.x,at.y)});x.stroke()});
+  }
   function redraw(){const a=focus.full?fullAnswers[focus.q]:answers[focus.q][focus.k];byId('schoolFocusV236')?.querySelectorAll('canvas').forEach(c=>redrawCanvas(c,a.strokes[Number(c.dataset.ci)]))}
   function snapshot(){const a=focus.full?fullAnswers[focus.q]:answers[focus.q][focus.k];byId('schoolFocusV236')?.querySelectorAll('canvas').forEach(c=>a.images[Number(c.dataset.ci)]=a.strokes[Number(c.dataset.ci)].length?c.toDataURL('image/png'):'')}
   ['selectstart','dragstart','contextmenu'].forEach(type=>document.addEventListener(type,e=>{if(e.target.closest?.('#schoolV236,#schoolFocusV236,#schoolVerifyV236'))e.preventDefault()},{capture:true}));
