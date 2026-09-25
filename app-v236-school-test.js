@@ -47,6 +47,8 @@
 .schoolQV236 .schoolFullBoxV236{width:clamp(30px,3.6vw,51px);height:clamp(88px,12vw,145px)}
 @media(max-width:800px){.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(130px,185px);grid-template-rows:minmax(0,1fr) auto}.schoolProblemV236 .schoolSentenceV236{font-size:clamp(14px,1.8vh,18px)}.schoolCanvasWrapV236 canvas{width:clamp(94px,12vh,130px);height:clamp(94px,12vh,130px)}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(335px,47vw);height:min(570px,65dvh)}}
 @media(max-width:600px){.schoolCardV236{grid-template-columns:minmax(0,1fr) 120px;grid-template-rows:minmax(0,1fr) auto}.schoolProblemV236 .schoolSentenceV236{font-size:14px}.schoolControlV236{grid-column:1/-1;grid-row:2}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(225px,51vw);height:min(540px,61dvh)}}
+.schoolFocusV236:not(.schoolFullV236) .schoolCanvasesV236{overflow:visible;flex-shrink:1}
+.schoolFocusV236:not(.schoolFullV236) .schoolCanvasWrapV236 canvas{width:clamp(112px,14.5dvh,130px);height:clamp(112px,14.5dvh,130px)}
 `;document.head.appendChild(style);
   function start(test=true){if(!available())return window.openPrintTestV230Legacy?.();mode=test?'test':'single';answers=questions().map(row=>row.filter(s=>s.lineType).map(record));fullAnswers=questions().map(()=>({strokes:[[]],images:[],result:null}));pencilSeen=false;selected=0;render();}
   function render(){
