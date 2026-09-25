@@ -13,18 +13,19 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
   const p=await setup(browser,v);
   const initial=await p.evaluate(()=>({stats:JSON.stringify(save.stats),okuri:JSON.stringify(save.okuriStats),kanken:JSON.stringify(save.kanken9V280)}));
   await p.evaluate(()=>window.gradeKanjiStrokeV230=async()=>({pass:true,total:100}));
-  await p.click('#schoolPracticeButtonV236');await p.click('.schoolQV236[data-q="7"]');
-  assert.equal(await p.locator('#schoolFocusV236 canvas').count(),4);
-  assert.equal(await p.locator('#schoolFocusV236 .schoolPaperBodyV236').count(),1);
-  assert.equal(await p.locator('#schoolFocusV236 .schoolWriteV236 h2').count(),0,'The canvas has no large horizontal instruction');
-  await adjacent(p);
-  await visible(p,'#schoolFocusV236 canvas');await visible(p,'#schoolClearV236');await visible(p,'#schoolNextV236');
-  assert.ok(!(await p.locator('#schoolFocusV236').innerText()).includes('水泳教室'));
-  await ink(p);await p.click('#schoolNextV236');assert.ok((await p.locator('#schoolFocusV236 .schoolFlowReadingV236').innerText()).includes('かよう'));
-  assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);const wavy=await adjacent(p);assert.ok(wavy.height>wavy.width*2,'Wavy answer has one tall box');assert.equal(await p.locator('#schoolFocusV236 canvas').evaluate(c=>getComputedStyle(c).backgroundImage),'none');await ink(p);await p.click('#schoolNextV236');
-  await p.waitForSelector('#schoolVerifyV236');assert.ok((await p.locator('#schoolVerifyV236').innerText()).includes('通う'));
-  await p.click('#schoolNoV236');await p.click('#schoolResultCloseV236');await p.click('#schoolCloseV236');
+  assert.equal(await p.locator('#schoolPracticeButtonV236').count(),0,'There is one visible entry');
   await p.click('#weeklyStaticOpenV202');assert.equal(await p.locator('.schoolQV236').count(),10);
+  await p.click('.schoolQV236[data-q="2"]');assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1,'兄 is one answer');await adjacent(p);await ink(p);await p.click('#schoolNextV236');
+  assert.ok((await p.locator('#schoolFocusV236 .schoolFlowReadingV236').innerText()).includes('じょげん'));
+  assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1,'助言 is one canvas');const multi=await adjacent(p);assert.ok(multi.height>multi.width*2);assert.ok(!(await p.locator('#schoolFocusV236').innerText()).includes('助言'));
+  await ink(p);await p.click('#schoolNextV236');assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1,'聞く is one canvas');await ink(p);await p.click('#schoolNextV236');
+  assert.ok((await p.locator('.schoolQV236[data-q="2"] .schoolDoneV236').innerText()).includes('記入ずみ'));
+  await p.click('#schoolSubmitV236');assert.equal(await p.locator('.schoolComparisonV236').count(),1);
+  assert.ok((await p.locator('.schoolComparisonV236 .compare').innerText()).includes('兄'));
+  await p.click('#schoolAgainV236');assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);await ink(p);await p.click('#schoolNextV236');
+  let partial=0;while(await p.locator('#schoolYesV236').count()){await p.click('#schoolYesV236');partial++;assert.ok(partial<=3)}assert.equal(partial,3,'All targets in one completed question compare');
+  assert.equal(await p.locator('.schoolScoreV236').innerText(),'1 / 1');await p.click('#schoolResultCloseV236');
+  assert.equal(await p.evaluate(()=>save.printTestsV230?.['2026-09-21-p58']?.runs||0),0,'Partial review is not a ten-question run');
   const [paper]=await Promise.all([p.waitForEvent('popup'),p.click('#schoolPaperV236')]);await paper.waitForLoadState();
   assert.equal(await paper.locator('.question').count(),10);assert.equal(await paper.locator('.answer-box').count(),10);
   assert.equal(await paper.locator('.question').nth(7).locator('.print-mark.wavy').innerText(),'かよう');
@@ -35,12 +36,17 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await paper.pdf({path:process.env.QA_PDF_PATH,preferCSSPageSize:true,printBackground:true});
   }
   await paper.close();assert.equal(await p.evaluate(()=>JSON.stringify(save)),before,'Print has no storage side effects');
-  for(let q=0;q<10;q++){await p.click(`.schoolQV236[data-q="${q}"]`);assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);await visible(p,'#schoolFocusV236 canvas');if(q===0){const whole=await adjacent(p);assert.ok(whole.height>whole.width*1.8,'Ten-question answer is narrower and taller');assert.equal(await p.locator('#schoolFocusV236 canvas').evaluate(c=>getComputedStyle(c).backgroundImage),'none')}await ink(p);await p.click('#schoolNextV236')}
+  for(let q=0;q<10;q++){
+   if(q===2)continue;
+   await p.click(`.schoolQV236[data-q="${q}"]`);
+   const n=await p.evaluate(q=>window.schoolTestModelV236.targets(q).length,q);
+   for(let k=0;k<n;k++){assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);await adjacent(p);await visible(p,'#schoolFocusV236 canvas');await ink(p);await p.click('#schoolNextV236')}
+  }
   assert.equal(await p.evaluate(()=>window.getSelection().toString()),'','Pencil strokes do not select surrounding text');
-  await p.click('#schoolSubmitV236');let count=0;while(await p.locator('#schoolYesV236').count()){await p.click('#schoolYesV236');count++;assert.ok(count<=10)}
-  assert.equal(count,10,'All whole sentences need human comparison');assert.equal(await p.locator('.schoolScoreV236').innerText(),'10 / 10');
+  await p.click('#schoolSubmitV236');let count=0;while(await p.locator('#schoolYesV236').count()){await p.click('#schoolYesV236');count++;assert.ok(count<=20)}
+  assert.equal(count,20,'All twenty marked lines compare as whole targets');assert.equal(await p.locator('.schoolScoreV236').innerText(),'10 / 10');
   const after=await p.evaluate(()=>save);assert.deepEqual(after.stats,JSON.parse(initial.stats));assert.deepEqual(after.okuriStats,JSON.parse(initial.okuri));assert.deepEqual(after.kanken9V280,JSON.parse(initial.kanken));assert.deepEqual(after.printTestsV230['2026-09-previous'],seed.printTestsV230['2026-09-previous']);
-  assert.deepEqual(p.errors,[]);await p.close();console.log(`PASS vertical full-sentence worksheet ${v.width}x${v.height}: Pencil, manual review, paper, storage`);
+  assert.deepEqual(p.errors,[]);await p.close();console.log(`PASS unified school worksheet ${v.width}x${v.height}: Pencil, manual review, paper, storage`);
  }
 }finally{await browser.close();server.close()}}
 main().catch(e=>{console.error(e);server.close();process.exitCode=1});
