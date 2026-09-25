@@ -10,7 +10,7 @@ assert.match(css,/\.is-returning \.k9FlightPlaneV293/);
 assert.match(css,/@keyframes k9ReturnFlightV294/);
 assert.ok(loader.includes('kanken9-travel-v293.js?v=2940'));
 assert.ok(loader.includes('kanken9-return-v294.css?v=2940'));
-assert.ok(html.includes('app-v240-release.js?v=2940')&&html.includes('v2.9.4'));
+assert.ok(html.includes('app-v240-release.js?v=2941')&&html.includes('v2.9.4'));
 assert.ok(!source.includes('save.')&&!source.includes('persist('),'Navigation must not change progress');
 function simulate(){
  let homeActive=true,islandActive=false,opened=0,homed=0,reduced=false;

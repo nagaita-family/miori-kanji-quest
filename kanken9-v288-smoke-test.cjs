@@ -80,6 +80,6 @@ assert.ok(css.includes('.k9ExamClear')&&css.includes('.k9cErase')&&css.includes(
 assert.ok(!fs.readFileSync('kanken9-layout-v288.js','utf8').includes('MutationObserver'));
 for(const f of ['kanken9-layout-v288.js?v=2910','kanken9-layout-v288.css?v=2880','kanken9-paper-nearby-v289.css?v=2900','kanken9-paper-flow-v291.css?v=2920'])assert.ok(loader.includes(f),'Loader must load '+f);
 assert.ok(loader.indexOf('kanken9-paper-guard-v287.js')<loader.indexOf('kanken9-layout-v288.js'),'Layout repair follows previous guards');
-assert.ok(html.includes('app-v240-release.js?v=2940')&&html.includes('v2.9.4'));
+assert.ok(html.includes('app-v240-release.js?v=2941')&&html.includes('v2.9.4'));
 for(const hook of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${hook}"`),'Original school study retains '+hook);
 console.log('PASS v2.9.4: VI examples detached on daily and mock papers, Pencil and eraser identities preserved, no extra blanks, fresh loader and school hooks.');

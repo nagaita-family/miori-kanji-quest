@@ -92,3 +92,4 @@
 - 答え合わせは線単位で左に筆跡、右に縦書き正答。○・△・もう一回を下に配置し、もう一回では同じtargetの筆跡を消して書き直せる。結果画面は記入済みの問題数を表示し、問題内の全targetが○ならその問題を○とする。
 - 途中の答え合わせは `schoolPracticeV236` の最終日時と問題番号だけ保存し、週別テスト回数を増やさない。10問全て記入して答え合わせした場合だけ、従来の `printTestsV230[packId]` の `best/runs/last/at` を更新する。`stats`、`okuriStats`、漢検島、旧週データには触れない。A4横印刷も変更しない。
 - 回帰は `school-structure-test.cjs` と `tools/school-test-browser.cjs` を新仕様へ更新。ブラウザ実機と指定viewportの実施状況は公開確認後に記録する。
+- ホームの静的HTMLだけでは旧 `app-v204-patch.js` と `app-v240-release.js` の再描画がボタンを「テストする」に戻す。現行パックの表示名・案内・ボタンは `app-v240-release.js` の `refresh()` にも反映し、旧週の表示とクリック配線を維持する。
