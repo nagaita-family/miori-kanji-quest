@@ -36,6 +36,20 @@ const KANJI_PACKS = [
     source: '教材58ページ・上半分「書く」',
     addedAt: '2026-09-21',
     status: 'current',
+    // Segments transcribed from the returned school Test 14. Only marked
+    // segments are targets; the ordinary weekly stages below stay intact.
+    schoolTest: [
+      [{text:'うみ',lineType:'straight',answer:'海'},{text:'で'},{text:'およぐ',lineType:'wavy',answer:'泳ぐ',kanji:'泳',okuri:'ぐ'},{text:'。'}],
+      [{text:'サッカーの'},{text:'れんしゅう',lineType:'straight',answer:'練習'},{text:'をする。'}],
+      [{text:'あに',lineType:'straight',answer:'兄'},{text:'の'},{text:'じょげん',lineType:'straight',answer:'助言'},{text:'を'},{text:'きく',lineType:'wavy',answer:'聞く',kanji:'聞',okuri:'く'},{text:'。'}],
+      [{text:'どうわ',lineType:'straight',answer:'童話'},{text:'の'},{text:'えほん',lineType:'straight',answer:'絵本'},{text:'を'},{text:'よむ',lineType:'wavy',answer:'読む',kanji:'読',okuri:'む'},{text:'。'}],
+      [{text:'てがみ',lineType:'straight',answer:'手紙'},{text:'で'},{text:'もうしこむ',lineType:'wavy',answer:'申し込む',kanji:'申込',kana:'しむ'},{text:'。'}],
+      [{text:'しょくひん',lineType:'straight',answer:'食品'},{text:'を'},{text:'うる',lineType:'wavy',answer:'売る',kanji:'売',okuri:'る'},{text:'。'}],
+      [{text:'しょうひん',lineType:'straight',answer:'商品'},{text:'を'},{text:'かう',lineType:'wavy',answer:'買う',kanji:'買',okuri:'う'},{text:'。'}],
+      [{text:'すいえいきょうしつ',lineType:'straight',answer:'水泳教室'},{text:'に'},{text:'かよう',lineType:'wavy',answer:'通う',kanji:'通',okuri:'う'},{text:'。'}],
+      [{text:'アイデアを'},{text:'ねる',lineType:'wavy',answer:'練る',kanji:'練',okuri:'る'},{text:'。'}],
+      [{text:'こ',lineType:'straight',answer:'子'},{text:'ねこを'},{text:'たすける',lineType:'wavy',answer:'助ける',kanji:'助',okuri:'ける'},{text:'。'}]
+    ],
     // Q5: write 申 + choose し; こむ is printed in after, never graded as 込.
     stages: [
       {"reading": "およ", "readingParts": ["およ"], "before": "海で", "after": "。", "answer": "泳", "icon": "🏊", "targetType": "core", "okuri": "ぐ", "okuriChoices": ["ぐ", "よぐ", "およぐ"], "chars": [{"char": "泳", "secret": "左は「さんずい」、右は「永」。", "memory": "左は「さんずい」、右は「永」。", "clue": "左は「さんずい」、右は「永」。"}]},
@@ -65,6 +79,12 @@ const KANJI_TEST_HISTORY = [
       '区切るは「区」だけでなく「切」まで語として練習する。',
       '今後はテスト結果を蓄積し、学期末復習・テストがない週の復習・親向け印刷教材に再利用する。'
     ]
+  },
+  {
+    id: 'kanji-test-14', testNo: 14, packId: '2026-09-21-p58',
+    source: 'ぐんぐん58 / 漢字テスト14', returnedAt: '2026-09-25',
+    score: 85, reviewTargets: [],
+    notes: ['返却答案の記録のみ。習熟度・おすすめ順には反映しない。']
   }
 ];
 

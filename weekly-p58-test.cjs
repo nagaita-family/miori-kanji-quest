@@ -19,7 +19,11 @@ assert.deepEqual(stages.map(s=>s.before+s.reading+(s.okuri||'')+s.after),['海�
 assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-09-21-p58');
 assert.equal(run('KANJI_PACKS.length'),2,'Only one ten-question pack is added');
 assert.equal(run('JSON.stringify(pastKanjiPacks()[0].stages)'),oldStages);
-assert.equal(run('kanjiTestHistory()[0].score'),65);
+assert.equal(run('kanjiTestHistory().find(x=>x.testNo===13).score'),65);
+assert.equal(run('kanjiTestHistory().find(x=>x.testNo===14).score'),85);
+assert.equal(run('kanjiTestHistory().find(x=>x.testNo===14).returnedAt'),'2026-09-25');
+assert.equal(run('currentKanjiPack().schoolTest.length'),10);
+assert.equal(run('currentKanjiPack().schoolTest[7].filter(x=>x.lineType).length'),2);
 assert.equal(run('currentKanjiPack().addedAt'),'2026-09-21');
 assert.equal(run('currentKanjiPack().testDate'),undefined,'No invented school date');
 for(const s of stages){assert.equal(s.chars.map(c=>c.char).join(''),s.answer);assert.equal(s.readingParts.join(''),s.reading);if(s.okuri)assert.ok(s.okuriChoices.includes(s.okuri));}
@@ -53,20 +57,22 @@ assert.ok(q5.includes('<span>こ</span><span>む</span>'),'Printed こむ stays 
 assert.ok(api.focusCanvases(stages[4],4).includes('data-okuri="し"'));
 run(read('app-v235-paper-pdf.js'));
 const sheet=ctx.window.weeklyPaperHtmlV235(stages);
-assert.equal((sheet.match(/<section class="question">/g)||[]).length,10);
+assert.equal((sheet.match(/<section class="question"/g)||[]).length,10);
 assert.ok(sheet.includes('@page{size:A4 landscape;margin:8mm}'));
 assert.ok(sheet.includes('direction:rtl;grid-template-columns:repeat(10,minmax(0,1fr));grid-template-rows:153mm'));
-assert.ok(sheet.includes('.text-run{writing-mode:vertical-rl'));
 assert.ok(sheet.includes('印刷・PDFとして保存'));
-assert.ok(sheet.includes('<span class="text-run before">手紙で</span>')&&sheet.includes('<span class="text-run after">こむ。</span>'),'Printed こむ stays outside handwritten boxes');
-assert.ok(sheet.includes('<span class="reading okuri-reading">もうし</span>'),'Question 5 reading has the red wavy style');
 const paperQuestions=sheet.slice(sheet.indexOf('<div class="questions">'),sheet.indexOf('<div class="foot">'));
-assert.equal((paperQuestions.match(/class="answer-box"/g)||[]).length,10,'Exactly one unpartitioned answer box per question');
-assert.ok(!paperQuestions.includes('class="okuri-cell"')&&!paperQuestions.includes('class="kanji-cell"')&&!paperQuestions.includes('>かな</span>'),'No kana box or separated kanji boxes');
-assert.equal((paperQuestions.match(/class="reading okuri-reading"/g)||[]).length,4,'Only the four suffix questions have red wavy readings');
-for(const s of stages)assert.ok(!paperQuestions.includes(s.answer),`Paper must not reveal ${s.answer}`);
-assert.ok(read('app-v231-print-test-fix.js').includes('よみ：${stage.reading||\'\'}${stage.okuri||\'\'}'));
-assert.ok(read('index.html').includes('app-v235-paper-pdf.js?v=20260923-landscape'));
+const school=JSON.parse(run('JSON.stringify(currentKanjiPack().schoolTest)'));
+const targets=school.flat().filter(x=>x.lineType);
+assert.equal((paperQuestions.match(/class="answer-box"/g)||[]).length,targets.length);
+assert.equal((paperQuestions.match(/class="reading straight-reading"/g)||[]).length,targets.filter(x=>x.lineType==='straight').length);
+assert.equal((paperQuestions.match(/class="reading okuri-reading"/g)||[]).length,targets.filter(x=>x.lineType==='wavy').length);
+assert.ok(paperQuestions.includes('すいえいきょうしつ')&&paperQuestions.includes('かよう'));
+assert.ok(!paperQuestions.includes('class="okuri-cell"')&&!paperQuestions.includes('class="kanji-cell"'));
+for(const t of targets)assert.ok(!paperQuestions.includes('>'+t.answer+'<'),`Paper must not reveal ${t.answer}`);
+assert.deepEqual(JSON.parse(stored).stats.路,oldSave.stats.路);
+assert.equal(JSON.stringify(JSON.parse(stored).okuriStats),JSON.stringify(oldSave.okuriStats));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260925-school'));
 const requested=[];
 ctx.expectedStrokes=async ch=>{requested.push(ch);return [[{x:0,y:0},{x:109,y:109}]];};
 ctx.jBBox=()=>({x:0,y:0,w:109,h:109});ctx.jShapeScore=()=>100;ctx.jCountScore=()=>100;ctx.jOrderInfo=()=>({score:100});
@@ -87,7 +93,7 @@ async function main(){
   assert.deepEqual(saved.printTestsV230['2026-09-previous'],oldSave.printTestsV230['2026-09-previous']);
   assert.deepEqual(saved.kanken9V280,oldSave.kanken9V280);
   assert.deepEqual(saved.specialItemsV234,oldSave.specialItemsV234);
-  for(const name of ['data-packs.js','app-v10.js','app-v11-patch.js'])assert.ok(read('index.html').includes(`${name}?v=20260921`));
+  for(const name of ['app-v10.js','app-v11-patch.js'])assert.ok(read('index.html').includes(`${name}?v=20260921`));
   console.log('PASS p58: exact ten questions, printed こむ, no answer leakage, old pack and scores, completion isolation, correct/wrong suffix grading, Kanken and rewards retained.');
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

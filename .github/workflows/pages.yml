@@ -60,11 +60,15 @@ jobs:
       - name: Validate school weekly pack and remaining regressions
         run: |
           node --check data-packs.js
+          node --check app-v230-print-test.js
+          node --check app-v235-paper-pdf.js
+          node --check app-v236-school-test.js
           node --check app-v10.js
           node --check app-v11-patch.js
           node --check app-v231-print-test-fix.js
           node --check app-v203-patch.js
           node weekly-p58-test.cjs
+          node school-structure-test.cjs
           node kanken9-v286-smoke-test.cjs
           node kanken9-travel-v293.test.cjs
 

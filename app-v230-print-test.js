@@ -197,6 +197,8 @@
   }
 
   installStyles();
+  // Shared stroke judge for the optional school worksheet targets.
+  window.gradeKanjiStrokeV230=gradeChar;
   window.openPrintTestV230=openTest;
   if(location.pathname.endsWith('/test-v230.html')||location.pathname.endsWith('test-v230.html'))setTimeout(openTest,650);
 })();

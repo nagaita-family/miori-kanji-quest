@@ -6,6 +6,14 @@
   }
 
   function question(stage,index){
+    const segments=typeof currentKanjiPack==='function'?currentKanjiPack().schoolTest?.[index]:null;
+    if(segments && typeof ACTIVE_KANJI_PACK_ID!=='undefined' && ACTIVE_KANJI_PACK_ID===CURRENT_KANJI_PACK_ID){
+      const count=segments.filter(s=>s.lineType).length;
+      const runs=segments.map(s=>s.lineType
+        ? `<span class="word"><span class="answer-box" aria-label="指定されたところを記入"></span><span class="reading ${s.lineType==='wavy'?'okuri-reading':'straight-reading'}">${escapeHtml(s.text)}</span></span>`
+        : `<span class="text-run">${escapeHtml(s.text)}</span>`).join('');
+      return `<section class="question" data-target-count="${count}"><div class="number">${index+1}</div><div class="sentence">${runs}</div></section>`;
+    }
     const reading=escapeHtml(`${stage.reading||''}${stage.okuri||''}`);
     return `<section class="question"><div class="number">${index+1}</div><div class="sentence"><span class="text-run before">${escapeHtml(stage.before)}</span><span class="word"><span class="answer-box" aria-label="漢字${stage.okuri?'と送り仮名':''}を記入"></span><span class="reading${stage.okuri?' okuri-reading':''}">${reading}</span></span><span class="text-run after">${escapeHtml(stage.after)}</span></div></section>`;
   }
@@ -27,7 +35,10 @@
 .text-run:empty{display:none}
 .word{position:relative;display:block;width:19mm;height:48mm;flex:none;margin:2mm 5mm 2mm 0}
 .answer-box{display:block;width:19mm;height:48mm;border:1.5px solid #354154;background:#fff}
+.question[data-target-count="2"] .word,.question[data-target-count="2"] .answer-box{height:31mm}
+.question[data-target-count="3"] .word,.question[data-target-count="3"] .answer-box{height:24mm}
 .reading{position:absolute;top:2mm;left:calc(100% + .5mm);writing-mode:vertical-rl;text-orientation:upright;font-size:9pt;line-height:1;white-space:nowrap}
+.straight-reading{text-decoration:underline solid #273446 1.5px;text-underline-position:left;text-underline-offset:1px}
 .okuri-reading{left:calc(100% + 2.5mm);color:#b64b47;background:#fff1ef;text-decoration:underline wavy #d95d57 1.5px;text-underline-position:left;text-underline-offset:0;border-radius:2px;padding:1mm 0;font-size:8.5pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .foot{font-size:9pt;text-align:right;margin-top:3mm;color:#627185}
 @media print{html,body{width:297mm;background:white}.toolbar{display:none}.paper{width:281mm;min-height:0;margin:0;box-shadow:none}.question{border-color:#697583}.foot{color:#454545}}
