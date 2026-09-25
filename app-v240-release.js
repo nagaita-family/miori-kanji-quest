@@ -2,7 +2,7 @@
 (() => {
   const VERSION='v2.9.4';
   function setVersion(){const v=document.querySelector('.hero .eyebrow span');if(v)v.textContent=VERSION;const f=document.querySelector('.buildFlagV202');if(f)f.textContent=`NEW ${VERSION}`;document.title=`Miori Kanji Quest ${VERSION}`;window.MioriReleaseVersion=VERSION;}
-  const schoolWeek=()=>window.schoolTestModelV236&&typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID==='2026-09-21-p58';
+  const schoolWeek=()=>window.schoolTestModelV236&&typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&typeof CURRENT_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID===CURRENT_KANJI_PACK_ID&&typeof currentKanjiPack==='function'&&!!currentKanjiPack()?.schoolTest;
   function polishWeekly(){const n=document.querySelector('.weeklyStaticNoteV202');if(n)n.textContent=schoolWeek()?'線のところを書いて、好きなところで答え合わせ！':'10問をプリントみたいにまとめて書いて、最後に採点！';const s=document.querySelector('.weeklyCardCopyV20 small');if(s)s.textContent=schoolWeek()?'学校と同じ形で練習しよう':'学校のテストに近い形で今週の漢字をチェック！';const b=document.querySelector('.weeklyCardCopyV20 b');if(b&&schoolWeek())b.textContent='今週の学校テスト';}
   function wirePrint(){const old=document.getElementById('weeklyStaticOpenV202');if(!old)return;if(old.dataset.v270wired==='1'){if(schoolWeek())old.textContent='やってみる';return}const b=old.cloneNode(true);b.dataset.v204wired='1';b.dataset.v240wired='1';b.dataset.v250wired='1';b.dataset.v251wired='1';b.dataset.v252wired='1';b.dataset.v260wired='1';b.dataset.v261wired='1';b.dataset.v270wired='1';b.textContent=schoolWeek()?'やってみる':'プリントでテスト';old.replaceWith(b);b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(typeof window.openPrintTestV230==='function')window.openPrintTestV230();});}
   function paperStyles(){
