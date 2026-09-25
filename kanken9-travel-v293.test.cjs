@@ -51,6 +51,6 @@ assert.match(css,/\.k9IslandStageV293 \.k9Scene/);
 assert.match(loader,/kanken9-travel-v293\.js\?v=2940/);
 assert.match(loader,/kanken9-travel-v293\.css\?v=2930/);
 assert.match(loader,/const VERSION='v2\.9\.4'/);
-assert.match(html,/app-v240-release\.js\?v=2941/);
+assert.match(html,/app-v240-release\.js\?v=2942/);
 assert.match(html,/v2\.9\.4/);
 console.log('PASS v2.9.3: Moko in airplane; flight skip and reduced-motion land once; island hero, collapsible secondary menus, gifts, save isolation and version cache.');
