@@ -1,8 +1,8 @@
 // School Test 14: marked kana segments, shared by practice, ten-question test and print.
 (() => {
-  const packId='2026-09-21-p58';
+  const packId=()=>typeof ACTIVE_KANJI_PACK_ID!=='undefined'?ACTIVE_KANJI_PACK_ID:null;
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const available=()=>typeof ACTIVE_KANJI_PACK_ID!=='undefined' && ACTIVE_KANJI_PACK_ID===packId && !!currentKanjiPack()?.schoolTest;
+  const available=()=>typeof ACTIVE_KANJI_PACK_ID!=='undefined' && typeof CURRENT_KANJI_PACK_ID!=='undefined' && ACTIVE_KANJI_PACK_ID===CURRENT_KANJI_PACK_ID && !!currentKanjiPack()?.schoolTest;
   const questions=()=>currentKanjiPack().schoolTest;
   const targets=q=>questions()[q].filter(s=>s.lineType);
   const completedSentence=q=>questions()[q].map(s=>s.answer||s.text).join('');
@@ -167,10 +167,10 @@
       if(typeof save==='undefined'||typeof persist!=='function')return;
       if(reviewedQuestions.length===questions().length){
         const score=reviewedQuestions.filter(q=>answers[q].every(a=>a.result?.pass)).length;
-        save.printTestsV230||={};const old=save.printTestsV230[packId]||{best:0,runs:0};
-        save.printTestsV230[packId]={best:Math.max(old.best||0,score),runs:(old.runs||0)+1,last:score,at:new Date().toISOString()};
+        save.printTestsV230||={};const old=save.printTestsV230[packId()]||{best:0,runs:0};
+        save.printTestsV230[packId()]={best:Math.max(old.best||0,score),runs:(old.runs||0)+1,last:score,at:new Date().toISOString()};
       }else{
-        save.schoolPracticeV236||={};save.schoolPracticeV236[packId]={lastQuestion:reviewedQuestions.at(-1)+1,at:new Date().toISOString()};
+        save.schoolPracticeV236||={};save.schoolPracticeV236[packId()]={lastQuestion:reviewedQuestions.at(-1)+1,at:new Date().toISOString()};
       }
       persist();
     }catch(e){}
