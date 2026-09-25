@@ -53,10 +53,10 @@
 .schoolWriteV236{align-items:flex-end;padding-right:4px}
 .schoolWriteV236 h2,.schoolWriteV236 p{align-self:center}
 .schoolCanvasesV236{align-items:flex-end}
-.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(570px,70dvh);background:#fff}
+.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(520px,60dvh);background:#fff}
 .schoolWavyV236 .schoolCanvasWrapV236 canvas,.schoolFocusV236.schoolWavyV236:not(.schoolFullV236) .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
 .schoolVerifyCardV236 .strokes.wavyV236 img{height:min(32vh,230px);width:auto;max-width:85%}
-@media(max-width:600px){.schoolCardV236{grid-template-columns:minmax(0,1fr) 120px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(530px,62dvh)}}
+@media(max-width:600px){.schoolCardV236{grid-template-columns:minmax(0,1fr) 120px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(490px,58dvh)}}
 `;document.head.appendChild(style);
   function start(test=true){if(!available())return window.openPrintTestV230Legacy?.();mode=test?'test':'single';answers=questions().map(row=>row.filter(s=>s.lineType).map(record));fullAnswers=questions().map(()=>({strokes:[[]],images:[],result:null}));pencilSeen=false;selected=0;render();}
   function render(){
