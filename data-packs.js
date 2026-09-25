@@ -35,7 +35,7 @@ const KANJI_PACKS = [
     shortLabel: '58ページ',
     source: '教材58ページ・上半分「書く」',
     addedAt: '2026-09-21',
-    status: 'current',
+    status: 'past',
     // Segments transcribed from the returned school Test 14. Only marked
     // segments are targets; the ordinary weekly stages below stay intact.
     schoolTest: [
@@ -62,6 +62,41 @@ const KANJI_PACKS = [
       {"reading": "すいえい", "readingParts": ["すい", "えい"], "before": "", "after": "教室に通う。", "answer": "水泳", "icon": "🏊", "targetType": "core", "chars": [{"char": "水", "secret": "真ん中の縦画と、左右にのびる画をよく見よう。", "memory": "真ん中の縦画と、左右にのびる画をよく見よう。", "clue": "真ん中の縦画と、左右にのびる画をよく見よう。"}, {"char": "泳", "secret": "左は「さんずい」、右は「永」。", "memory": "左は「さんずい」、右は「永」。", "clue": "左は「さんずい」、右は「永」。"}]},
       {"reading": "ね", "readingParts": ["ね"], "before": "アイデアを", "after": "。", "answer": "練", "icon": "💡", "targetType": "core", "okuri": "る", "okuriChoices": ["る", "ねる"], "chars": [{"char": "練", "secret": "左は「糸へん」。右の形もよく見よう。", "memory": "左は「糸へん」。右の形もよく見よう。", "clue": "左は「糸へん」。右の形もよく見よう。"}]},
       {"reading": "たす", "readingParts": ["たす"], "before": "子ねこを", "after": "。", "answer": "助", "icon": "🐱", "targetType": "core", "okuri": "ける", "okuriChoices": ["る", "ける", "すける"], "chars": [{"char": "助", "secret": "左は「且」、右は「力」。", "memory": "左は「且」、右は「力」。", "clue": "左は「且」、右は「力」。"}]}
+    ]
+  },
+  {
+    // Registration date only; the school test date is not specified.
+    id: '2026-09-26-p62',
+    label: '62ページ・上半分（書く①〜⑩）',
+    shortLabel: '62ページ',
+    source: '教材62ページ・上半分「書く」',
+    addedAt: '2026-09-26',
+    status: 'current',
+    // School-test prompts normalize surrounding learned kanji back to kana.
+    // Only the textbook's marked target is writable; surrounding kana are context.
+    schoolTest: [
+      [{text:'お'},{text:'きゃくさま',lineType:'straight',answer:'客様'},{text:'をもてなす。'}],
+      [{text:'にゅうがくしき',lineType:'straight',answer:'入学式'},{text:'のひ。'}],
+      [{text:'きょねん',lineType:'straight',answer:'去年'},{text:'のあき。'}],
+      [{text:'にばい',lineType:'straight',answer:'二倍'},{text:'のおおきさ。'}],
+      [{text:'もうひつ',lineType:'straight',answer:'毛筆'},{text:'のしょもつ。'}],
+      [{text:'ぎんこう',lineType:'straight',answer:'銀行'},{text:'のそば。'}],
+      [{text:'きせつが'},{text:'さる',lineType:'wavy',answer:'去る',kanji:'去',okuri:'る'},{text:'。'}],
+      [{text:'ふで',lineType:'straight',answer:'筆'},{text:'をにぎる。'}],
+      [{text:'ほんの'},{text:'だいめい',lineType:'straight',answer:'題名'},{text:'。'}],
+      [{text:'よこ',lineType:'straight',answer:'横'},{text:'がきでじをかく。'}]
+    ],
+    stages: [
+      {"reading":"きゃくさま","readingParts":["きゃく","さま"],"before":"お","after":"をもてなす。","answer":"客様","icon":"🎎","targetType":"core","chars":[{"char":"客","secret":"上は「うかんむり」、下は「各」。","memory":"上は「うかんむり」、下は「各」。","clue":"上は「うかんむり」、下は「各」。"},{"char":"様","secret":"左は「木へん」。右の形もよく見よう。","memory":"左は「木へん」。右の形もよく見よう。","clue":"左は「木へん」。右の形もよく見よう。"}]},
+      {"reading":"にゅうがくしき","readingParts":["にゅう","がく","しき"],"before":"","after":"の日。","answer":"入学式","icon":"🎒","targetType":"core","chars":[{"char":"入","secret":"二つの画の開き方をよく見よう。","memory":"二つの画の開き方をよく見よう。","clue":"二つの画の開き方をよく見よう。"},{"char":"学","secret":"上の形と下の「子」をよく見よう。","memory":"上の形と下の「子」をよく見よう。","clue":"上の形と下の「子」をよく見よう。"},{"char":"式","secret":"横線と右上のはらいの形をよく見よう。","memory":"横線と右上のはらいの形をよく見よう。","clue":"横線と右上のはらいの形をよく見よう。"}]},
+      {"reading":"きょねん","readingParts":["きょ","ねん"],"before":"","after":"の秋。","answer":"去年","icon":"📅","targetType":"core","chars":[{"char":"去","secret":"上は「土」、下は「ム」の形。","memory":"上は「土」、下は「ム」の形。","clue":"上は「土」、下は「ム」の形。"},{"char":"年","secret":"横線と真ん中の縦画の位置をよく見よう。","memory":"横線と真ん中の縦画の位置をよく見よう。","clue":"横線と真ん中の縦画の位置をよく見よう。"}]},
+      {"reading":"にばい","readingParts":["に","ばい"],"before":"","after":"の大きさ。","answer":"二倍","icon":"✌️","targetType":"core","chars":[{"char":"二","secret":"二本の横線。下を少し長く。","memory":"二本の横線。下を少し長く。","clue":"二本の横線。下を少し長く。"},{"char":"倍","secret":"左は「にんべん」。右の形もよく見よう。","memory":"左は「にんべん」。右の形もよく見よう。","clue":"左は「にんべん」。右の形もよく見よう。"}]},
+      {"reading":"もうひつ","readingParts":["もう","ひつ"],"before":"","after":"の書物。","answer":"毛筆","icon":"🖌️","targetType":"core","chars":[{"char":"毛","secret":"最後の曲がる画をよく見よう。","memory":"最後の曲がる画をよく見よう。","clue":"最後の曲がる画をよく見よう。"},{"char":"筆","secret":"上は「たけかんむり」。","memory":"上は「たけかんむり」。","clue":"上は「たけかんむり」。"}]},
+      {"reading":"ぎんこう","readingParts":["ぎん","こう"],"before":"","after":"のそば。","answer":"銀行","icon":"🏦","targetType":"core","chars":[{"char":"銀","secret":"左は「かねへん」。","memory":"左は「かねへん」。","clue":"左は「かねへん」。"},{"char":"行","secret":"左右の形と縦画の位置をよく見よう。","memory":"左右の形と縦画の位置をよく見よう。","clue":"左右の形と縦画の位置をよく見よう。"}]},
+      {"reading":"さ","readingParts":["さ"],"before":"きせつが","after":"。","answer":"去","icon":"🍂","targetType":"core","okuri":"る","okuriChoices":["る","さる"],"chars":[{"char":"去","secret":"上は「土」、下は「ム」の形。","memory":"上は「土」、下は「ム」の形。","clue":"上は「土」、下は「ム」の形。"}]},
+      {"reading":"ふで","readingParts":["ふで"],"before":"","after":"をにぎる。","answer":"筆","icon":"🖌️","targetType":"core","chars":[{"char":"筆","secret":"上は「たけかんむり」。","memory":"上は「たけかんむり」。","clue":"上は「たけかんむり」。"}]},
+      {"reading":"だいめい","readingParts":["だい","めい"],"before":"本の","after":"。","answer":"題名","icon":"📖","targetType":"core","chars":[{"char":"題","secret":"左の形と右の「頁」をよく見よう。","memory":"左の形と右の「頁」をよく見よう。","clue":"左の形と右の「頁」をよく見よう。"},{"char":"名","secret":"上は「夕」、下は「口」。","memory":"上は「夕」、下は「口」。","clue":"上は「夕」、下は「口」。"}]},
+      {"reading":"よこ","readingParts":["よこ"],"before":"","after":"書きで字を書く。","answer":"横","icon":"↔️","targetType":"core","chars":[{"char":"横","secret":"左は「木へん」、右は「黄」。","memory":"左は「木へん」、右は「黄」。","clue":"左は「木へん」、右は「黄」。"}]}
     ]
   }
 ];
@@ -90,7 +125,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-09-21-p58';
+let CURRENT_KANJI_PACK_ID = '2026-09-26-p62';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
