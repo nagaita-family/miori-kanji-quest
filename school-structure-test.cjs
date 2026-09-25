@@ -5,6 +5,7 @@ const doc={createElement:node,head:{appendChild(){}},querySelector(){return null
 const ctx=vm.createContext({window:{},document:doc,location:{pathname:'/'},console});
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])vm.runInContext(src(f),ctx);
 const evalJs=s=>vm.runInContext(s,ctx);
+evalJs("CURRENT_KANJI_PACK_ID='2026-09-21-p58';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 let pack=JSON.parse(evalJs('JSON.stringify(currentKanjiPack().schoolTest)'));
 assert.equal(pack.length,10);assert.equal(pack.map(q=>q.map(x=>x.text).join('')).join('|'),'うみでおよぐ。|サッカーのれんしゅうをする。|あにのじょげんをきく。|どうわのえほんをよむ。|てがみでもうしこむ。|しょくひんをうる。|しょうひんをかう。|すいえいきょうしつにかよう。|アイデアをねる。|こねこをたすける。');
 const targets=pack.flat().filter(x=>x.lineType);assert.equal(targets.length,20);assert.equal(targets.filter(x=>x.lineType==='wavy').length,9);assert.equal(targets.filter(x=>x.lineType==='straight').length,11);
