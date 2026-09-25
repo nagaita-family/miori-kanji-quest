@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const src=f=>fs.readFileSync(f,'utf8');
 const node=()=>({style:{},classList:{add(){},remove(){}},appendChild(){},insertAdjacentElement(){},remove(){}});
-const doc={createElement:node,head:{appendChild(){}},querySelector(){return null},getElementById(){return null}};
+const doc={createElement:node,head:{appendChild(){}},querySelector(){return null},getElementById(){return null},addEventListener(){}};
 const ctx=vm.createContext({window:{},document:doc,location:{pathname:'/'},console});
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])vm.runInContext(src(f),ctx);
 const evalJs=s=>vm.runInContext(s,ctx);
@@ -13,7 +13,7 @@ assert.deepEqual(pack[9].filter(x=>x.lineType).map(x=>[x.text,x.answer]),[['こ'
 assert.equal(pack[4][2].answer,'申し込む');assert.equal(pack[4][2].kanji,'申込');assert.equal(pack[4][2].kana,'しむ');
 assert.equal(evalJs('kanjiTestHistory()[0].score'),65);assert.equal(evalJs('kanjiTestHistory()[1].score'),85);assert.equal(evalJs('kanjiTestHistory()[1].reviewTargets.length'),0);
 const original=evalJs('JSON.stringify(KANJI_PACKS[0].stages)');evalJs("useKanjiPack('2026-09-previous')");assert.equal(evalJs('JSON.stringify(QUEST_STAGES)'),original);evalJs('useKanjiPack(CURRENT_KANJI_PACK_ID)');
-const code=src('app-v236-school-test.js').replace('  const old=window.openPrintTestV230;', '  window.__schoolTest={record,gradeOne,saveResult,write:a=>answers=a,mode:m=>mode=m};\n  const old=window.openPrintTestV230;');vm.runInContext(code,ctx);
+const code=src('app-v236-school-test.js').replace('  const old=window.openPrintTestV230;', '  window.__schoolTest={record,gradeOne,saveResult,write:a=>answers=a,writeFull:a=>fullAnswers=a,mode:m=>mode=m,completedSentence};\n  const old=window.openPrintTestV230;');vm.runInContext(code,ctx);
 const api=ctx.window.__schoolTest;const seen=[];ctx.window.gradeKanjiStrokeV230=async(strokes,ch)=>{seen.push(ch);return{pass:true,total:100}};
 let rows=pack.map(q=>q.filter(x=>x.lineType).map(t=>api.record(t)));for(const row of rows)for(const a of row)a.strokes.forEach(x=>x.push([{x:1,y:1}]));api.write(rows);
 const prior={stats:{路:{mastery:88}},okuriStats:{old:{correct:4}},kanken9V280:{xp:14},printTestsV230:{'2026-09-previous':{best:8,runs:2}}};ctx.save=structuredClone(prior);ctx.persist=()=>{};
@@ -21,7 +21,10 @@ const prior={stats:{路:{mastery:88}},okuriStats:{old:{correct:4}},kanken9V280:{
  await api.gradeOne(4,1);assert.deepEqual(seen,['申','込']);assert.equal(rows[4][1].result.manual,true,'Mixed kana must require comparison');seen.length=0;
  await api.gradeOne(7,0);assert.deepEqual(seen,['水','泳','教','室']);assert.equal(rows[7][0].result.pass,true);
  ctx.window.gradeKanjiStrokeV230=async()=>({pass:false,total:33});await api.gradeOne(7,0);assert.equal(rows[7][0].result.manual,true,'Uncertain handwriting requires confirmation');
- api.mode('test');rows.forEach(row=>row.forEach(a=>a.result={pass:true,manual:false}));api.saveResult();
+ assert.equal(api.completedSentence(7),'水泳教室に通う。');
+ assert.equal(api.completedSentence(4),'手紙で申し込む。');
+ const full=pack.map(()=>({strokes:[[[{x:1,y:1}]]],images:[],result:{pass:true}}));
+ api.writeFull(full);api.mode('test');api.saveResult();
  assert.equal(ctx.save.printTestsV230['2026-09-21-p58'].last,10);assert.deepEqual(ctx.save.printTestsV230['2026-09-previous'],prior.printTestsV230['2026-09-previous']);for(const k of ['stats','okuriStats','kanken9V280'])assert.deepEqual(ctx.save[k],prior[k]);
  console.log('PASS school data: 10 kana prompts, 20 marked targets, mixed kana handwriting, hybrid grading, history and storage isolation.');
 })().catch(e=>{console.error(e);process.exitCode=1});
