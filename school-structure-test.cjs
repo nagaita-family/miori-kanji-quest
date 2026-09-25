@@ -13,8 +13,16 @@ assert.deepEqual(pack[9].filter(x=>x.lineType).map(x=>[x.text,x.answer]),[['こ'
 assert.equal(pack[4][2].answer,'申し込む');assert.equal(pack[4][2].kanji,'申込');assert.equal(pack[4][2].kana,'しむ');
 assert.equal(evalJs('kanjiTestHistory()[0].score'),65);assert.equal(evalJs('kanjiTestHistory()[1].score'),85);assert.equal(evalJs('kanjiTestHistory()[1].reviewTargets.length'),0);
 const original=evalJs('JSON.stringify(KANJI_PACKS[0].stages)');evalJs("useKanjiPack('2026-09-previous')");assert.equal(evalJs('JSON.stringify(QUEST_STAGES)'),original);evalJs('useKanjiPack(CURRENT_KANJI_PACK_ID)');
-const code=src('app-v236-school-test.js').replace('  const old=window.openPrintTestV230;', '  window.__schoolTest={record,gradeOne,saveResult,redrawCanvas,write:a=>answers=a,writeFull:a=>fullAnswers=a,mode:m=>mode=m,completedSentence};\n  const old=window.openPrintTestV230;');vm.runInContext(code,ctx);
+const code=src('app-v236-school-test.js').replace('  const old=window.openPrintTestV230;', '  window.__schoolTest={record,gradeOne,saveResult,redrawCanvas,focusPaper,write:a=>answers=a,writeFull:a=>fullAnswers=a,mode:m=>mode=m,completedSentence};\n  const old=window.openPrintTestV230;');vm.runInContext(code,ctx);
 const api=ctx.window.__schoolTest;const seen=[];ctx.window.gradeKanjiStrokeV230=async(strokes,ch)=>{seen.push(ch);return{pass:true,total:100}};
+for(const [full,k] of [[false,1],[true,-1]]){
+ const html=api.focusPaper(0,k,'<canvas aria-label="記入欄"></canvas>',full);
+ assert.ok(html.includes('schoolProblemV236')&&html.includes('schoolPaperBodyV236')&&html.includes('schoolWriteV236')&&html.includes('schoolSentenceV236'),'Both modes share one worksheet structure');
+ assert.ok(html.indexOf('schoolWriteV236')<html.indexOf('schoolSentenceV236'),'Writing is next to the kana sentence inside one paper');
+ assert.ok(html.includes('schoolUndoV236')&&html.includes('schoolClearV236')&&html.includes('schoolBackV236')&&html.includes('schoolNextV236'));
+ assert.ok(!html.includes('泳ぐ'),'The answer stays hidden while writing');
+ assert.ok(!html.includes('線のところ：'),'No large duplicate horizontal reading above the canvas');
+}
 for(const [pixelWidth,pixelHeight,displayWidth,displayHeight] of [[520,520,130,130],[440,720,185,480],[520,720,250,520]]){
  const ops=[],pencil={setTransform(...v){ops.push(['transform',...v])},clearRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){ops.push(['stroke',this.lineWidth])},arc(){},fill(){}};
  api.redrawCanvas({width:pixelWidth,height:pixelHeight,getBoundingClientRect:()=>({width:displayWidth,height:displayHeight}),getContext:()=>pencil},[[{x:10,y:10},{x:30,y:30}]]);

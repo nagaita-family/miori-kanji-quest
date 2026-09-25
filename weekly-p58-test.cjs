@@ -72,7 +72,7 @@ assert.ok(!paperQuestions.includes('class="okuri-cell"')&&!paperQuestions.includ
 for(const t of targets)assert.ok(!paperQuestions.includes('>'+t.answer+'<'),`Paper must not reveal ${t.answer}`);
 assert.deepEqual(JSON.parse(stored).stats.路,oldSave.stats.路);
 assert.equal(JSON.stringify(JSON.parse(stored).okuriStats),JSON.stringify(oldSave.okuriStats));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260925-kana-near-thin-ink'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260926-integrated-paper'));
 const requested=[];
 ctx.expectedStrokes=async ch=>{requested.push(ch);return [[{x:0,y:0},{x:109,y:109}]];};
 ctx.jBBox=()=>({x:0,y:0,w:109,h:109});ctx.jShapeScore=()=>100;ctx.jCountScore=()=>100;ctx.jOrderInfo=()=>({score:100});

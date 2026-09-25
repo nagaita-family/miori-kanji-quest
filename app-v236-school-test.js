@@ -17,27 +17,41 @@
 .schoolV236{position:fixed;inset:0;z-index:21000;background:#e9f1fa;display:flex;flex-direction:column;color:#26354b;font-family:system-ui,'Noto Sans JP',sans-serif}
 .schoolHeadV236{height:58px;background:white;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;gap:8px}.schoolHeadV236 b{font-size:19px}.schoolHeadV236 button,.schoolActionsV236 button,.schoolControlV236 button,.schoolVerifyV236 button{border:1px solid #cbd6e5;border-radius:10px;background:#fff;color:#344d75;font-size:14px;font-weight:800;padding:10px;cursor:pointer}.schoolHeadV236 button{white-space:nowrap}
 .schoolPaperV236{direction:rtl;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));background:#fffdf8;flex:1;min-height:0;margin:10px;border:1px solid #c9d0d7;border-radius:12px;overflow:hidden}
-.schoolQV236{direction:ltr;border-left:1px solid #d8d5ca;min-width:0;display:flex;align-items:center;flex-direction:column;position:relative;padding:6px 2px;background:transparent;cursor:pointer;color:#26354b}.schoolQV236:hover,.schoolQV236:focus-visible{background:#f0f6ff}.schoolQV236 .num{border:1px solid #69778a;border-radius:50%;width:27px;height:27px;display:grid;place-items:center;flex:none;font-weight:800}.schoolSentenceV236{display:flex;flex-direction:column;align-items:center;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(12px,1.55vw,19px);line-height:1.12;margin-top:8px}.schoolSentenceV236>span{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap}.schoolMarkV236{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;text-decoration:underline solid #26354b 2px;text-underline-position:left;text-underline-offset:2px}.schoolMarkV236.wavy{color:#ad3838;text-decoration:underline wavy #c84242 2px}.schoolMarkV236.active{background:#ffeb8a;border-radius:3px}.schoolBoxesV236{display:flex;flex-direction:column;align-items:center;gap:3px;margin:4px 0}.schoolBoxV236{width:clamp(38px,4.8vw,65px);height:clamp(33px,5vw,59px);border:1.5px solid #7a8da6;background:#fff;display:grid;place-items:center}.schoolBoxV236 img{max-width:100%;max-height:100%}.schoolDoneV236{font-size:10px;color:#397d51;font-weight:800;margin-top:auto}.schoolActionsV236{height:57px;display:flex;gap:10px;justify-content:center;align-items:center;padding:4px}.schoolActionsV236 .primary,.schoolControlV236 .primary,.schoolVerifyV236 .primary{background:#496ed8;color:white;border-color:#496ed8}
-.schoolFocusV236{position:fixed;inset:0;z-index:21100;background:#223347aa;display:grid;place-items:center;padding:10px}.schoolCardV236{width:min(1000px,98vw);height:min(710px,97dvh);background:white;border-radius:18px;display:grid;grid-template-columns:minmax(145px,230px) minmax(0,1fr) minmax(145px,210px);gap:10px;padding:12px;overflow:hidden}.schoolProblemV236{border:1px solid #e2d7c3;border-radius:12px;background:#fffdf6;display:flex;align-items:center;flex-direction:column;padding:8px;min-height:0;overflow:auto}.schoolProblemV236 .schoolSentenceV236{font-size:21px;margin:12px 0}.schoolWriteV236{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:0;overflow:auto}.schoolWriteV236 h2{font-size:20px;margin:3px 0}.schoolWriteV236 p{font-size:13px;margin:3px 0 10px}.schoolCanvasesV236{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;align-content:center}.schoolCanvasWrapV236{position:relative;border:2px solid #72859c;border-radius:7px}.schoolCanvasWrapV236.on{border-color:#416be4;box-shadow:0 0 0 3px #b5c9ff}.schoolCanvasWrapV236 canvas{display:block;width:clamp(110px,19vh,185px);height:clamp(110px,19vh,185px);touch-action:none;background:linear-gradient(transparent 49.8%,#e4e9ef 50%,transparent 50.2%),linear-gradient(90deg,transparent 49.8%,#e4e9ef 50%,transparent 50.2%)}.schoolCanvasWrapV236 label{position:absolute;right:4px;top:4px;background:#fff9;padding:2px;font-size:11px}.schoolControlV236{display:flex;flex-direction:column;gap:8px;background:#f4f8ff;border-radius:12px;padding:10px;min-width:0;overflow:auto}.schoolControlV236 p{font-size:12px;line-height:1.5}.schoolControlV236 .primary{margin-top:auto}.schoolVerifyV236{position:fixed;inset:0;z-index:21200;background:#223347b8;display:grid;place-items:center;padding:12px}.schoolVerifyCardV236{width:min(560px,96vw);max-height:94dvh;overflow:auto;border-radius:18px;background:white;text-align:center;padding:20px}.schoolVerifyCardV236 h2{font-size:19px}.schoolVerifyCardV236 .compare{font-size:25px;font-weight:800;color:#294d9b}.schoolVerifyCardV236 .strokes{display:flex;justify-content:center;gap:3px;flex-wrap:wrap}.schoolVerifyCardV236 img{height:75px;width:75px;object-fit:contain;border:1px solid #b8c9da}.schoolVerifyCardV236 button{margin:8px 4px}.schoolScoreV236{font-size:35px;color:#315bc0;font-weight:900}.schoolReviewRowsV236{max-height:36vh;overflow:auto;text-align:left}.schoolReviewRowsV236 div{padding:5px;border-bottom:1px solid #e1e6ef}
-@media(max-width:800px){.schoolCardV236{grid-template-columns:155px minmax(0,1fr) 156px;gap:6px;padding:7px}.schoolProblemV236 .schoolSentenceV236{font-size:17px}.schoolCanvasWrapV236 canvas{width:clamp(95px,15vh,140px);height:clamp(95px,15vh,140px)}}
-@media(max-width:600px){.schoolPaperV236{overflow:auto}.schoolQV236{min-width:58px}.schoolCardV236{grid-template-columns:130px minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}.schoolProblemV236 .schoolSentenceV236{font-size:15px}.schoolControlV236{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;align-items:center}.schoolControlV236 p{display:none}.schoolControlV236 button{flex:1}.schoolControlV236 .primary{margin:0}}
+.schoolQV236{direction:ltr;border-left:1px solid #d8d5ca;min-width:0;display:flex;align-items:center;flex-direction:column;position:relative;padding:6px 2px;background:transparent;cursor:pointer;color:#26354b}.schoolQV236:hover,.schoolQV236:focus-visible{background:#f0f6ff}.schoolQV236 .num{border:1px solid #69778a;border-radius:50%;width:27px;height:27px;display:grid;place-items:center;flex:none;font-weight:800}.schoolSentenceV236{display:flex;flex-direction:column;align-items:center;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(12px,1.55vw,19px);line-height:1.12;margin-top:8px}.schoolSentenceV236>span{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap}.schoolMarkV236{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;text-decoration:underline solid #26354b 2px;text-underline-position:left;text-underline-offset:2px}.schoolMarkV236.wavy{color:#ad3838;text-decoration:underline wavy #c84242 2px}.schoolMarkV236.active{background:rgba(226,176,74,.11);border-radius:3px;text-decoration-thickness:3px}.schoolBoxesV236{display:flex;flex-direction:column;align-items:center;gap:3px;margin:4px 0}.schoolBoxV236{width:clamp(38px,4.8vw,65px);height:clamp(33px,5vw,59px);border:1.5px solid #7a8da6;background:#fff;display:grid;place-items:center}.schoolBoxV236 img{max-width:100%;max-height:100%}.schoolDoneV236{font-size:10px;color:#397d51;font-weight:800;margin-top:auto}.schoolActionsV236{height:57px;display:flex;gap:10px;justify-content:center;align-items:center;padding:4px}.schoolActionsV236 .primary,.schoolControlV236 .primary,.schoolVerifyV236 .primary{background:#496ed8;color:white;border-color:#496ed8}
+
+/* Enlarged school writing: one cream worksheet with the kana sentence and answer together. */
 .schoolV236,.schoolFocusV236,.schoolVerifyV236{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:contain}
-.schoolFocusV236{touch-action:none}
-.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(170px,245px);grid-template-rows:minmax(0,1fr) auto;max-height:calc(100dvh - 12px)}
-.schoolProblemV236{grid-column:2;grid-row:1;overflow:hidden}.schoolProblemV236 .schoolSentenceV236{font-size:clamp(15px,2.3vh,22px);max-height:100%;overflow:auto}
-.schoolWriteV236{grid-column:1;grid-row:1;overflow:hidden;justify-content:center}
-.schoolControlV236{grid-column:1/-1;grid-row:2;display:flex;flex-direction:row;align-items:center;padding:6px;gap:6px;overflow:visible}
-.schoolControlV236 b,.schoolControlV236 p{display:none}.schoolControlV236 button{flex:1;padding:9px 4px}.schoolControlV236 .primary{margin:0}
-.schoolCanvasesV236{display:flex;flex-direction:column;flex-wrap:nowrap;gap:4px;max-height:100%;overflow:auto;overscroll-behavior:contain}
-.schoolCanvasWrapV236 canvas{width:clamp(105px,15vh,146px);height:clamp(105px,15vh,146px)}
-.schoolFullV236 .schoolWriteV236 h2{font-size:18px}
-.schoolFullV236 .schoolCanvasesV236{overflow:hidden}
-.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(400px,53vw);height:min(540px,68dvh);background:linear-gradient(90deg,transparent 49.75%,#c8d4e2 50%,transparent 50.25%),linear-gradient(0deg,transparent 49.75%,#eef1f5 50%,transparent 50.25%)}
-.schoolFullV236 .schoolProblemV236 .schoolSentenceV236{font-size:clamp(16px,2.1vh,21px)}
-.schoolFullV236 .schoolCanvasWrapV236 label{font-size:11px}
+.schoolFocusV236{position:fixed;inset:0;z-index:21100;background:#223347aa;display:grid;place-items:center;padding:10px;touch-action:none;color:#26354b;font-family:system-ui,'Noto Sans JP',sans-serif}
+.schoolCardV236{width:min(1080px,98vw);height:min(710px,97dvh);max-height:calc(100dvh - 12px);background:#fff;border-radius:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,210px);gap:10px;padding:10px;overflow:hidden}
+.schoolProblemV236{grid-column:1;grid-row:1;min-width:0;min-height:0;display:flex;flex-direction:column;padding:13px 17px;background:#fffdf7;border:1px solid #ded4c1;border-radius:12px;box-shadow:0 8px 22px rgba(65,79,97,.08);overflow:hidden}
+.schoolPaperHeadV236{flex:none;display:flex;align-items:center;gap:9px;border-bottom:2px solid #4b87ba;padding:0 0 8px;font-size:14px;font-weight:800;color:#44556a}
+.schoolPaperNumberV236{flex:none;width:32px;height:32px;display:grid;place-items:center;border:2px solid #69727f;border-radius:50%;background:#fff;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:18px;color:#25344b}
+.schoolPaperBodyV236{flex:1;min-height:0;min-width:0;display:flex;align-items:center;justify-content:center;gap:14px;overflow:hidden}
+.schoolPaperBodyV236 .schoolSentenceV236{flex:none;align-self:center;display:flex;flex-direction:column;align-items:center;max-height:100%;overflow:auto;margin:0;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(18px,2.3vh,24px);line-height:1.12}
+.schoolWriteV236{flex:none;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:visible}
+.schoolCanvasesV236{display:flex;flex-direction:column;align-items:center;gap:4px;max-height:100%;overflow:auto;overscroll-behavior:contain}
+.schoolCanvasWrapV236{position:relative;border:2px solid #72859c;border-radius:5px;background:#fff}
+.schoolCanvasWrapV236.on{border-color:#416be4;box-shadow:0 0 0 2px #b5c9ff}
+.schoolCanvasWrapV236 canvas{display:block;width:clamp(112px,14.5dvh,130px);height:clamp(112px,14.5dvh,130px);touch-action:none;background:linear-gradient(transparent 49.8%,#e4e9ef 50%,transparent 50.2%),linear-gradient(90deg,transparent 49.8%,#e4e9ef 50%,transparent 50.2%)}
+.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(520px,60dvh);background:#fff}
+.schoolWavyV236 .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
+.schoolControlV236{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:8px;background:#f7faff;border:1px solid #e0e8f2;border-radius:12px;padding:12px;min-width:0;overflow:auto}
+.schoolControlV236 b{font-size:14px}.schoolControlV236 p{font-size:12px;line-height:1.4;color:#66758b;margin:0 0 5px}
+.schoolControlV236 button,.schoolVerifyV236 button{border:1px solid #cbd6e5;border-radius:10px;background:#fff;color:#344d75;font-size:14px;font-weight:800;padding:10px;cursor:pointer}
+.schoolControlV236 .primary,.schoolVerifyV236 .primary{background:#496ed8;color:white;border-color:#496ed8}
+.schoolControlV236 .primary{margin-top:auto}
+.schoolVerifyV236{position:fixed;inset:0;z-index:21200;background:#223347b8;display:grid;place-items:center;padding:12px}
+.schoolVerifyCardV236{width:min(560px,96vw);max-height:94dvh;overflow:auto;border-radius:18px;background:white;text-align:center;padding:20px}
+.schoolVerifyCardV236 h2{font-size:19px}.schoolVerifyCardV236 .compare{font-size:25px;font-weight:800;color:#294d9b}
+.schoolVerifyCardV236 .strokes{display:flex;justify-content:center;gap:3px;flex-wrap:wrap}
+.schoolVerifyCardV236 img{height:75px;width:75px;object-fit:contain;border:1px solid #b8c9da}
+.schoolVerifyCardV236 button{margin:8px 4px}
+.schoolScoreV236{font-size:35px;color:#315bc0;font-weight:900}
+.schoolReviewRowsV236{max-height:36vh;overflow:auto;text-align:left}.schoolReviewRowsV236 div{padding:5px;border-bottom:1px solid #e1e6ef}
 .schoolVerifyCardV236 .strokes.fullSentenceV236 img{height:min(34vh,260px);width:auto;max-width:90%;border:1px solid #b8c9da}
 .schoolVerifyCardV236 .compare.fullSentenceV236{writing-mode:vertical-rl;text-orientation:upright;text-align:left;max-height:220px;margin:5px auto;white-space:normal;font-size:18px;line-height:1.5}
-.schoolQV236 .schoolFullBoxV236{width:clamp(40px,5vw,67px);height:clamp(85px,12vw,145px)}
+.schoolVerifyCardV236 .strokes.wavyV236 img{height:min(32vh,230px);width:auto;max-width:85%}
+/* The small ten-question overview keeps its right-to-left paper layout. */
 .schoolQV236{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;justify-items:center;align-items:start}
 .schoolQV236 .num{grid-column:1/-1;grid-row:1}
 .schoolQV236 .schoolSentenceV236{grid-column:2;grid-row:2}
@@ -45,19 +59,8 @@
 .schoolQV236 .schoolDoneV236{grid-column:1/-1;grid-row:3}
 .schoolQV236 .schoolBoxV236{width:clamp(29px,3.4vw,48px);height:clamp(34px,4.6vw,52px)}
 .schoolQV236 .schoolFullBoxV236{width:clamp(30px,3.6vw,51px);height:clamp(88px,12vw,145px)}
-@media(max-width:800px){.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(130px,185px);grid-template-rows:minmax(0,1fr) auto}.schoolProblemV236 .schoolSentenceV236{font-size:clamp(14px,1.8vh,18px)}.schoolCanvasWrapV236 canvas{width:clamp(94px,12vh,130px);height:clamp(94px,12vh,130px)}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(335px,47vw);height:min(570px,65dvh)}}
-@media(max-width:600px){.schoolCardV236{grid-template-columns:minmax(0,1fr) 120px;grid-template-rows:minmax(0,1fr) auto}.schoolProblemV236 .schoolSentenceV236{font-size:14px}.schoolControlV236{grid-column:1/-1;grid-row:2}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(225px,51vw);height:min(540px,61dvh)}}
-.schoolFocusV236:not(.schoolFullV236) .schoolCanvasesV236{overflow:visible;flex-shrink:1}
-.schoolFocusV236:not(.schoolFullV236) .schoolCanvasWrapV236 canvas{width:clamp(112px,14.5dvh,130px);height:clamp(112px,14.5dvh,130px)}
-.schoolCardV236{width:min(780px,98vw);grid-template-columns:minmax(0,1fr) minmax(160px,215px);column-gap:8px}
-.schoolWriteV236{align-items:flex-end;padding-right:4px}
-.schoolWriteV236 h2,.schoolWriteV236 p{align-self:center}
-.schoolCanvasesV236{align-items:flex-end}
-.schoolProblemV236 .schoolSentenceV236{align-self:flex-start;margin-left:2px}
-.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(520px,60dvh);background:#fff}
-.schoolWavyV236 .schoolCanvasWrapV236 canvas,.schoolFocusV236.schoolWavyV236:not(.schoolFullV236) .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
-.schoolVerifyCardV236 .strokes.wavyV236 img{height:min(32vh,230px);width:auto;max-width:85%}
-@media(max-width:600px){.schoolCardV236{grid-template-columns:minmax(0,1fr) 120px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(490px,58dvh)}}
+@media(max-width:800px){.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(160px,190px);gap:7px;padding:7px}.schoolPaperBodyV236{gap:10px}.schoolProblemV236{padding:10px 12px}.schoolPaperBodyV236 .schoolSentenceV236{font-size:clamp(16px,1.9vh,21px)}}
+@media(max-width:600px){.schoolPaperV236{overflow:auto}.schoolQV236{min-width:58px}.schoolCardV236{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}.schoolControlV236{grid-column:1;grid-row:2;flex-direction:row;flex-wrap:wrap;align-items:center;padding:7px}.schoolControlV236 b,.schoolControlV236 p{display:none}.schoolControlV236 button{flex:1 1 42%;padding:8px 4px}.schoolControlV236 .primary{margin:0}.schoolPaperBodyV236{gap:8px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(490px,58dvh)}}
 `;document.head.appendChild(style);
   function start(test=true){if(!available())return window.openPrintTestV230Legacy?.();mode=test?'test':'single';answers=questions().map(row=>row.filter(s=>s.lineType).map(record));fullAnswers=questions().map(()=>({strokes:[[]],images:[],result:null}));pencilSeen=false;selected=0;render();}
   function render(){
@@ -74,11 +77,30 @@
     if(mode==='test')byId('schoolSubmitV236').onclick=submit;
   }
   const complete=a=>a.strokes.every(st=>st.length>0);
-  function openFocus(q,k){selected=q;focus={q,k,ci:0};byId('schoolFocusV236')?.remove();const t=targets(q)[k],a=answers[q][k];const el=document.createElement('section');el.id='schoolFocusV236';el.className='schoolFocusV236'+(t.lineType==='wavy'?' schoolWavyV236':'');const count=targets(q).length;el.innerHTML=`<div class="schoolCardV236"><section class="schoolProblemV236"><b>${q+1}ばん・${k+1}/${count}か所</b><div class="schoolSentenceV236">${sentence(q,k)}</div></section><section class="schoolWriteV236"><h2>線のところ：${esc(t.text)}</h2><p>${t.lineType==='wavy'?'波線：漢字と送り仮名まで書こう':'直線：漢字だけを書こう'}</p><div class="schoolCanvasesV236">${a.strokes.map((_,ci)=>`<div class="schoolCanvasWrapV236" data-ci="${ci}"><canvas width="${t.lineType==='wavy'?440:520}" height="${t.lineType==='wavy'?720:520}" data-ci="${ci}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':isKanji(writable(t)[ci])?'漢字':'かな'}の記入欄"></canvas>${t.lineType==='wavy'?'':`<label>漢字</label>`}</div>`).join('')}</div></section><aside class="schoolControlV236"><b>✏️ 線のところだけ</b><p>ヒントなし。書くわくをタップすると、そのわくを直せるよ。</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${k+1<count?'次の線へ →':'✓ 記入してもどる'}</button></aside></div>`;document.body.appendChild(el);el.querySelectorAll('canvas').forEach(c=>attach(c,a,Number(c.dataset.ci)));el.querySelectorAll('[data-ci].schoolCanvasWrapV236').forEach(w=>w.onclick=()=>active(Number(w.dataset.ci)));active(0);redraw();byId('schoolUndoV236').onclick=()=>{a.strokes[focus.ci].pop();redraw()};byId('schoolClearV236').onclick=()=>{a.strokes[focus.ci]=[];redraw()};byId('schoolBackV236').onclick=()=>{snapshot();el.remove();render()};byId('schoolNextV236').onclick=()=>{snapshot();el.remove();if(k+1<count)openFocus(q,k+1);else if(mode==='single'&&answers[q].every(complete))finishSingle(q);else render()};}
+  // Both school modes use the same worksheet. Only the answer canvas and progress differ.
+  function focusPaper(q,k,canvases,full){
+    const progress=full?'文をぜんぶ書こう':`${k+1}/${targets(q).length}か所 · ${targets(q)[k].lineType==='wavy'?'波線：送り仮名まで':'直線：漢字だけ'}`;
+    return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>${full?'学校の10問テスト':'学校テストれんしゅう'} · ${progress}</span></header><div class="schoolPaperBodyV236"><div class="schoolWriteV236"><div class="schoolCanvasesV236">${canvases}</div></div><div class="schoolSentenceV236">${sentence(q,k)}</div></div></section><aside class="schoolControlV236"><b>✏️ ${full?'文をぜんぶ':'線のところだけ'}</b><p>${full?'右のかな文を見て、文全体をたてに書こう。':k>=0&&targets(q)[k].lineType==='wavy'?'線の漢字と送り仮名まで書こう。':'線の漢字だけを書こう。'}</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${full||k+1===targets(q).length?'✓ 記入してもどる':'次の線へ →'}</button></aside></div>`;
+  }
+  function openFocus(q,k){
+    selected=q;focus={q,k,ci:0};byId('schoolFocusV236')?.remove();
+    const t=targets(q)[k],a=answers[q][k],el=document.createElement('section');
+    el.id='schoolFocusV236';el.className='schoolFocusV236'+(t.lineType==='wavy'?' schoolWavyV236':'');
+    const canvases=a.strokes.map((_,ci)=>`<div class="schoolCanvasWrapV236" data-ci="${ci}"><canvas width="${t.lineType==='wavy'?440:520}" height="${t.lineType==='wavy'?720:520}" data-ci="${ci}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`).join('');
+    el.innerHTML=focusPaper(q,k,canvases,false);
+    document.body.appendChild(el);
+    el.querySelectorAll('canvas').forEach(c=>attach(c,a,Number(c.dataset.ci)));
+    el.querySelectorAll('[data-ci].schoolCanvasWrapV236').forEach(w=>w.onclick=()=>active(Number(w.dataset.ci)));
+    active(0);redraw();
+    byId('schoolUndoV236').onclick=()=>{a.strokes[focus.ci].pop();redraw()};
+    byId('schoolClearV236').onclick=()=>{a.strokes[focus.ci]=[];redraw()};
+    byId('schoolBackV236').onclick=()=>{snapshot();el.remove();render()};
+    byId('schoolNextV236').onclick=()=>{snapshot();el.remove();if(k+1<targets(q).length)openFocus(q,k+1);else if(mode==='single'&&answers[q].every(complete))finishSingle(q);else render()};
+  }
   function openFullFocus(q){
     selected=q;focus={q,k:-1,ci:0,full:true};byId('schoolFocusV236')?.remove();
     const a=fullAnswers[q],el=document.createElement('section');el.id='schoolFocusV236';el.className='schoolFocusV236 schoolFullV236';
-    el.innerHTML=`<div class="schoolCardV236"><section class="schoolProblemV236"><b>${q+1}ばん・かなの問題文</b><div class="schoolSentenceV236">${sentence(q)}</div></section><section class="schoolWriteV236"><h2>文をぜんぶ、たてに書こう</h2><p>右上から下へ。長い文は左の列へ続けよう。</p><div class="schoolCanvasesV236"><div class="schoolCanvasWrapV236 on" data-ci="0"><canvas width="520" height="720" data-ci="0" aria-label="文全体の記入欄"></canvas></div></div></section><aside class="schoolControlV236"><b>✏️ 文をぜんぶ</b><p>右のかな文を見て、線の部分を漢字に直して書こう。</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">✓ 記入してもどる</button></aside></div>`;
+    el.innerHTML=focusPaper(q,-1,'<div class="schoolCanvasWrapV236 on" data-ci="0"><canvas width="520" height="720" data-ci="0" aria-label="文全体の記入欄"></canvas></div>',true);
     document.body.appendChild(el);const canvas=el.querySelector('canvas');attach(canvas,a,0);redraw();
     byId('schoolUndoV236').onclick=()=>{a.strokes[0].pop();redraw()};
     byId('schoolClearV236').onclick=()=>{a.strokes[0]=[];redraw()};
