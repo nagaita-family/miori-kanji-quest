@@ -17,8 +17,9 @@ const code=src('app-v236-school-test.js').replace('  const old=window.openPrintT
 const api=ctx.window.__schoolTest;const seen=[];ctx.window.gradeKanjiStrokeV230=async(strokes,ch)=>{seen.push(ch);return{pass:true,total:100}};
 for(const [full,k] of [[false,1],[true,-1]]){
  const html=api.focusPaper(0,k,'<canvas aria-label="記入欄"></canvas>',full);
- assert.ok(html.includes('schoolProblemV236')&&html.includes('schoolPaperBodyV236')&&html.includes('schoolWriteV236')&&html.includes('schoolSentenceV236'),'Both modes share one worksheet structure');
- assert.ok(html.indexOf('schoolWriteV236')<html.indexOf('schoolSentenceV236'),'Writing is next to the kana sentence inside one paper');
+ assert.ok(html.includes('schoolProblemV236')&&html.includes('schoolPaperBodyV236')&&html.includes('schoolWriteV236'),'Both modes share one worksheet structure');
+ if(full){assert.ok(html.includes('schoolSentenceV236')&&html.indexOf('schoolWriteV236')<html.indexOf('schoolSentenceV236'),'The whole sentence stays next to its answer');}
+ else{assert.ok(html.includes('schoolFlowV236')&&html.includes('schoolFlowReadingV236 wavy'),'Practice places the reading beside the answer within the sentence flow');assert.equal((html.match(/およぐ/g)||[]).length,1,'The current reading appears once');}
  assert.ok(html.includes('schoolUndoV236')&&html.includes('schoolClearV236')&&html.includes('schoolBackV236')&&html.includes('schoolNextV236'));
  assert.ok(!html.includes('泳ぐ'),'The answer stays hidden while writing');
  assert.ok(!html.includes('線のところ：'),'No large duplicate horizontal reading above the canvas');

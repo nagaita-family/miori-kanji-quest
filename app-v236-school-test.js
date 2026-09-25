@@ -27,7 +27,13 @@
 .schoolPaperHeadV236{flex:none;display:flex;align-items:center;gap:9px;border-bottom:2px solid #4b87ba;padding:0 0 8px;font-size:14px;font-weight:800;color:#44556a}
 .schoolPaperNumberV236{flex:none;width:32px;height:32px;display:grid;place-items:center;border:2px solid #69727f;border-radius:50%;background:#fff;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:18px;color:#25344b}
 .schoolPaperBodyV236{flex:1;min-height:0;min-width:0;display:flex;align-items:center;justify-content:center;gap:14px;overflow:hidden}
-.schoolPaperBodyV236 .schoolSentenceV236{flex:none;align-self:center;display:flex;flex-direction:column;align-items:center;max-height:100%;overflow:auto;margin:0;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(18px,2.3vh,24px);line-height:1.12}
+.schoolPaperBodyV236 .schoolSentenceV236{flex:none;align-self:center;display:flex;flex-direction:column;align-items:center;max-height:100%;overflow:visible;margin:0;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(18px,2.3vh,24px);line-height:1.12}
+.schoolFlowV236{width:100%;height:100%;display:flex;flex-flow:column wrap;align-content:center;align-items:center;justify-content:center;column-gap:14px;direction:rtl;font-family:'Yu Mincho','Noto Serif JP',serif;color:#24272c}
+.schoolFlowTextV236{display:flex;flex-direction:column;align-items:center;font-size:clamp(18px,2.3vh,24px);line-height:1.12}
+.schoolFlowTextV236>span{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap}
+.schoolFlowAnswerV236{display:flex;flex:none;align-items:center;gap:8px;direction:ltr}
+.schoolFlowReadingV236{writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;font-size:16px;line-height:1.1;text-decoration:underline solid #26354b 2px;text-underline-position:left;text-underline-offset:2px}
+.schoolFlowReadingV236.wavy{color:#ad3838;text-decoration:underline wavy #c84242 2px}
 .schoolWriteV236{flex:none;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:visible}
 .schoolCanvasesV236{display:flex;flex-direction:column;align-items:center;gap:4px;max-height:100%;overflow:auto;overscroll-behavior:contain}
 .schoolCanvasWrapV236{position:relative;border:2px solid #72859c;border-radius:5px;background:#fff}
@@ -77,10 +83,19 @@
     if(mode==='test')byId('schoolSubmitV236').onclick=submit;
   }
   const complete=a=>a.strokes.every(st=>st.length>0);
+  function practiceFlow(q,k,canvases){
+    let targetIndex=-1,segmentIndex=-1;
+    questions()[q].forEach((s,i)=>{if(s.lineType&&++targetIndex===k)segmentIndex=i});
+    const row=questions()[q],t=row[segmentIndex];
+    const fragment=parts=>parts.map(s=>s.lineType?line(s):`<span>${esc(s.text)}</span>`).join('');
+    const before=fragment(row.slice(0,segmentIndex)),after=fragment(row.slice(segmentIndex+1));
+    return `<div class="schoolFlowV236">${before?`<div class="schoolFlowTextV236">${before}</div>`:''}<div class="schoolFlowAnswerV236"><div class="schoolWriteV236"><div class="schoolCanvasesV236">${canvases}</div></div><span class="schoolFlowReadingV236 ${t.lineType}">${esc(t.text)}</span></div>${after?`<div class="schoolFlowTextV236">${after}</div>`:''}</div>`;
+  }
   // Both school modes use the same worksheet. Only the answer canvas and progress differ.
   function focusPaper(q,k,canvases,full){
     const progress=full?'文をぜんぶ書こう':`${k+1}/${targets(q).length}か所 · ${targets(q)[k].lineType==='wavy'?'波線：送り仮名まで':'直線：漢字だけ'}`;
-    return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>${full?'学校の10問テスト':'学校テストれんしゅう'} · ${progress}</span></header><div class="schoolPaperBodyV236"><div class="schoolWriteV236"><div class="schoolCanvasesV236">${canvases}</div></div><div class="schoolSentenceV236">${sentence(q,k)}</div></div></section><aside class="schoolControlV236"><b>✏️ ${full?'文をぜんぶ':'線のところだけ'}</b><p>${full?'右のかな文を見て、文全体をたてに書こう。':k>=0&&targets(q)[k].lineType==='wavy'?'線の漢字と送り仮名まで書こう。':'線の漢字だけを書こう。'}</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${full||k+1===targets(q).length?'✓ 記入してもどる':'次の線へ →'}</button></aside></div>`;
+    const writing=full?`<div class="schoolWriteV236"><div class="schoolCanvasesV236">${canvases}</div></div><div class="schoolSentenceV236">${sentence(q)}</div>`:practiceFlow(q,k,canvases);
+    return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>${full?'学校の10問テスト':'学校テストれんしゅう'} · ${progress}</span></header><div class="schoolPaperBodyV236">${writing}</div></section><aside class="schoolControlV236"><b>✏️ ${full?'文をぜんぶ':'線のところだけ'}</b><p>${full?'右のかな文を見て、文全体をたてに書こう。':k>=0&&targets(q)[k].lineType==='wavy'?'線の漢字と送り仮名まで書こう。':'線の漢字だけを書こう。'}</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${full||k+1===targets(q).length?'✓ 記入してもどる':'次の線へ →'}</button></aside></div>`;
   }
   function openFocus(q,k){
     selected=q;focus={q,k,ci:0};byId('schoolFocusV236')?.remove();
