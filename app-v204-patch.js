@@ -89,7 +89,7 @@
     const score=card.querySelector('.weeklyCardGoalV20 strong');
     if(score)score.innerHTML=`${info.runs?info.best:'?'}<small>/10</small>`;
     const desc=card.querySelector('.weeklyCardCopyV20 small');
-    const schoolWeek=window.schoolTestModelV236&&typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID==='2026-09-21-p58';
+    const schoolWeek=window.schoolTestModelV236&&typeof ACTIVE_KANJI_PACK_ID!=='undefined'&&typeof CURRENT_KANJI_PACK_ID!=='undefined'&&ACTIVE_KANJI_PACK_ID===CURRENT_KANJI_PACK_ID&&typeof currentKanjiPack==='function'&&!!currentKanjiPack()?.schoolTest;
     if(desc)desc.textContent=schoolWeek?'学校と同じ形で練習しよう':info.runs?`今週のBEST　${info.best} / 10点`:'今週の漢字をまとめてチェック！';
     const btn=$('weeklyStaticOpenV202');if(btn)btn.textContent=schoolWeek?'やってみる':info.runs?'もう一回挑戦':'テストする';
   }
