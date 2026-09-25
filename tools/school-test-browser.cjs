@@ -7,6 +7,7 @@ const seed={xp:550,storyV15Seen:true,stats:{路:{mastery:88}},okuriStats:{old:{c
 async function setup(browser,v){const p=await browser.newPage({viewport:v,reducedMotion:'reduce'});p.errors=[];p.on('pageerror',e=>p.errors.push(e.stack));await p.addInitScript(x=>localStorage.setItem('miori-kanji-quest-v10',JSON.stringify(x)),seed);await p.goto(`http://127.0.0.1:${server.address().port}`);await p.waitForFunction(()=>window.schoolTestModelV236&&document.querySelector('#weeklyStaticOpenV202'));await p.waitForTimeout(500);assert.deepEqual(p.errors,[]);return p}
 async function ink(p){await p.evaluate(()=>{document.querySelectorAll('#schoolFocusV236 canvas').forEach(c=>{const r=c.getBoundingClientRect();for(const [name,x,y] of [['pointerdown',.3,.3],['pointermove',.6,.6],['pointerup',.7,.7]])c.dispatchEvent(new PointerEvent(name,{bubbles:true,pointerType:'pen',pointerId:17,clientX:r.x+r.width*x,clientY:r.y+r.height*y}))})})}
 async function visible(p,s){const b=await p.locator(s).first().boundingBox(),v=p.viewportSize();assert.ok(b&&b.x>=0&&b.y>=0&&b.x+b.width<=v.width+1&&b.y+b.height<=v.height+1,`${s} visible: ${JSON.stringify({b,v})}`)}
+async function adjacent(p){const [canvas,problem]=await Promise.all([p.locator('#schoolFocusV236 canvas').first().boundingBox(),p.locator('.schoolProblemV236').boundingBox()]);assert.ok(canvas&&problem&&canvas.x+canvas.width<problem.x&&problem.x-(canvas.x+canvas.width)<20,`Answer must be just left of prompt: ${JSON.stringify({canvas,problem})}`);return canvas}
 async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE||undefined,args:['--no-sandbox','--disable-gpu']});try{
  for(const v of [{width:1024,height:768},{width:744,height:1133}]){
   const p=await setup(browser,v);
@@ -16,10 +17,11 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
   assert.equal(await p.locator('#schoolFocusV236 canvas').count(),4);
   const columns=await p.evaluate(()=>{const w=document.querySelector('.schoolWriteV236').getBoundingClientRect(),r=document.querySelector('.schoolProblemV236').getBoundingClientRect();return{writing:w.right,prompt:r.left}});
   assert.ok(columns.writing<columns.prompt,'Vertical handwriting is left of the kana sentence');
+  await adjacent(p);
   await visible(p,'#schoolFocusV236 canvas');await visible(p,'#schoolClearV236');await visible(p,'#schoolNextV236');
   assert.ok(!(await p.locator('#schoolFocusV236').innerText()).includes('水泳教室'));
   await ink(p);await p.click('#schoolNextV236');assert.ok((await p.locator('.schoolWriteV236').innerText()).includes('かよう'));
-  assert.equal(await p.locator('#schoolFocusV236 canvas').count(),2);await ink(p);await p.click('#schoolNextV236');
+  assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);const wavy=await adjacent(p);assert.ok(wavy.height>wavy.width*2,'Wavy answer has one tall box');assert.equal(await p.locator('#schoolFocusV236 canvas').evaluate(c=>getComputedStyle(c).backgroundImage),'none');await ink(p);await p.click('#schoolNextV236');
   await p.waitForSelector('#schoolVerifyV236');assert.ok((await p.locator('#schoolVerifyV236').innerText()).includes('通う'));
   await p.click('#schoolNoV236');await p.click('#schoolResultCloseV236');await p.click('#schoolCloseV236');
   await p.click('#weeklyStaticOpenV202');assert.equal(await p.locator('.schoolQV236').count(),10);
@@ -33,7 +35,7 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await paper.pdf({path:process.env.QA_PDF_PATH,preferCSSPageSize:true,printBackground:true});
   }
   await paper.close();assert.equal(await p.evaluate(()=>JSON.stringify(save)),before,'Print has no storage side effects');
-  for(let q=0;q<10;q++){await p.click(`.schoolQV236[data-q="${q}"]`);assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);await visible(p,'#schoolFocusV236 canvas');await ink(p);await p.click('#schoolNextV236')}
+  for(let q=0;q<10;q++){await p.click(`.schoolQV236[data-q="${q}"]`);assert.equal(await p.locator('#schoolFocusV236 canvas').count(),1);await visible(p,'#schoolFocusV236 canvas');if(q===0){const whole=await adjacent(p);assert.ok(whole.height>whole.width*1.8,'Ten-question answer is narrower and taller');assert.equal(await p.locator('#schoolFocusV236 canvas').evaluate(c=>getComputedStyle(c).backgroundImage),'none')}await ink(p);await p.click('#schoolNextV236')}
   assert.equal(await p.evaluate(()=>window.getSelection().toString()),'','Pencil strokes do not select surrounding text');
   await p.click('#schoolSubmitV236');let count=0;while(await p.locator('#schoolYesV236').count()){await p.click('#schoolYesV236');count++;assert.ok(count<=10)}
   assert.equal(count,10,'All whole sentences need human comparison');assert.equal(await p.locator('.schoolScoreV236').innerText(),'10 / 10');

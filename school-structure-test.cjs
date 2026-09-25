@@ -16,9 +16,12 @@ const original=evalJs('JSON.stringify(KANJI_PACKS[0].stages)');evalJs("useKanjiP
 const code=src('app-v236-school-test.js').replace('  const old=window.openPrintTestV230;', '  window.__schoolTest={record,gradeOne,saveResult,write:a=>answers=a,writeFull:a=>fullAnswers=a,mode:m=>mode=m,completedSentence};\n  const old=window.openPrintTestV230;');vm.runInContext(code,ctx);
 const api=ctx.window.__schoolTest;const seen=[];ctx.window.gradeKanjiStrokeV230=async(strokes,ch)=>{seen.push(ch);return{pass:true,total:100}};
 let rows=pack.map(q=>q.filter(x=>x.lineType).map(t=>api.record(t)));for(const row of rows)for(const a of row)a.strokes.forEach(x=>x.push([{x:1,y:1}]));api.write(rows);
+assert.equal(rows[0][1].strokes.length,1,'Wavy target has one answer area, regardless of suffix length');
+assert.equal(rows[4][1].strokes.length,1,'Longer wavy answers cannot reveal their character count');
+assert.equal(rows[7][0].strokes.length,4,'Straight kanji retain independent handwriting recognition');
 const prior={stats:{路:{mastery:88}},okuriStats:{old:{correct:4}},kanken9V280:{xp:14},printTestsV230:{'2026-09-previous':{best:8,runs:2}}};ctx.save=structuredClone(prior);ctx.persist=()=>{};
 (async()=>{
- await api.gradeOne(4,1);assert.deepEqual(seen,['申','込']);assert.equal(rows[4][1].result.manual,true,'Mixed kana must require comparison');seen.length=0;
+ await api.gradeOne(4,1);assert.deepEqual(seen,[],'Combined kanji and kana must not be judged as a single kanji');assert.equal(rows[4][1].result.manual,true,'Mixed kana must require comparison');
  await api.gradeOne(7,0);assert.deepEqual(seen,['水','泳','教','室']);assert.equal(rows[7][0].result.pass,true);
  ctx.window.gradeKanjiStrokeV230=async()=>({pass:false,total:33});await api.gradeOne(7,0);assert.equal(rows[7][0].result.manual,true,'Uncertain handwriting requires confirmation');
  assert.equal(api.completedSentence(7),'水泳教室に通う。');
@@ -26,5 +29,5 @@ const prior={stats:{路:{mastery:88}},okuriStats:{old:{correct:4}},kanken9V280:{
  const full=pack.map(()=>({strokes:[[[{x:1,y:1}]]],images:[],result:{pass:true}}));
  api.writeFull(full);api.mode('test');api.saveResult();
  assert.equal(ctx.save.printTestsV230['2026-09-21-p58'].last,10);assert.deepEqual(ctx.save.printTestsV230['2026-09-previous'],prior.printTestsV230['2026-09-previous']);for(const k of ['stats','okuriStats','kanken9V280'])assert.deepEqual(ctx.save[k],prior[k]);
- console.log('PASS school data: 10 kana prompts, 20 marked targets, mixed kana handwriting, hybrid grading, history and storage isolation.');
+ console.log('PASS school data: 10 kana prompts, 20 marked targets, one blank wavy answer, hybrid grading, history and storage isolation.');
 })().catch(e=>{console.error(e);process.exitCode=1});
