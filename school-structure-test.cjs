@@ -25,6 +25,7 @@ for(const [q,k,answer] of [[0,1,'泳ぐ'],[2,1,'助言'],[2,2,'聞く']]){
  assert.ok(!html.includes('文をぜんぶ書こう'),'Full sentence copying is removed');
 }
 assert.ok(code.includes('schoolComparisonV236')&&code.includes('grid-template-columns:1fr 1fr'),'Handwriting and vertical answer compare side by side');
+assert.ok(src('app-v204-patch.js').includes("schoolWeek?'やってみる'"),'Legacy home score refresh keeps the one school-test entry');
 for(const [pixelWidth,pixelHeight,displayWidth,displayHeight] of [[520,520,130,130],[440,720,185,480],[520,720,250,520]]){
  const ops=[],pencil={setTransform(...v){ops.push(['transform',...v])},clearRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){ops.push(['stroke',this.lineWidth])},arc(){},fill(){}};
  api.redrawCanvas({width:pixelWidth,height:pixelHeight,getBoundingClientRect:()=>({width:displayWidth,height:displayHeight}),getContext:()=>pencil},[[{x:10,y:10},{x:30,y:30}]]);
