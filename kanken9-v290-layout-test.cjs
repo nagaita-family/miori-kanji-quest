@@ -33,7 +33,7 @@ for(const [root,work,paper,q,a,example] of [
 }
 assert.match(flow,/@media\(max-width:570px\)/);assert.match(flow,/grid-template-rows:auto minmax\(0,1fr\)!important/);
 assert.ok(loader.includes('kanken9-paper-flow-v291.css?v=2920'));
-assert.ok(html.includes('app-v240-release.js?v=2943')&&html.includes('v2.9.4'));
+assert.ok(html.includes('app-v240-release.js?v=2944')&&html.includes('v2.9.4'));
 assert.match(script,/layout\.append\(example\)/,'Example must actually be moved out of text');
 for(const id of ['helpPips','strokeMsg','okuriPrompt','writeCanvas','recommendBtn','weeklyStaticOpenV202'])assert.ok(html.includes(`id="${id}"`),'School screen hook: '+id);
 console.log('PASS v2.9.4: VI example, question, answer have distinct grid cells with selectors that outrank old !important CSS; paper, cache and school hooks checked.');
