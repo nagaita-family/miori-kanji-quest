@@ -21,5 +21,5 @@ assert.match(code,/selfReviewed/,'Progress is credited from self-review');
 assert.doesNotMatch(code,/judgeCurrent\s*\(/,'New self-review module must not call automatic right\/wrong judgement');
 assert.doesNotMatch(code,/gradeKanjiStrokeV230/,'New regular practice does not call handwriting OCR grading');
 assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2950/,'Best-writing module loads after regular practice modules');
-assert.match(html,/app-v240-release\.js\?v=2945/,'Fresh loader is used on iPad');
+assert.match(html,/app-v240-release\.js\?v=2946/,'Fresh loader is used on iPad');
 console.log('PASS best-writing: write -> compare -> refine -> choose best, with no automatic correctness gate.');
