@@ -43,18 +43,20 @@
 
   function chipV270(index=null,where='review'){
     const host=where==='review'?document.querySelector('#reviewScreen .reviewShell'):document.querySelector('#resultScreen .resultShell');
-    if(!host)return;
+    const st=QUEST_STAGES?.[stageIndex];
+    if(!host||!st?.chars?.length)return;
     host.querySelector('.practiceNoteChipV270')?.remove();
     const pending=unresolvedV270();
-    if(!pending.length)return;
-    if(index!==null&&!stageNeedsV270.has(index))return;
-    const target=index!==null?index:pending[0];
-    const count=index!==null?1:pending.length;
+    const target=index!==null?index:(pending[0]??0);
+    if(!st.chars[target])return;
+    const recommended=index!==null?stageNeedsV270.has(index):pending.length>0;
+    const queue=index!==null?[index]:(pending.length?pending:st.chars.map((_,i)=>i));
+    const count=queue.length;
     const b=document.createElement('button');
     b.type='button';b.className='practiceNoteChipV270';
-    b.innerHTML=`<span class="noteBookIconV270" aria-hidden="true"><i></i><i></i><i></i></span><span><b>練習ノート</b><small>${count>1?`${count}字 おすすめ`:'3回だけ おすすめ'}</small></span><em>→</em>`;
-    b.setAttribute('aria-label','おすすめの練習ノートをひらく');
-    b.onclick=()=>openNotebookV270(target,pending);
+    b.innerHTML=`<span class="noteBookIconV270" aria-hidden="true"><i></i><i></i><i></i></span><span><b>${recommended?'練習ノート':'たくさん練習'}</b><small>${recommended?(count>1?`${count}字 おすすめ`:'3回だけ おすすめ'):(index!==null?'判定に関係なく、いつでも書ける':`${count}字を自由に練習`)}</small></span><em>→</em>`;
+    b.setAttribute('aria-label',recommended?'おすすめの練習ノートをひらく':'たくさん練習をひらく');
+    b.onclick=()=>openNotebookV270(target,queue,true);
     const actions=where==='review'?host.querySelector('.reviewActions'):host.querySelector('.resultActions');
     if(actions)host.insertBefore(b,actions);else host.appendChild(b);
   }
@@ -66,9 +68,22 @@
     if(resultActive)chipV270(null,'result');
   }
 
+  function installAlwaysAccessV271(){
+    const dock=document.querySelector('#challengeScreen .helpDock');
+    if(!dock||document.getElementById('practiceAnyV271'))return;
+    const b=document.createElement('button');
+    b.id='practiceAnyV271';b.className='practiceAnyV271';b.type='button';
+    b.innerHTML='<span>📒</span><span><b>たくさん練習</b><small>判定に関係なく、いつでも書ける</small></span><em>→</em>';
+    b.setAttribute('aria-label','今の漢字をたくさん練習する');
+    b.onclick=()=>openNotebookV270(charIndex,[charIndex],true);
+    const buttons=dock.querySelector('.helpButtons');
+    if(buttons)buttons.insertAdjacentElement('afterend',b);else dock.appendChild(b);
+  }
+
   function installStylesV270(){
     if(document.getElementById('styleV270PracticeNote'))return;
     const s=document.createElement('style');s.id='styleV270PracticeNote';s.textContent=`
+.practiceAnyV271{margin:9px 0 0;border:1px solid #ead38f;border-radius:14px;background:#fff9df;color:#65562e;padding:9px 12px;display:flex;align-items:center;gap:9px;text-align:left;font-weight:900;touch-action:manipulation}.practiceAnyV271>span:first-child{font-size:20px}.practiceAnyV271>span:nth-child(2){display:flex;flex-direction:column;gap:1px;flex:1}.practiceAnyV271 b{font-size:13px}.practiceAnyV271 small{font-size:9px;color:#8b7a50;font-weight:800}.practiceAnyV271 em{font-style:normal;font-size:16px;color:#a78631}
 .practiceNoteChipV270{margin:12px auto 15px;width:min(390px,92%);border:1px solid #ead38f;border-radius:18px;background:linear-gradient(135deg,#fffdf4,#fff7d6);box-shadow:0 8px 22px rgba(95,77,31,.12);padding:10px 13px;display:flex;align-items:center;gap:11px;color:#5f542f;text-align:left;animation:noteNudgeV270 .55s ease both;touch-action:manipulation}.practiceNoteChipV270>span:nth-child(2){display:flex;flex-direction:column;gap:1px;flex:1}.practiceNoteChipV270 b{font-size:14px;font-weight:950}.practiceNoteChipV270 small{font-size:10px;color:#8a7951;font-weight:800}.practiceNoteChipV270 em{font-style:normal;font-size:17px;color:#a78631}.noteBookIconV270{position:relative;width:34px;height:40px;border:2px solid #d8b64f;border-radius:5px;background:#fffef8;box-shadow:inset 5px 0 0 #f5df91;flex:0 0 auto}.noteBookIconV270:before{content:"";position:absolute;left:8px;right:5px;top:10px;height:2px;background:#d9e3ec;box-shadow:0 7px 0 #d9e3ec,0 14px 0 #d9e3ec}.noteBookIconV270 i{position:absolute;left:-5px;width:7px;height:2px;border-radius:2px;background:#7c8da0}.noteBookIconV270 i:nth-child(1){top:8px}.noteBookIconV270 i:nth-child(2){top:18px}.noteBookIconV270 i:nth-child(3){top:28px}
 .practiceNotebookV270{position:fixed;inset:0;z-index:10040;background:rgba(37,48,61,.52);backdrop-filter:blur(3px);display:grid;place-items:center;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}.practiceNotebookCardV270{width:min(880px,97vw);max-height:94vh;overflow:auto;border-radius:24px;background:#fffdf5;box-shadow:0 28px 80px rgba(27,35,45,.28);border:1px solid #e8dcc0;padding:18px 20px 20px;position:relative}.practiceNotebookCardV270:before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:24px;background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(91,130,155,.045) 31px 32px)}.practiceNoteHeadV270,.practiceNoteBodyV270,.practiceNoteFootV270{position:relative;z-index:1}.practiceNoteHeadV270{display:flex;align-items:flex-start;gap:14px;border-bottom:2px solid #7ca7c8;padding-bottom:11px}.practiceNoteMiniV270{font-size:12px;color:#7b8c9f;font-weight:900;letter-spacing:.08em}.practiceNoteHeadV270 h2{margin:2px 0 3px;font-size:28px;color:#35465a}.practiceNoteHeadV270 p{margin:0;color:#738094;font-size:12px;font-weight:750;line-height:1.55}.practiceNoteCloseV270{margin-left:auto;border:0;background:#f1eee5;color:#68717c;width:34px;height:34px;border-radius:50%;font-size:18px}.practiceNoteBodyV270{display:grid;grid-template-columns:190px 1fr;gap:18px;padding-top:15px}.practiceNoteModelV270{border:1px solid #dfd4bb;border-radius:18px;background:#fff;padding:12px;text-align:center;align-self:start}.practiceNoteModelGlyphV270{font-family:"Yu Mincho","Noto Serif JP",serif;font-weight:900;font-size:112px;line-height:1.05;color:#202c3b}.practiceNoteWordV270{font-size:17px;font-weight:950;color:#42556b}.practiceNoteReadingV270{font-size:12px;color:#71839a;margin-top:2px;font-weight:800}.practiceNoteMemoryV270{margin-top:10px;padding-top:9px;border-top:1px dashed #dfd4bb;color:#70664f;font-size:11px;line-height:1.5;text-align:left}.practiceGridV270{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr));gap:10px}.practiceCellV270{position:relative;aspect-ratio:1;background:#fff;border:2px solid #9eabb7;border-radius:8px;overflow:hidden}.practiceCellV270:before,.practiceCellV270:after{content:"";position:absolute;pointer-events:none;z-index:0}.practiceCellV270:before{left:50%;top:0;bottom:0;border-left:1px dashed #d6dde3}.practiceCellV270:after{top:50%;left:0;right:0;border-top:1px dashed #d6dde3}.practiceCellV270.optional:after{border-top-color:#e5e9ed}.practiceTraceGlyphV270{position:absolute;inset:0;display:grid;place-items:center;font-family:"Yu Mincho","Noto Serif JP",serif;font-size:clamp(72px,10vw,122px);font-weight:900;color:rgba(91,119,145,.13);z-index:0;pointer-events:none}.practiceCanvasV270{position:absolute;inset:0;width:100%;height:100%;z-index:2;touch-action:none}.practiceCellEraseV270{position:absolute;right:5px;top:5px;z-index:4;border:1px solid #dbe1e6;background:rgba(255,255,255,.92);border-radius:9px;padding:4px 6px;font-size:9px;color:#7a8794;font-weight:900}.practiceCellTagV270{position:absolute;left:6px;top:5px;z-index:3;font-size:8px;font-weight:900;color:#9a895c;background:#fff8d9;border-radius:999px;padding:2px 5px;pointer-events:none}.practiceCellV270.done{box-shadow:inset 0 0 0 3px rgba(103,181,119,.22);border-color:#75b683}.practiceCellV270.optional{border-color:#ccd4da}.practiceNoteGuideV270{grid-column:1/-1;background:#fff9db;border:1px solid #ecdda2;border-radius:13px;padding:8px 10px;font-size:11px;line-height:1.55;color:#6e6243;font-weight:800}.practiceNoteFootV270{margin-top:14px;display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}.practiceNoteProgressV270{margin-right:auto;display:flex;align-items:center;gap:8px;font-size:11px;color:#6d7a89;font-weight:900}.practiceNoteProgressV270 b{font-size:19px;color:#4a7656}.practiceNoteSkipV270{border:0;background:transparent;color:#9ba4ad;text-decoration:underline dotted;font-size:10px;font-weight:850;padding:8px}.practiceNoteDoneV270{border:0;border-radius:14px;background:linear-gradient(135deg,#5d8ed8,#6f9be0);color:#fff;padding:11px 16px;font-weight:950;box-shadow:0 7px 18px rgba(74,112,170,.20)}.practiceNoteDoneV270:disabled{opacity:.38;box-shadow:none}.practiceNoteReasonV270{margin-top:7px;color:#806f46;font-size:11px;font-weight:850;line-height:1.5}
 @keyframes noteNudgeV270{0%{opacity:0;transform:translateY(6px) scale(.97)}70%{transform:translateY(-2px) scale(1.01)}100%{opacity:1;transform:none}}
@@ -133,12 +148,16 @@
     updateNoteProgressV270();
   }
 
-  function openNotebookV270(index,queue=null){
-    const pending=(queue&&queue.length?queue:unresolvedV270()).filter(i=>stageNeedsV270.has(i));if(!pending.length)return;
-    const ordered=[index,...pending.filter(i=>i!==index)];
+  function openNotebookV270(index,queue=null,force=false){
+    const st=QUEST_STAGES?.[stageIndex];if(!st?.chars?.length)return;
+    const source=queue&&queue.length?queue:(force?st.chars.map((_,i)=>i):unresolvedV270());
+    let pending=source.filter(i=>st.chars[i]&&(force||stageNeedsV270.has(i)));
+    if(!pending.length&&force&&st.chars[index])pending=[index];
+    if(!pending.length)return;
+    const ordered=[index,...pending.filter(i=>i!==index)].filter((v,i,a)=>a.indexOf(v)===i);
     document.getElementById('practiceNotebookV270')?.remove();
     const ov=document.createElement('div');ov.id='practiceNotebookV270';ov.className='practiceNotebookV270';ov.innerHTML='<div class="practiceNotebookCardV270"></div>';document.body.appendChild(ov);
-    noteStateV270={queue:ordered,queuePos:0,cells:[]};renderNotebookPageV270();
+    noteStateV270={queue:ordered,queuePos:0,cells:[],voluntary:force};renderNotebookPageV270();
   }
 
   function scanBatchFailsV270(token){
@@ -148,7 +167,7 @@
 
   startStage=function(i){
     stageTokenV270++;stageNeedsV270=new Map();fullHintV270=new Set();document.getElementById('practiceNotebookV270')?.remove();noteStateV270=null;
-    prevStartV270(i);setVersionV270();
+    prevStartV270(i);setVersionV270();setTimeout(installAlwaysAccessV271,0);
   };
 
   if(prevOpenReviewV270){
@@ -177,5 +196,5 @@
   },true);
 
   installStylesV270();setVersionV270();
-  window.MioriPracticeNoteV270={open:(i=0)=>openNotebookV270(i),pending:()=>unresolvedV270()};
+  window.MioriPracticeNoteV270={open:(i=0)=>openNotebookV270(i,[i],true),openStage:()=>{const st=QUEST_STAGES?.[stageIndex];if(st?.chars?.length)openNotebookV270(0,st.chars.map((_,i)=>i),true);},pending:()=>unresolvedV270()};
 })();
