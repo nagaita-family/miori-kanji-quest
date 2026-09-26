@@ -30,7 +30,7 @@
     './app-v250-study.js?v=2700',
     './app-v252-cell-erase.js?v=2700',
     './app-v260-target-first.js?v=2700',
-    './app-v270-practice-note.js?v=2700',
+    './app-v270-practice-note.js?v=2701',
     './app-v270-pencil-guard.js?v=2701',
     './kanken9-data-v280.js?v=2800',
     './kanken9-island-v280.js?v=2800',
