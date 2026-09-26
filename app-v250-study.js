@@ -12,12 +12,33 @@
   function nextInV251(t=API.total?.()??0){const p=progressV251(t);return p===0?REWARD_INTERVAL:REWARD_INTERVAL-p;}
   API.earned=earnedV251;API.progress=progressV251;API.nextIn=nextInV251;
   const oldPolishIsland=API.polishIsland;
+  let islandStorageObserverV251=null;
+  function rewardIndexV251(el){return Number((String(el?.dataset?.key||'').match(/^r(\d+)$/)||[])[1]??-1);}
+  function syncIslandStorageV251(play=document.getElementById('islandPlayV15'),n=earnedV251(API.total?.()??0)){
+    if(!play)return;
+    const map=(save.storageV19&&typeof save.storageV19==='object')?save.storageV19:{};
+    let onIsland=0,stored=0;
+    [...play.querySelectorAll('.islandObjectV15')].filter(x=>/^r\d+$/.test(x.dataset.key||'')).forEach(el=>{
+      const i=rewardIndexV251(el),earned=i>=0&&i<n,inBox=earned&&!!map[el.dataset.key],show=earned&&!inBox;
+      el.hidden=!show;el.style.display=show?'':'none';el.setAttribute('aria-hidden',show?'false':'true');el.classList.toggle('storedV19',inBox);
+      if(show)onIsland++;else if(inBox)stored++;
+    });
+    const hb=document.querySelector('.islandHudV15 b');if(hb)hb.textContent=`島に ${onIsland}こ ・ 宝箱 ${stored}こ`;
+  }
+  function watchIslandStorageV251(){
+    const art=document.querySelector('.hero.v15Hero .skyArt');if(!art)return;
+    if(islandStorageObserverV251?.__art===art)return;
+    islandStorageObserverV251?.disconnect?.();
+    const ob=new MutationObserver(()=>requestAnimationFrame(()=>syncIslandStorageV251()));
+    ob.__art=art;ob.observe(art,{childList:true,subtree:true});islandStorageObserverV251=ob;
+  }
+  API.syncIslandStorage=syncIslandStorageV251;
   API.polishIsland=function(){
     oldPolishIsland?.();
     const play=document.getElementById('islandPlayV15');if(!play)return;
     const t=API.total?.()??0,n=earnedV251(t),p=progressV251(t),phase=p===0?0:p<=2?1:p<=4?2:3;
-    [...play.querySelectorAll('.islandObjectV15')].filter(x=>/^r\d+$/.test(x.dataset.key||'')).forEach(el=>{const i=Number((el.dataset.key.match(/r(\d+)/)||[])[1]??-1);el.style.display=i>=0&&i<n?'':'none';});
-    const hb=document.querySelector('.islandHudV15 b'),hs=document.querySelector('.islandHudV15 small');if(hb)hb.textContent=`${n+1} なかま・アイテム`;if(hs)hs.textContent=`ことばの木：あと ${nextInV251(t)}問でごほうび`;
+    syncIslandStorageV251(play,n);watchIslandStorageV251();
+    const hs=document.querySelector('.islandHudV15 small');if(hs)hs.textContent=`ことばの木：あと ${nextInV251(t)}問でごほうび`;
     const plant=play.querySelector('.wordPlantV250');if(plant){plant.className=`wordPlantV250 p${phase}`;}
     const meter=play.querySelector('.rewardMeterV250');if(meter)meter.innerHTML=`<b>ことばの木 ${p}/${REWARD_INTERVAL}</b><span>${'●'.repeat(p)}${'○'.repeat(REWARD_INTERVAL-p)}</span><b>あと${nextInV251(t)}問</b>`;
   };
@@ -122,7 +143,7 @@
   const oldHome=renderHome,oldStart=startStage,oldFinish=finishStage;
   const oldOpenReview=typeof openReview==='function'?openReview:null;
   if(oldOpenReview)openReview=function(gain){oldOpenReview(gain);polishPracticeWords();};
-  renderHome=function(){setFocus(0);clearTransient();oldHome();setVersion();requestAnimationFrame(()=>API.polishIsland?.());setTimeout(()=>{setVersion();API.polishIsland?.();},90);};
+  renderHome=function(){setFocus(0);clearTransient();oldHome();setVersion();watchIslandStorageV251();requestAnimationFrame(()=>API.polishIsland?.());setTimeout(()=>{setVersion();watchIslandStorageV251();API.polishIsland?.();},90);};
   startStage=function(i){clearTransient();oldStart(i);setVersion();fallback();wireOne();polishPracticeWords();setTimeout(()=>{fallback();wireOne();polishPracticeWords();},90);};
   finishStage=function(){clearTransient();oldFinish();setVersion();const step=bumpFocus();resultCard(step);};
 
