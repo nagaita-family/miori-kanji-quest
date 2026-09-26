@@ -51,7 +51,8 @@
     './kanken9-coverage-daily-v287.js?v=2870',
     './kanken9-paper-guard-v287.js?v=2870',
     './kanken9-layout-v288.js?v=2910',
-    './kanken9-travel-v293.js?v=2940'
+    './kanken9-travel-v293.js?v=2940',
+    './app-v295-best-writing.js?v=2950'
   ],()=>{
     refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();
     window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();
