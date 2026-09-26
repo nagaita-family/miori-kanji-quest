@@ -20,7 +20,7 @@
   }
 
   function setVersion(){
-    window.MioriReleaseVersion=VERSION;
+    window.MioriBestWritingVersion=VERSION;
   }
 
   function polish(){
