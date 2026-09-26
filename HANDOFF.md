@@ -107,3 +107,12 @@
 - p62 current化に伴い、学校テストUIとホーム入口のp58固定判定をcurrent schoolTest pack判定へ汎用化。
 - indexのdata/app cache queryを更新。関連する漢検島回帰のrelease loader期待値も新queryへ整合。
 - GitHub Actions run 36202159737 が成功し、Kanji 9回帰、p58、p62、school structure、Pages deployまで成功。
+
+
+## 2026-09-26：練習ノートへの常設導線
+- 既存の `app-v270-practice-note.js` の「練習ノート」は、従来は書き直し・ヒント・手動OKなどadaptive needが付いた時だけ表示されていた。手書き判定の誤判定や、正解でも本人が追加練習したいケースでは到達できなかった。
+- 問題記入画面のHELP直下に **「📒 たくさん練習」** を常設。判定前・不正解判定中でも、現在の漢字を直接練習ノートへ送れる。
+- 正解後のreviewでも、adaptive needがなくても「たくさん練習」を表示。語の完了resultでも、needがなければその語の全漢字を自由に練習できる。
+- adaptive needがある場合は従来どおり「練習ノート / 3回だけおすすめ」を優先表示する。自動判定はおすすめのきっかけには使うが、練習へのアクセス条件にはしない。
+- 練習ノート本体（3回を目安、4〜6マスは任意）、保存キー `practiceNotebookV270`、Apple Pencil入力処理は維持。
+- `practice-note-access-test.cjs` を追加し、判定状態に依存しない導線・新cache queryをActionsで検証。GitHub Actions run 36209708015 は成功し、Pages deployまで完了。
