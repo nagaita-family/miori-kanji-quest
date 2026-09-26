@@ -116,3 +116,10 @@
 - adaptive needがある場合は従来どおり「練習ノート / 3回だけおすすめ」を優先表示する。自動判定はおすすめのきっかけには使うが、練習へのアクセス条件にはしない。
 - 練習ノート本体（3回を目安、4〜6マスは任意）、保存キー `practiceNotebookV270`、Apple Pencil入力処理は維持。
 - `practice-note-access-test.cjs` を追加し、判定状態に依存しない導線・新cache queryをActionsで検証。GitHub Actions run 36209708015 は成功し、Pages deployまで完了。
+
+
+## 2026-09-26：複数字の「たくさん練習」修正
+- 「たくさん練習」常設導線が `charIndex` 1文字だけを練習ノートへ渡していたため、2文字以上の問題でも最初の1文字しか出ない不具合を修正。
+- 問題記入画面からの任意練習は、その問題の `stage.chars` 全文字をqueueへ渡す。例: 「客様」は客→様、「入学式」は入→学→式を順に練習できる。
+- 正解後reviewで本人が任意に「たくさん練習」を開く場合も、その語の全漢字を対象にする。一方、adaptive needで「3回だけおすすめ」が出た場合は従来どおり該当字だけに絞る。
+- `practice-note-access-test.cjs` を更新し、複数字全体queueとcache queryを回帰確認。GitHub Actions run 36210004659 は全検証・Pages deployとも成功。
