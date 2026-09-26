@@ -50,7 +50,7 @@
     const target=index!==null?index:(pending[0]??0);
     if(!st.chars[target])return;
     const recommended=index!==null?stageNeedsV270.has(index):pending.length>0;
-    const queue=index!==null?[index]:(pending.length?pending:st.chars.map((_,i)=>i));
+    const queue=index!==null?(recommended?[index]:st.chars.map((_,i)=>i)):(pending.length?pending:st.chars.map((_,i)=>i));
     const count=queue.length;
     const b=document.createElement('button');
     b.type='button';b.className='practiceNoteChipV270';
@@ -74,8 +74,8 @@
     const b=document.createElement('button');
     b.id='practiceAnyV271';b.className='practiceAnyV271';b.type='button';
     b.innerHTML='<span>📒</span><span><b>たくさん練習</b><small>判定に関係なく、いつでも書ける</small></span><em>→</em>';
-    b.setAttribute('aria-label','今の漢字をたくさん練習する');
-    b.onclick=()=>openNotebookV270(charIndex,[charIndex],true);
+    b.setAttribute('aria-label','この問題の漢字をたくさん練習する');
+    b.onclick=()=>{const st=QUEST_STAGES?.[stageIndex];if(st?.chars?.length)openNotebookV270(charIndex,st.chars.map((_,i)=>i),true);};
     const buttons=dock.querySelector('.helpButtons');
     if(buttons)buttons.insertAdjacentElement('afterend',b);else dock.appendChild(b);
   }
