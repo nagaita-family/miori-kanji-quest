@@ -33,16 +33,36 @@
     if(!save.storageV19 || typeof save.storageV19!=='object') save.storageV19={};
     return save.storageV19;
   }
-  function islandItems204(){
+  function rewardIndex204(el){
+    return Number((String(el?.dataset?.key||'').match(/^r(\d+)$/)||[])[1]??-1);
+  }
+  function islandAllItems204(){
     return [...document.querySelectorAll('#islandPlayV15 .islandObjectV15:not(.mokoObjectV15)')];
   }
+  function earnedCount204(){
+    const api=window.MioriV250;
+    if(api?.earned){
+      const n=Number(api.earned(api.total?.()));
+      if(Number.isFinite(n))return Math.max(0,n);
+    }
+    return islandAllItems204().filter(el=>rewardIndex204(el)>=0).length;
+  }
+  function islandItems204(){
+    const n=earnedCount204();
+    return islandAllItems204().filter(el=>{const i=rewardIndex204(el);return i>=0&&i<n;});
+  }
   function applyStorage204(){
-    const map=storageMap204();
-    islandItems204().forEach(el=>{
-      const stored=!!map[el.dataset.key];
-      el.hidden=stored;
+    const map=storageMap204(),n=earnedCount204();
+    islandAllItems204().forEach(el=>{
+      const i=rewardIndex204(el),earned=i>=0&&i<n,stored=earned&&!!map[el.dataset.key],show=earned&&!stored;
+      el.hidden=!show;
+      el.style.display=show?'':'none';
+      el.setAttribute('aria-hidden',show?'false':'true');
       el.classList.toggle('storedV19',stored);
     });
+    const items=islandItems204(),stored=items.filter(el=>!!map[el.dataset.key]).length;
+    const hud=document.querySelector('.islandHudV15 b');
+    if(hud)hud.textContent=`島に ${items.length-stored}こ ・ 宝箱 ${stored}こ`;
   }
   function renderTreasure204(){
     const grid=$('treasureGridV204'); if(!grid)return;
@@ -58,7 +78,7 @@
     grid.querySelectorAll('.treasureToggleV20').forEach(btn=>btn.onclick=()=>{
       const key=btn.dataset.key;
       if(map[key])delete map[key]; else map[key]=true;
-      persist(); applyStorage204(); renderTreasure204();
+      persist();applyStorage204();window.MioriV250?.polishIsland?.();renderTreasure204();
     });
   }
   function openTreasure204(){
