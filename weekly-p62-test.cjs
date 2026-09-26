@@ -65,6 +65,6 @@ assert.ok(paper.includes('>おおきさ</span>')&&paper.includes('>がき</span>
 for(const file of ['app-v236-school-test.js','app-v204-patch.js','app-v240-release.js']){
   assert.ok(!read(file).includes("ACTIVE_KANJI_PACK_ID==='2026-09-21-p58'"),file+' must not hardcode p58 as the current school pack');
 }
-assert.ok(read('index.html').includes('data-packs.js?v=20260926-p62'));
+assert.ok(read('index.html').includes('data-packs.js?v=20260926-p62-learned'));
 assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260926-p62-current'));
 console.log('PASS p62: current ten questions, new + learned kanji targets, okurigana line types, A4 marks, p58 history, and generic school flow.');
