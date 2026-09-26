@@ -49,7 +49,7 @@ assert.ok(loader.indexOf('kanken9-quality-v285.js')<loader.indexOf('kanken9-phil
 assert.ok(loader.indexOf('kanken9-philosophy-v286.js')<loader.indexOf('kanken9-exam-v283.js'));
 assert.ok(loader.indexOf('kanken9-daily-v286.js')<loader.indexOf('kanken9-daily-v284.js'));
 for(const f of ['kanken9-philosophy-v286.js','kanken9-daily-v286.js','kanken9-inline-v286.js','kanken9-inline-v286.css'])assert.ok(loader.includes(f),`loader missing ${f}`);
-assert.ok(html.includes('app-v240-release.js?v=2944'));
+assert.ok(html.includes('app-v240-release.js?v=2945'));
 assert.ok(html.includes('id="okuriPrompt"')&&html.includes('id="strokeMsg"')&&html.includes('id="helpPips"'),'School mode DOM hooks must be untouched');
 assert.ok(!html.includes('app-v233-polish.js'));
 console.log('PASS v2.8.6: section intent, five on/kun pairs, hard stroke set, inferred VI/VII rules, 25 writes, all-eight daily, direct vertical Pencil paper, school safety.');
