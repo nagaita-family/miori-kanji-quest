@@ -38,7 +38,8 @@
 .schoolCanvasesV236{display:flex;flex-direction:column;align-items:center;gap:4px;max-height:100%;overflow:auto;overscroll-behavior:contain}
 .schoolCanvasWrapV236{position:relative;border:2px solid #72859c;border-radius:5px;background:#fff}
 .schoolCanvasWrapV236.on{border-color:#416be4;box-shadow:0 0 0 2px #b5c9ff}
-.schoolCanvasWrapV236 canvas{display:block;width:clamp(112px,14.5dvh,130px);height:clamp(112px,14.5dvh,130px);touch-action:none;background:#fff}
+.schoolCanvasWrapV236 canvas{display:block;width:clamp(96px,13dvh,118px);height:clamp(108px,15dvh,132px);touch-action:none;background:#fff}
+.schoolCanvasWrapV236.long canvas{width:clamp(100px,13.5dvh,122px);height:min(var(--school-target-h,210px),31dvh);background:#fff}
 .schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(250px,38vw);height:min(520px,60dvh);background:#fff}
 .schoolWavyV236 .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
 .schoolTallV236 .schoolCanvasWrapV236 canvas{width:min(185px,32vw);height:min(480px,64dvh);background:#fff}
@@ -82,47 +83,52 @@
     byId('schoolSubmitV236').onclick=submit;
   }
   const complete=a=>a.strokes.every(st=>st.length>0);
-  function practiceFlow(q,k,canvases){
-    let targetIndex=-1,segmentIndex=-1;
-    questions()[q].forEach((s,i)=>{if(s.lineType&&++targetIndex===k)segmentIndex=i});
-    const row=questions()[q],t=row[segmentIndex];
-    const fragment=parts=>parts.map(s=>s.lineType?line(s):`<span>${esc(s.text)}</span>`).join('');
-    const before=fragment(row.slice(0,segmentIndex)),after=fragment(row.slice(segmentIndex+1));
-    return `<div class="schoolFlowV236">${before?`<div class="schoolFlowTextV236">${before}</div>`:''}<div class="schoolFlowAnswerV236"><div class="schoolWriteV236"><div class="schoolCanvasesV236">${canvases}</div></div><span class="schoolFlowReadingV236 ${t.lineType}">${esc(t.text)}</span></div>${after?`<div class="schoolFlowTextV236">${after}</div>`:''}</div>`;
+  function targetCanvas(q,k){
+    const t=targets(q)[k],len=[...t.answer].length,long=t.lineType==='wavy'||len>1;
+    const displayH=Math.min(260,115+Math.max(0,len-1)*48);
+    return `<div class="schoolCanvasWrapV236 ${long?'long':''}" data-k="${k}" style="--school-target-h:${displayH}px"><canvas width="${long?440:520}" height="${long?720:520}" data-k="${k}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`;
   }
-  function focusPaper(q,k,canvases){
-    const progress=`${k+1}/${targets(q).length}か所 · ${targets(q)[k].lineType==='wavy'?'波線：送り仮名まで':'直線：漢字だけ'}`;
-    return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>今週の学校テスト · ${progress}</span></header><div class="schoolPaperBodyV236">${practiceFlow(q,k,canvases)}</div></section><aside class="schoolControlV236"><b>✏️ 線のところだけ</b><p>${targets(q)[k].lineType==='wavy'?'線の漢字と送り仮名まで書こう。':'線の漢字だけを書こう。'}</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${k+1===targets(q).length?'✓ 記入してもどる':'次の線へ →'}</button></aside></div>`;
+  function practiceFlow(q){
+    let k=-1;
+    return `<div class="schoolFlowV236">${questions()[q].map(s=>{
+      if(!s.lineType)return `<div class="schoolFlowTextV236"><span>${esc(s.text)}</span></div>`;
+      k++;
+      return `<div class="schoolFlowAnswerV236" data-target-k="${k}"><div class="schoolWriteV236"><div class="schoolCanvasesV236">${targetCanvas(q,k)}</div></div><span class="schoolFlowReadingV236 ${s.lineType}">${esc(s.text)}</span></div>`;
+    }).join('')}</div>`;
   }
-  function openFocus(q,k){
-    selected=q;focus={q,k,ci:0};byId('schoolFocusV236')?.remove();
-    const t=targets(q)[k],a=answers[q][k],el=document.createElement('section');
-    const tall=t.lineType==='wavy'||[...t.answer].length>1;
-    el.id='schoolFocusV236';el.className='schoolFocusV236'+(tall?' schoolTallV236':'');
-    const canvases=`<div class="schoolCanvasWrapV236" data-ci="0"><canvas width="${tall?440:520}" height="${tall?720:520}" data-ci="0" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`;
-    el.innerHTML=focusPaper(q,k,canvases);
+  function focusPaper(q,k=0){
+    const count=targets(q).length;
+    return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>今週の学校テスト · ${count}か所を1ページで記入</span></header><div class="schoolPaperBodyV236">${practiceFlow(q)}</div></section><aside class="schoolControlV236"><b>✏️ 線の横に書こう</b><p>この問題の記入欄はぜんぶ同じページにあるよ。書きたい欄をタップして書こう。</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">この欄を消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${q+1<questions().length?'次の問題 →':'✓ プリントにもどる'}</button></aside></div>`;
+  }
+  function openFocus(q,k=0){
+    selected=q;focus={q,k:Math.max(0,Math.min(k,targets(q).length-1)),ci:0};byId('schoolFocusV236')?.remove();
+    const el=document.createElement('section');
+    el.id='schoolFocusV236';el.className=`schoolFocusV236 schoolTargets${targets(q).length}V236`;
+    el.innerHTML=focusPaper(q,focus.k);
     document.body.appendChild(el);
-    el.querySelectorAll('canvas').forEach(c=>attach(c,a,Number(c.dataset.ci)));
-    el.querySelectorAll('[data-ci].schoolCanvasWrapV236').forEach(w=>w.onclick=()=>active(Number(w.dataset.ci)));
-    active(0);redraw();
-    byId('schoolUndoV236').onclick=()=>{a.strokes[focus.ci].pop();redraw()};
-    byId('schoolClearV236').onclick=()=>{a.strokes[focus.ci]=[];redraw()};
+    el.querySelectorAll('canvas[data-k]').forEach(canvas=>{
+      const targetK=Number(canvas.dataset.k);attach(canvas,answers[q][targetK],targetK);
+    });
+    el.querySelectorAll('.schoolCanvasWrapV236[data-k]').forEach(w=>w.onclick=()=>active(Number(w.dataset.k)));
+    active(focus.k);redraw();
+    byId('schoolUndoV236').onclick=()=>{const a=answers[q][focus.k];a.strokes[0].pop();redraw()};
+    byId('schoolClearV236').onclick=()=>{const a=answers[q][focus.k];a.strokes[0]=[];a.images=[];redraw()};
     byId('schoolBackV236').onclick=()=>{snapshot();el.remove();render()};
-    byId('schoolNextV236').onclick=()=>{snapshot();el.remove();if(k+1<targets(q).length)openFocus(q,k+1);else render()};
+    byId('schoolNextV236').onclick=()=>{snapshot();el.remove();if(q+1<questions().length)openFocus(q+1,Math.max(0,answers[q+1].findIndex(a=>!complete(a))));else render()};
   }
-  function active(ci){focus.ci=ci;byId('schoolFocusV236')?.querySelectorAll('.schoolCanvasWrapV236').forEach(w=>w.classList.toggle('on',Number(w.dataset.ci)===ci));}
-  function attach(c,a,ci){
+  function active(k){focus.k=k;focus.ci=0;byId('schoolFocusV236')?.querySelectorAll('.schoolCanvasWrapV236[data-k]').forEach(w=>w.classList.toggle('on',Number(w.dataset.k)===k));}
+  function attach(c,a,k){
     let drawing=false,current=null,pointerId=null;
     const pos=e=>{const r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}};
     c.onpointerdown=e=>{
       if(e.pointerType==='touch'&&(pencilSeen||Number(e.width)>=18||Number(e.height)>=18)){e.preventDefault();return}
       if(e.pointerType==='pen')pencilSeen=true;
       e.preventDefault();e.stopPropagation();
-      active(ci);
-      drawing=true;pointerId=e.pointerId;current=[pos(e)];a.strokes[ci].push(current);c.setPointerCapture?.(e.pointerId);
+      active(k);
+      drawing=true;pointerId=e.pointerId;current=[pos(e)];a.strokes[0].push(current);c.setPointerCapture?.(e.pointerId);
     };
-    c.onpointermove=e=>{if(!drawing||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();current.push(pos(e));redrawCanvas(c,a.strokes[ci])};
-    const finish=e=>{if(!drawing||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();drawing=false;pointerId=null;current=null;redrawCanvas(c,a.strokes[ci])};
+    c.onpointermove=e=>{if(!drawing||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();current.push(pos(e));redrawCanvas(c,a.strokes[0])};
+    const finish=e=>{if(!drawing||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();drawing=false;pointerId=null;current=null;redrawCanvas(c,a.strokes[0])};
     c.onpointerup=finish;c.onpointercancel=finish;c.onlostpointercapture=finish;
   }
   function redrawCanvas(c,strokes){
@@ -134,8 +140,8 @@
     const point=p=>({x:p.x*w/c.width,y:p.y*h/c.height});
     strokes.forEach(s=>{if(!s.length)return;const first=point(s[0]);if(s.length===1){x.beginPath();x.arc(first.x,first.y,x.lineWidth/2,0,Math.PI*2);x.fill();return}x.beginPath();x.moveTo(first.x,first.y);s.slice(1).forEach(p=>{const at=point(p);x.lineTo(at.x,at.y)});x.stroke()});
   }
-  function redraw(){const a=answers[focus.q][focus.k];byId('schoolFocusV236')?.querySelectorAll('canvas').forEach(c=>redrawCanvas(c,a.strokes[Number(c.dataset.ci)]))}
-  function snapshot(){const a=answers[focus.q][focus.k];byId('schoolFocusV236')?.querySelectorAll('canvas').forEach(c=>a.images[Number(c.dataset.ci)]=a.strokes[Number(c.dataset.ci)].length?c.toDataURL('image/png'):'')}
+  function redraw(){byId('schoolFocusV236')?.querySelectorAll('canvas[data-k]').forEach(c=>{const a=answers[focus.q][Number(c.dataset.k)];redrawCanvas(c,a.strokes[0])})}
+  function snapshot(){byId('schoolFocusV236')?.querySelectorAll('canvas[data-k]').forEach(c=>{const a=answers[focus.q][Number(c.dataset.k)];a.images[0]=a.strokes[0].length?c.toDataURL('image/png'):''})}
   ['selectstart','dragstart','contextmenu'].forEach(type=>document.addEventListener(type,e=>{if(e.target.closest?.('#schoolV236,#schoolFocusV236,#schoolVerifyV236'))e.preventDefault()},{capture:true}));
   document.addEventListener('touchmove',e=>{if(byId('schoolFocusV236')&&!e.target.closest?.('button'))e.preventDefault()},{capture:true,passive:false});
   async function gradeOne(q,k){const t=targets(q)[k],a=answers[q][k],marks=[];if(t.lineType==='wavy'||[...t.answer].length!==1||!isKanji(t.answer)){a.result={pass:false,manual:true,marks};return}try{marks.push(await window.gradeKanjiStrokeV230(a.strokes[0],t.answer));a.result={pass:marks[0].pass&&marks[0].total>=75,manual:!marks[0].pass||marks[0].total<75,marks}}catch(e){a.result={pass:false,manual:true,marks,error:true}}}
