@@ -162,3 +162,17 @@
 - 既存の「たくさん練習／練習ノート」、送り仮名フロー、Apple Pencil、空島報酬、保存キー本体、漢検島は維持。
 - `best-writing-flow-test.cjs` を追加。自動判定呼び出しが新モジュールにないこと、見比べ→重ねる→書き直す→ベスト選択、複数字対応、保存、cache-bustを回帰確認。
 - GitHub Actions run 36212325762 は全検証・Pages deployとも成功。
+
+
+## 2026-09-26：空島の宝箱と模様替えの状態同期を修正
+- ユーザー報告: 宝箱の「島に出す／宝箱にしまう」と実際の空島表示が一致しないことがあり、「もようがえ」を押すと宝箱にしまったアイテムまで再表示される。
+- 原因1: v1.5の模様替えは空島DOMを丸ごと再描画するため、`hidden` / `storedV19` の表示状態が再生成時に失われていた。
+- 原因2: 後段の `app-v250-study.js` が獲得済みアイテムを `style.display` で再表示しており、宝箱の `save.storageV19` を考慮していなかった。複数レイヤーが別々に表示状態を決めていたのが本質的な不整合。
+- 原因3: 宝箱一覧はDOM上の全報酬を列挙していたため、v2.5以降の「4問ごとに獲得」経済で、まだ獲得していないプレースホルダーも宝箱側の対象になり得た。
+- `app-v204-patch.js` を修正し、宝箱は `window.MioriV250.earned()` を利用して**実際に獲得済みの報酬だけ**を一覧対象にする。表示同期では `hidden`、`style.display`、`aria-hidden`、`storedV19` classを同時に更新し、古いinline displayが残らないようにした。
+- 宝箱で「島に出す／しまう」を切り替えた直後に、現行の `MioriV250.polishIsland()` も呼び、宝箱・島・HUDを同じ保存状態へ揃える。
+- `app-v250-study.js` に `syncIslandStorageV251()` を追加。獲得済みかつ宝箱に入っていないアイテムだけを表示し、HUDも「島にNこ・宝箱Mこ」で同じstateから算出する。
+- 空島の `.skyArt` を `MutationObserver` で監視し、模様替え等で島DOMが再描画されたら次frameで宝箱stateを自動再適用する。これにより「模様替えで全部復活」を防ぐ。
+- 保存形式は既存 `save.storageV19` を継続し、移行・リセットなし。
+- `island-storage-integrity-test.cjs` を追加し、獲得数・宝箱state・hidden/display・模様替え再描画監視・cache keyを回帰確認。
+- GitHub Actions run 36213344402 は全検証・Pages deployとも成功。iPad実機の最終目視は未確認。
