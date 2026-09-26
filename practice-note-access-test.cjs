@@ -13,5 +13,5 @@ assert.match(note,/force\|\|stageNeedsV270\.has\(i\)/,'Voluntary notebook access
 assert.match(note,/open:\(i=0\)=>openNotebookV270\(i,\[i\],true\)/,'Public practice API is ungated');
 assert.match(note,/判定に関係なく、いつでも書ける/);
 assert.match(release,/app-v270-practice-note\.js\?v=2702/,'Fresh practice-note asset is loaded');
-assert.match(html,/app-v240-release\.js\?v=2944/,'Fresh loader reaches iPad cache');
+assert.match(html,/app-v240-release\.js\?v=2945/,'Fresh loader reaches iPad cache');
 console.log('PASS practice-note access: always available and multi-kanji words practice every character.');
