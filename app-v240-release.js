@@ -27,7 +27,7 @@
   refresh();paperStyles();
   loadSequence([
     './app-v250-island.js?v=2700',
-    './app-v250-study.js?v=2700',
+    './app-v250-study.js?v=2701',
     './app-v252-cell-erase.js?v=2700',
     './app-v260-target-first.js?v=2700',
     './app-v270-practice-note.js?v=2702',
