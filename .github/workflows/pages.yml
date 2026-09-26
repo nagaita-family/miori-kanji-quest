@@ -49,6 +49,7 @@ jobs:
           node --check kanken9-travel-v293.js
           node --check app-v240-release.js
           node --check app-v270-practice-note.js
+          node --check app-v295-best-writing.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
           node kanken9-v284-smoke-test.cjs
@@ -74,6 +75,7 @@ jobs:
           node kanken9-v286-smoke-test.cjs
           node kanken9-travel-v293.test.cjs
           node practice-note-access-test.cjs
+          node best-writing-flow-test.cjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
