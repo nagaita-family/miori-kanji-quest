@@ -18,10 +18,13 @@ const code=src('app-v236-school-test.js').replace('  const old=window.openPrintT
 const api=ctx.window.__schoolTest;const seen=[];ctx.window.gradeKanjiStrokeV230=async(strokes,ch)=>{seen.push(ch);return{pass:true,total:100}};
 assert.equal((code.match(/schoolPracticeButtonV236/g)||[]).length,0,'Only the weekly school entry remains');
 for(const [q,k,answer] of [[0,1,'泳ぐ'],[2,1,'助言'],[2,2,'聞く']]){
- const html=api.focusPaper(q,k,'<canvas aria-label="記入欄"></canvas>');
- assert.ok(html.includes('schoolProblemV236')&&html.includes('schoolFlowV236')&&html.includes('schoolFlowReadingV236'),'Reading and one target canvas share the cream worksheet');
- assert.equal((html.match(/<canvas/g)||[]).length,1,'A marked line has exactly one answer canvas');
+ const html=api.focusPaper(q,k);
+ const expectedTargets=pack[q].filter(x=>x.lineType).length;
+ assert.ok(html.includes('schoolProblemV236')&&html.includes('schoolFlowV236')&&html.includes('schoolFlowReadingV236'),'Reading and all target canvases share the cream worksheet');
+ assert.equal((html.match(/<canvas/g)||[]).length,expectedTargets,'One question page shows every marked line as its own answer canvas');
  assert.ok(html.includes('schoolUndoV236')&&html.includes('schoolNextV236'));
+ assert.ok(html.includes('次の問題')||html.includes('プリントにもどる'),'Navigation advances by question, not by marked line');
+ assert.ok(!html.includes('次の線へ'),'The old target-by-target navigation is removed');
  assert.ok(!html.includes(answer),'Answers remain hidden while writing');
  assert.ok(!html.includes('文をぜんぶ書こう'),'Full sentence copying is removed');
 }
@@ -49,5 +52,5 @@ const prior={stats:{路:{mastery:88}},okuriStats:{old:{correct:4}},kanken9V280:{
  api.reviewed([0,1,2]);api.saveResult();assert.equal(ctx.save.printTestsV230['2026-09-21-p58'],undefined,'Partial review never records a ten-question run');assert.equal(ctx.save.schoolPracticeV236['2026-09-21-p58'].lastQuestion,3);
  api.reviewed([...Array(10).keys()]);api.saveResult();assert.equal(ctx.save.printTestsV230['2026-09-21-p58'].last,10);assert.equal(ctx.save.printTestsV230['2026-09-21-p58'].runs,1);
  assert.deepEqual(ctx.save.printTestsV230['2026-09-previous'],prior.printTestsV230['2026-09-previous']);for(const k of ['stats','okuriStats','kanken9V280'])assert.deepEqual(ctx.save[k],prior[k]);
- console.log('PASS school: one entry, one canvas per target, partial/full save isolation, handwriting comparison, history protection.');
+ console.log('PASS school: one entry, one question page with all target canvases, partial/full save isolation, handwriting comparison, history protection.');
 })().catch(e=>{console.error(e);process.exitCode=1});
