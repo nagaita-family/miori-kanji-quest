@@ -71,5 +71,5 @@ assert.ok(schoolUi.includes('次の問題 →'),'Primary navigation advances to 
 assert.ok(!schoolUi.includes('次の線へ →'),'Target-by-target navigation is removed');
 assert.ok(schoolUi.includes('canvas[data-k]'),'Each visible answer canvas is associated with its target on the same question page');
 assert.ok(read('index.html').includes('data-packs.js?v=20260926-p62-learned'));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260926-p62-current'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20260926-all-targets'));
 console.log('PASS p62: current ten questions, new + learned kanji targets, okurigana line types, A4 marks, p58 history, and generic school flow.');
