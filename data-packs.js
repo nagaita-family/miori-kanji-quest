@@ -72,19 +72,20 @@ const KANJI_PACKS = [
     source: '教材62ページ・上半分「書く」',
     addedAt: '2026-09-26',
     status: 'current',
-    // School-test prompts normalize surrounding learned kanji back to kana.
-    // Only the textbook's marked target is writable; surrounding kana are context.
+    // School-test prompts are shown in kana, but every kanji that appears in
+    // the textbook sentence (new or previously learned) is writable.
+    // straight = kanji only; wavy = kanji plus okurigana.
     schoolTest: [
       [{text:'お'},{text:'きゃくさま',lineType:'straight',answer:'客様'},{text:'をもてなす。'}],
-      [{text:'にゅうがくしき',lineType:'straight',answer:'入学式'},{text:'のひ。'}],
-      [{text:'きょねん',lineType:'straight',answer:'去年'},{text:'のあき。'}],
-      [{text:'にばい',lineType:'straight',answer:'二倍'},{text:'のおおきさ。'}],
-      [{text:'もうひつ',lineType:'straight',answer:'毛筆'},{text:'のしょもつ。'}],
+      [{text:'にゅうがくしき',lineType:'straight',answer:'入学式'},{text:'の'},{text:'ひ',lineType:'straight',answer:'日'},{text:'。'}],
+      [{text:'きょねん',lineType:'straight',answer:'去年'},{text:'の'},{text:'あき',lineType:'straight',answer:'秋'},{text:'。'}],
+      [{text:'にばい',lineType:'straight',answer:'二倍'},{text:'の'},{text:'おおきさ',lineType:'wavy',answer:'大きさ',kanji:'大',okuri:'きさ'},{text:'。'}],
+      [{text:'もうひつ',lineType:'straight',answer:'毛筆'},{text:'の'},{text:'しょもつ',lineType:'straight',answer:'書物'},{text:'。'}],
       [{text:'ぎんこう',lineType:'straight',answer:'銀行'},{text:'のそば。'}],
       [{text:'きせつが'},{text:'さる',lineType:'wavy',answer:'去る',kanji:'去',okuri:'る'},{text:'。'}],
       [{text:'ふで',lineType:'straight',answer:'筆'},{text:'をにぎる。'}],
-      [{text:'ほんの'},{text:'だいめい',lineType:'straight',answer:'題名'},{text:'。'}],
-      [{text:'よこ',lineType:'straight',answer:'横'},{text:'がきでじをかく。'}]
+      [{text:'ほん',lineType:'straight',answer:'本'},{text:'の'},{text:'だいめい',lineType:'straight',answer:'題名'},{text:'。'}],
+      [{text:'よこ',lineType:'straight',answer:'横'},{text:'がき',lineType:'wavy',answer:'書き',kanji:'書',okuri:'き'},{text:'で'},{text:'じ',lineType:'straight',answer:'字'},{text:'を'},{text:'かく',lineType:'wavy',answer:'書く',kanji:'書',okuri:'く'},{text:'。'}]
     ],
     stages: [
       {"reading":"きゃくさま","readingParts":["きゃく","さま"],"before":"お","after":"をもてなす。","answer":"客様","icon":"🎎","targetType":"core","chars":[{"char":"客","secret":"上は「うかんむり」、下は「各」。","memory":"上は「うかんむり」、下は「各」。","clue":"上は「うかんむり」、下は「各」。"},{"char":"様","secret":"左は「木へん」。右の形もよく見よう。","memory":"左は「木へん」。右の形もよく見よう。","clue":"左は「木へん」。右の形もよく見よう。"}]},
