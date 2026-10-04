@@ -59,6 +59,7 @@
 .schoolVerifyCardV236 .strokes.fullSentenceV236 img{height:min(34vh,260px);width:auto;max-width:90%;border:1px solid #b8c9da}
 .schoolVerifyCardV236 .compare.fullSentenceV236{writing-mode:vertical-rl;text-orientation:upright;text-align:left;max-height:220px;margin:5px auto;white-space:normal;font-size:18px;line-height:1.5}
 .schoolVerifyCardV236 .schoolComparisonV236{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;margin:10px 0}.schoolVerifyCardV236 .schoolComparisonV236>div{min-width:0;border:1px solid #d3dce7;border-radius:10px;padding:8px;display:flex;flex-direction:column;align-items:center}.schoolVerifyCardV236 .schoolComparisonV236 p{margin:0 0 7px}.schoolVerifyCardV236 .schoolComparisonV236 .strokes{flex:1;align-items:center}.schoolVerifyCardV236 .schoolComparisonV236 img{height:min(47vh,360px);width:auto;max-width:100%;object-fit:contain}.schoolVerifyCardV236 .schoolComparisonV236 .compare{writing-mode:vertical-rl;text-orientation:upright;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(32px,6vh,54px);line-height:1.25;max-height:47vh;white-space:nowrap;margin:auto}
+.schoolStrokeOrderV236{margin:10px auto 12px;padding:10px;border:1px solid #d7e0eb;border-radius:12px;background:#f8fbff}.schoolStrokeOrderV236>p{margin:0 0 7px;font-weight:900;color:#405b7c}.schoolStrokeButtonsV236{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}.schoolStrokeButtonsV236 button{min-width:42px;padding:7px 10px;border-radius:10px;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:22px}.schoolStrokeButtonsV236 button.on{background:#496ed8;color:#fff;border-color:#496ed8}.schoolStrokeDemoV236{display:flex;align-items:center;justify-content:center;gap:10px}.schoolStrokeDemoV236 svg{width:118px;height:118px;border:1px solid #c9d5e2;border-radius:10px;background:#fff}.schoolStrokeDemoV236 path{fill:none;stroke:#273142;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}.schoolStrokeMsgV236{min-width:90px;text-align:left;font-size:12px;font-weight:850;color:#66758b}
 /* The small ten-question overview keeps its right-to-left paper layout. */
 .schoolQV236{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;justify-items:center;align-items:start}
 .schoolQV236 .num{grid-column:1/-1;grid-row:1}
@@ -145,6 +146,42 @@
   ['selectstart','dragstart','contextmenu'].forEach(type=>document.addEventListener(type,e=>{if(e.target.closest?.('#schoolV236,#schoolFocusV236,#schoolVerifyV236'))e.preventDefault()},{capture:true}));
   document.addEventListener('touchmove',e=>{if(byId('schoolFocusV236')&&!e.target.closest?.('button'))e.preventDefault()},{capture:true,passive:false});
   async function gradeOne(q,k){const t=targets(q)[k],a=answers[q][k],marks=[];if(t.lineType==='wavy'||[...t.answer].length!==1||!isKanji(t.answer)){a.result={pass:false,manual:true,marks};return}try{marks.push(await window.gradeKanjiStrokeV230(a.strokes[0],t.answer));a.result={pass:marks[0].pass&&marks[0].total>=75,manual:!marks[0].pass||marks[0].total<75,marks}}catch(e){a.result={pass:false,manual:true,marks,error:true}}}
+  let schoolStrokeTokenV236=0;
+  const answerKanjiV236=answer=>[...String(answer||'')].filter(ch=>isKanji(ch));
+  function strokeOrderHtmlV236(t){
+    const chars=answerKanjiV236(t.answer);if(!chars.length)return '';
+    return `<div class="schoolStrokeOrderV236"><p>✏️ 書き順も見てみよう</p><div class="schoolStrokeButtonsV236">${chars.map((ch,i)=>`<button type="button" data-school-stroke="${esc(ch)}" class="${i===0?'on':''}">${esc(ch)}</button>`).join('')}</div><div class="schoolStrokeDemoV236"><svg id="schoolStrokeSvgV236" viewBox="0 0 109 109" aria-label="書き順のお手本"></svg><span id="schoolStrokeMsgV236" class="schoolStrokeMsgV236">1画ずつ見てみよう</span></div></div>`;
+  }
+  async function playSchoolStrokeV236(ch){
+    const token=++schoolStrokeTokenV236,svg=byId('schoolStrokeSvgV236'),msg=byId('schoolStrokeMsgV236');if(!svg||!msg)return;
+    document.querySelectorAll('[data-school-stroke]').forEach(b=>b.classList.toggle('on',b.dataset.schoolStroke===ch));
+    svg.innerHTML='';msg.textContent='書き順を準備中…';
+    try{
+      if(typeof getKanjiData!=='function')throw new Error('no stroke data');
+      const paths=await getKanjiData(ch);if(token!==schoolStrokeTokenV236||!byId('schoolStrokeSvgV236'))return;
+      svg.innerHTML=paths.map(p=>`<path d="${p.d}"></path>`).join('');
+      const els=[...svg.querySelectorAll('path')];
+      els.forEach((el,i)=>{el.style.strokeDasharray=String(paths[i].len);el.style.strokeDashoffset=String(paths[i].len)});
+      const animate=(el,len,duration)=>new Promise(resolve=>{
+        const start=performance.now();
+        const frame=now=>{
+          if(token!==schoolStrokeTokenV236){resolve();return}
+          const p=Math.min(1,(now-start)/duration);el.style.strokeDashoffset=String(len*(1-p));
+          p<1?requestAnimationFrame(frame):resolve();
+        };requestAnimationFrame(frame);
+      });
+      for(let i=0;i<els.length;i++){
+        if(token!==schoolStrokeTokenV236)return;
+        msg.textContent=`${ch}　${i+1} / ${els.length}画`;
+        await animate(els[i],paths[i].len,Math.max(260,Math.min(650,paths[i].len*6)));
+        await new Promise(resolve=>setTimeout(resolve,90));
+      }
+      if(token===schoolStrokeTokenV236)msg.textContent=`${ch}　${els.length}画・もう一度見るなら漢字をタップ`;
+    }catch(e){
+      svg.innerHTML=`<text x="54.5" y="58" text-anchor="middle" dominant-baseline="middle" font-size="72" font-family="serif" fill="#273142">${esc(ch)}</text>`;
+      msg.textContent='書き順データを読みこめなかったよ';
+    }
+  }
   async function submit(){
     reviewedQuestions=answers.map((row,q)=>row.every(complete)?q:null).filter(q=>q!==null);
     if(!reviewedQuestions.length){alert('まず1問書いてね');return}
@@ -153,16 +190,19 @@
     review=reviewedQuestions.flatMap(q=>answers[q].map((_,k)=>({q,k})));reviewAt=0;nextReview();
   }
   function nextReview(){
-    byId('schoolVerifyV236')?.remove();
+    schoolStrokeTokenV236++;byId('schoolVerifyV236')?.remove();
     if(reviewAt>=review.length){saveResult();showResult();return}
     const {q,k}=review[reviewAt],t=targets(q)[k],a=answers[q][k];
     const el=document.createElement('section');el.id='schoolVerifyV236';el.className='schoolVerifyV236';
-    el.innerHTML=`<div class="schoolVerifyCardV236"><h2>${q+1}番・${k+1}か所目を見くらべよう</h2><div class="schoolComparisonV236"><div><p>自分で書いた字</p><div class="strokes">${a.images.map(x=>`<img src="${x}" alt="自分の字">`).join('')}</div></div><div><p>こたえ</p><div class="compare">${esc(t.answer)}</div></div></div><button id="schoolYesV236" class="primary">○ あってる</button><button id="schoolNoV236">△ まだちがう</button><button id="schoolAgainV236">↻ もう一回</button></div>`;
+    el.innerHTML=`<div class="schoolVerifyCardV236"><h2>${q+1}番・${k+1}か所目を見くらべよう</h2><div class="schoolComparisonV236"><div><p>自分で書いた字</p><div class="strokes">${a.images.map(x=>`<img src="${x}" alt="自分の字">`).join('')}</div></div><div><p>こたえ</p><div class="compare">${esc(t.answer)}</div></div></div>${strokeOrderHtmlV236(t)}<button id="schoolYesV236" class="primary">○ あってる</button><button id="schoolNoV236">△ まだちがう</button><button id="schoolAgainV236">↻ もう一回</button></div>`;
     document.body.appendChild(el);
+    const strokeChars=answerKanjiV236(t.answer);
+    el.querySelectorAll('[data-school-stroke]').forEach(b=>b.onclick=()=>playSchoolStrokeV236(b.dataset.schoolStroke));
+    if(strokeChars.length)setTimeout(()=>playSchoolStrokeV236(strokeChars[0]),60);
     byId('schoolYesV236').onclick=()=>{a.result={pass:true,manual:false};reviewAt++;nextReview()};
     byId('schoolNoV236').onclick=()=>{a.result={pass:false,manual:false};reviewAt++;nextReview()};
     byId('schoolAgainV236').onclick=()=>{
-      el.remove();a.result=null;a.strokes=[[]];a.images=[];
+      schoolStrokeTokenV236++;el.remove();a.result=null;a.strokes=[[]];a.images=[];
       openFocus(q,k);
       const button=byId('schoolNextV236');button.textContent='書き直して確認';
       button.onclick=async()=>{if(!complete(a)){alert('記入欄に書いてね');return}snapshot();byId('schoolFocusV236').remove();await gradeOne(q,k);nextReview()};
