@@ -67,5 +67,5 @@ assert.match(schoolUi,/getKanjiData/,'Stroke order reuses existing KanjiVG data'
 assert.match(schoolUi,/setTimeout\(\(\)=>playSchoolStrokeV236\(strokeChars\[0\]\),60\)/,'First kanji stroke order starts automatically during review');
 
 assert.ok(read('index.html').includes('data-packs.js?v=20261004-p66'));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261004-stroke-order'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261004-ipad-landscape'));
 console.log('PASS p66: current ten questions, source-based learned kanji targets, okurigana lines, A4 marks, and stroke-order answer review.');
