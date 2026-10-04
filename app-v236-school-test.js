@@ -70,6 +70,27 @@
 .schoolQV236 .schoolBoxV236{height:clamp(80px,11vw,135px)}
 @media(max-width:800px){.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(160px,190px);gap:7px;padding:7px}.schoolPaperBodyV236{gap:10px}.schoolProblemV236{padding:10px 12px}.schoolPaperBodyV236 .schoolSentenceV236{font-size:clamp(16px,1.9vh,21px)}}
 @media(max-width:600px){.schoolPaperV236{overflow:auto}.schoolQV236{min-width:58px}.schoolCardV236{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}.schoolControlV236{grid-column:1;grid-row:2;flex-direction:row;flex-wrap:wrap;align-items:center;padding:7px}.schoolControlV236 b,.schoolControlV236 p{display:none}.schoolControlV236 button{flex:1 1 42%;padding:8px 4px}.schoolControlV236 .primary{margin:0}.schoolPaperBodyV236{gap:8px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(490px,58dvh)}}
+.schoolVerifyActionsV236{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+@media (orientation:landscape) and (max-height:900px){
+  .schoolVerifyV236{padding:5px}
+  .schoolVerifyCardV236{width:min(980px,98vw);height:calc(100dvh - 10px);max-height:none;overflow:hidden;padding:7px 10px;border-radius:14px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(245px,.65fr);grid-template-rows:auto minmax(0,1fr) auto;gap:5px 9px;align-items:stretch}
+  .schoolVerifyCardV236 h2{grid-column:1/-1;grid-row:1;margin:0;font-size:15px;line-height:1.15}
+  .schoolVerifyCardV236 .schoolComparisonV236{grid-column:1;grid-row:2;min-height:0;margin:0;gap:7px}
+  .schoolVerifyCardV236 .schoolComparisonV236>div{padding:5px;min-height:0}
+  .schoolVerifyCardV236 .schoolComparisonV236 p{margin:0 0 3px;font-size:11px}
+  .schoolVerifyCardV236 .schoolComparisonV236 .strokes{min-height:0}
+  .schoolVerifyCardV236 .schoolComparisonV236 img{height:min(45dvh,285px);max-height:100%}
+  .schoolVerifyCardV236 .schoolComparisonV236 .compare{font-size:clamp(28px,6.8vh,48px);max-height:45dvh}
+  .schoolStrokeOrderV236{grid-column:2;grid-row:2;min-height:0;margin:0;padding:6px;display:flex;flex-direction:column;justify-content:center}
+  .schoolStrokeOrderV236>p{margin:0 0 4px;font-size:12px}
+  .schoolStrokeButtonsV236{margin-bottom:4px;gap:4px}
+  .schoolStrokeButtonsV236 button{min-width:34px;margin:0;padding:4px 7px;font-size:17px}
+  .schoolStrokeDemoV236{gap:6px;min-height:0}
+  .schoolStrokeDemoV236 svg{width:min(23dvh,108px);height:min(23dvh,108px);flex:0 0 auto}
+  .schoolStrokeMsgV236{min-width:76px;font-size:10px;line-height:1.25}
+  .schoolVerifyActionsV236{grid-column:1/-1;grid-row:3;display:flex;flex-wrap:nowrap;gap:6px}
+  .schoolVerifyActionsV236 button{flex:1;margin:0;padding:7px 9px;font-size:12px}
+}
 `;document.head.appendChild(style);
   function start(){if(!available())return window.openPrintTestV230Legacy?.();answers=questions().map(row=>row.filter(s=>s.lineType).map(record));pencilSeen=false;selected=0;reviewedQuestions=[];render();}
   function render(){
@@ -194,7 +215,7 @@
     if(reviewAt>=review.length){saveResult();showResult();return}
     const {q,k}=review[reviewAt],t=targets(q)[k],a=answers[q][k];
     const el=document.createElement('section');el.id='schoolVerifyV236';el.className='schoolVerifyV236';
-    el.innerHTML=`<div class="schoolVerifyCardV236"><h2>${q+1}番・${k+1}か所目を見くらべよう</h2><div class="schoolComparisonV236"><div><p>自分で書いた字</p><div class="strokes">${a.images.map(x=>`<img src="${x}" alt="自分の字">`).join('')}</div></div><div><p>こたえ</p><div class="compare">${esc(t.answer)}</div></div></div>${strokeOrderHtmlV236(t)}<button id="schoolYesV236" class="primary">○ あってる</button><button id="schoolNoV236">△ まだちがう</button><button id="schoolAgainV236">↻ もう一回</button></div>`;
+    el.innerHTML=`<div class="schoolVerifyCardV236"><h2>${q+1}番・${k+1}か所目を見くらべよう</h2><div class="schoolComparisonV236"><div><p>自分で書いた字</p><div class="strokes">${a.images.map(x=>`<img src="${x}" alt="自分の字">`).join('')}</div></div><div><p>こたえ</p><div class="compare">${esc(t.answer)}</div></div></div>${strokeOrderHtmlV236(t)}<div class="schoolVerifyActionsV236"><button id="schoolYesV236" class="primary">○ あってる</button><button id="schoolNoV236">△ まだちがう</button><button id="schoolAgainV236">↻ もう一回</button></div></div>`;
     document.body.appendChild(el);
     const strokeChars=answerKanjiV236(t.answer);
     el.querySelectorAll('[data-school-stroke]').forEach(b=>b.onclick=()=>playSchoolStrokeV236(b.dataset.schoolStroke));
