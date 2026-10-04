@@ -25,5 +25,5 @@ assert.match(study,/watchIslandStorageV251\(\);requestAnimationFrame/,'Home rend
 
 assert.match(release,/app-v250-study\.js\?v=2701/,'Fresh storage-aware study patch is loaded');
 assert.match(html,/app-v204-patch\.js\?v=2043/,'Fresh treasure controller is loaded');
-assert.match(html,/app-v240-release\.js\?v=2946/,'Fresh dynamic loader reaches iPad');
+assert.match(html,/app-v240-release\.js\?v=2947/,'Fresh dynamic loader reaches iPad');
 console.log('PASS island storage: earned, island, and treasure states stay synchronized across toggles and decoration redraws.');
