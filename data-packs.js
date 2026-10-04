@@ -71,7 +71,7 @@ const KANJI_PACKS = [
     shortLabel: '62ページ',
     source: '教材62ページ・上半分「書く」',
     addedAt: '2026-09-26',
-    status: 'current',
+    status: 'past',
     // School-test prompts are shown in kana, but every kanji that appears in
     // the textbook sentence (new or previously learned) is writable.
     // straight = kanji only; wavy = kanji plus okurigana.
@@ -98,6 +98,40 @@ const KANJI_PACKS = [
       {"reading":"ふで","readingParts":["ふで"],"before":"","after":"をにぎる。","answer":"筆","icon":"🖌️","targetType":"core","chars":[{"char":"筆","secret":"上は「たけかんむり」。","memory":"上は「たけかんむり」。","clue":"上は「たけかんむり」。"}]},
       {"reading":"だいめい","readingParts":["だい","めい"],"before":"本の","after":"。","answer":"題名","icon":"📖","targetType":"core","chars":[{"char":"題","secret":"左の形と右の「頁」をよく見よう。","memory":"左の形と右の「頁」をよく見よう。","clue":"左の形と右の「頁」をよく見よう。"},{"char":"名","secret":"上は「夕」、下は「口」。","memory":"上は「夕」、下は「口」。","clue":"上は「夕」、下は「口」。"}]},
       {"reading":"よこ","readingParts":["よこ"],"before":"","after":"書きで字を書く。","answer":"横","icon":"↔️","targetType":"core","chars":[{"char":"横","secret":"左は「木へん」、右は「黄」。","memory":"左は「木へん」、右は「黄」。","clue":"左は「木へん」、右は「黄」。"}]}
+    ]
+  },
+  {
+    id: '2026-10-04-p66',
+    label: '66ページ・上半分（書く①〜⑩）',
+    shortLabel: '66ページ',
+    source: '教材66ページ・上半分「書く」',
+    addedAt: '2026-10-04',
+    status: 'current',
+    // The school test shows the whole sentence in kana. Every kanji printed in
+    // the textbook sentence, including previously learned kanji, is writable.
+    schoolTest: [
+      [{text:'しょくぶつ',lineType:'straight',answer:'植物'},{text:'の'},{text:'せわ',lineType:'straight',answer:'世話'},{text:'をする。'}],
+      [{text:'ざいりょうを'},{text:'あつめる',lineType:'wavy',answer:'集める',kanji:'集',okuri:'める'},{text:'。'}],
+      [{text:'かせき',lineType:'straight',answer:'化石'},{text:'をほる。'}],
+      [{text:'むし',lineType:'straight',answer:'虫'},{text:'が'},{text:'しぬ',lineType:'wavy',answer:'死ぬ',kanji:'死',okuri:'ぬ'},{text:'。'}],
+      [{text:'つごう',lineType:'straight',answer:'都合'},{text:'のよい'},{text:'ひ',lineType:'straight',answer:'日'},{text:'。'}],
+      [{text:'はな',lineType:'straight',answer:'花'},{text:'のなえを'},{text:'うえる',lineType:'wavy',answer:'植える',kanji:'植',okuri:'える'},{text:'。'}],
+      [{text:'がっこう',lineType:'straight',answer:'学校'},{text:'に'},{text:'しゅうごう',lineType:'straight',answer:'集合'},{text:'する。'}],
+      [{text:'たぬきが'},{text:'ばける',lineType:'wavy',answer:'化ける',kanji:'化',okuri:'ける'},{text:'。'}],
+      [{text:'ひっ'},{text:'し',lineType:'straight',answer:'死'},{text:'に'},{text:'およぐ',lineType:'wavy',answer:'泳ぐ',kanji:'泳',okuri:'ぐ'},{text:'。'}],
+      [{text:'とかい',lineType:'straight',answer:'都会'},{text:'のまちなみ。'}]
+    ],
+    stages: [
+      {"reading":"しょくぶつ","readingParts":["しょく","ぶつ"],"before":"","after":"の世話をする。","answer":"植物","icon":"🌱","targetType":"core","chars":[{"char":"植","secret":"左は「木へん」、右は「直」。","memory":"左は「木へん」、右は「直」。","clue":"左は「木へん」、右は「直」。"},{"char":"物","secret":"左は「牛へん」。右の形もよく見よう。","memory":"左は「牛へん」。右の形もよく見よう。","clue":"左は「牛へん」。右の形もよく見よう。"}]},
+      {"reading":"あつ","readingParts":["あつ"],"before":"ざいりょうを","after":"。","answer":"集","icon":"🧺","targetType":"core","okuri":"める","okuriChoices":["める","る"],"chars":[{"char":"集","secret":"上の形と、下の「木」をよく見よう。","memory":"上の形と、下の「木」をよく見よう。","clue":"上の形と、下の「木」をよく見よう。"}]},
+      {"reading":"かせき","readingParts":["か","せき"],"before":"","after":"をほる。","answer":"化石","icon":"🪨","targetType":"core","chars":[{"char":"化","secret":"左は「にんべん」。右の形もよく見よう。","memory":"左は「にんべん」。右の形もよく見よう。","clue":"左は「にんべん」。右の形もよく見よう。"},{"char":"石","secret":"上と下の「口」の大きさをよく見よう。","memory":"上と下の「口」の大きさをよく見よう。","clue":"上と下の「口」の大きさをよく見よう。"}]},
+      {"reading":"し","readingParts":["し"],"before":"虫が","after":"。","answer":"死","icon":"🍂","targetType":"core","okuri":"ぬ","okuriChoices":["ぬ","る"],"chars":[{"char":"死","secret":"横線の下の形と、右側の曲がりをよく見よう。","memory":"横線の下の形と、右側の曲がりをよく見よう。","clue":"横線の下の形と、右側の曲がりをよく見よう。"}]},
+      {"reading":"つごう","readingParts":["つ","ごう"],"before":"","after":"のよい日。","answer":"都合","icon":"📅","targetType":"core","chars":[{"char":"都","secret":"左は「者」、右は「おおざと」。","memory":"左は「者」、右は「おおざと」。","clue":"左は「者」、右は「おおざと」。"},{"char":"合","secret":"上の形と下の「口」をよく見よう。","memory":"上の形と下の「口」をよく見よう。","clue":"上の形と下の「口」をよく見よう。"}]},
+      {"reading":"う","readingParts":["う"],"before":"花のなえを","after":"。","answer":"植","icon":"🌷","targetType":"core","okuri":"える","okuriChoices":["える","る"],"chars":[{"char":"植","secret":"左は「木へん」、右は「直」。","memory":"左は「木へん」、右は「直」。","clue":"左は「木へん」、右は「直」。"}]},
+      {"reading":"しゅうごう","readingParts":["しゅう","ごう"],"before":"学校に","after":"する。","answer":"集合","icon":"👥","targetType":"core","chars":[{"char":"集","secret":"上の形と、下の「木」をよく見よう。","memory":"上の形と、下の「木」をよく見よう。","clue":"上の形と、下の「木」をよく見よう。"},{"char":"合","secret":"上の形と下の「口」をよく見よう。","memory":"上の形と下の「口」をよく見よう。","clue":"上の形と下の「口」をよく見よう。"}]},
+      {"reading":"ば","readingParts":["ば"],"before":"たぬきが","after":"。","answer":"化","icon":"🦝","targetType":"core","okuri":"ける","okuriChoices":["ける","る"],"chars":[{"char":"化","secret":"左は「にんべん」。右の形もよく見よう。","memory":"左は「にんべん」。右の形もよく見よう。","clue":"左は「にんべん」。右の形もよく見よう。"}]},
+      {"reading":"し","readingParts":["し"],"before":"ひっ","after":"に泳ぐ。","answer":"死","icon":"🏊","targetType":"core","chars":[{"char":"死","secret":"横線の下の形と、右側の曲がりをよく見よう。","memory":"横線の下の形と、右側の曲がりをよく見よう。","clue":"横線の下の形と、右側の曲がりをよく見よう。"}]},
+      {"reading":"とかい","readingParts":["と","かい"],"before":"","after":"のまちなみ。","answer":"都会","icon":"🏙️","targetType":"core","chars":[{"char":"都","secret":"左は「者」、右は「おおざと」。","memory":"左は「者」、右は「おおざと」。","clue":"左は「者」、右は「おおざと」。"},{"char":"会","secret":"上の形と下の「云」の形をよく見よう。","memory":"上の形と下の「云」の形をよく見よう。","clue":"上の形と下の「云」の形をよく見よう。"}]}
     ]
   }
 ];
@@ -126,7 +160,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-09-26-p62';
+let CURRENT_KANJI_PACK_ID = '2026-10-04-p66';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
