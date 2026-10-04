@@ -43,7 +43,7 @@ assert.deepEqual(school[9].filter(x=>x.lineType).map(x=>[x.text,x.answer,x.lineT
   ['よこ','横','straight',''],['がき','書き','wavy','き'],['じ','字','straight',''],['かく','書く','wavy','く']
 ]);
 
-run("useKanjiPack('2026-09-26-p62')");
+run("CURRENT_KANJI_PACK_ID='2026-09-26-p62';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const paper=ctx.window.weeklyPaperHtmlV235(stages);
 assert.equal((paper.match(/print-mark straight/g)||[]).length,14);
