@@ -106,7 +106,7 @@ const KANJI_PACKS = [
     shortLabel: '66ページ',
     source: '教材66ページ・上半分「書く」',
     addedAt: '2026-10-04',
-    status: 'current',
+    status: 'past',
     // The school test shows the whole sentence in kana. Every kanji printed in
     // the textbook sentence, including previously learned kanji, is writable.
     schoolTest: [
@@ -132,6 +132,40 @@ const KANJI_PACKS = [
       {"reading":"ば","readingParts":["ば"],"before":"たぬきが","after":"。","answer":"化","icon":"🦝","targetType":"core","okuri":"ける","okuriChoices":["ける","る"],"chars":[{"char":"化","secret":"左は「にんべん」。右の形もよく見よう。","memory":"左は「にんべん」。右の形もよく見よう。","clue":"左は「にんべん」。右の形もよく見よう。"}]},
       {"reading":"し","readingParts":["し"],"before":"ひっ","after":"に泳ぐ。","answer":"死","icon":"🏊","targetType":"core","chars":[{"char":"死","secret":"横線の下の形と、右側の曲がりをよく見よう。","memory":"横線の下の形と、右側の曲がりをよく見よう。","clue":"横線の下の形と、右側の曲がりをよく見よう。"}]},
       {"reading":"とかい","readingParts":["と","かい"],"before":"","after":"のまちなみ。","answer":"都会","icon":"🏙️","targetType":"core","chars":[{"char":"都","secret":"左は「者」、右は「おおざと」。","memory":"左は「者」、右は「おおざと」。","clue":"左は「者」、右は「おおざと」。"},{"char":"会","secret":"上の形と下の「云」の形をよく見よう。","memory":"上の形と下の「云」の形をよく見よう。","clue":"上の形と下の「云」の形をよく見よう。"}]}
+    ]
+  },
+  {
+    id: '2026-10-10-p70',
+    label: '70ページ・上半分（書く①〜⑩）',
+    shortLabel: '70ページ',
+    source: '教材70ページ・上半分「書く」',
+    addedAt: '2026-10-10',
+    status: 'current',
+    // Show the whole prompt in kana for the school test. Any kanji printed in
+    // the textbook sentence, including previously learned context, is writable.
+    schoolTest: [
+      [{text:'りょうて',lineType:'straight',answer:'両手'},{text:'でおさえる。'}],
+      [{text:'ゲームに'},{text:'まける',lineType:'wavy',answer:'負ける',kanji:'負',okuri:'ける'},{text:'。'}],
+      [{text:'としょがかり',lineType:'straight',answer:'図書係'},{text:'になる。'}],
+      [{text:'ぜんいん',lineType:'straight',answer:'全員'},{text:'が'},{text:'あつまる',lineType:'wavy',answer:'集まる',kanji:'集',okuri:'まる'},{text:'。'}],
+      [{text:'まつり',lineType:'wavy',answer:'祭り',kanji:'祭',okuri:'り'},{text:'の'},{text:'ようす',lineType:'straight',answer:'様子'},{text:'。'}],
+      [{text:'のうさぎょう',lineType:'straight',answer:'農作業'},{text:'をてつだう。'}],
+      [{text:'かばんをせ'},{text:'おう',lineType:'wavy',answer:'負う',kanji:'負',okuri:'う'},{text:'。'}],
+      [{text:'ことば',lineType:'straight',answer:'言葉'},{text:'が'},{text:'かかる',lineType:'wavy',answer:'係る',kanji:'係',okuri:'る'},{text:'。'}],
+      [{text:'ちゅうがっこう',lineType:'straight',answer:'中学校'},{text:'の'},{text:'ぶんかさい',lineType:'straight',answer:'文化祭'},{text:'。'}],
+      [{text:'じぶん',lineType:'straight',answer:'自分'},{text:'との'},{text:'たいわ',lineType:'straight',answer:'対話'},{text:'。'}]
+    ],
+    stages: [
+      {"reading":"りょうて","readingParts":["りょう","て"],"before":"","after":"でおさえる。","answer":"両手","icon":"🙌","targetType":"core","chars":[{"char":"両","secret":"外側の形の中に二つのまとまり。","memory":"外側の形の中に二つのまとまり。","clue":"上の横線と中の形をよく見よう。"},{"char":"手","secret":"横線の長さと最後の曲がりをよく見よう。","memory":"横線の長さと最後の曲がりをよく見よう。","clue":"まんなかの縦画を意識しよう。"}]},
+      {"reading":"ま","readingParts":["ま"],"before":"ゲームに","after":"。","answer":"負","icon":"🎮","targetType":"core","okuri":"ける","okuriChoices":["ける","る"],"chars":[{"char":"負","secret":"上と下の「貝」の形を分けて見よう。","memory":"上と下の「貝」の形を分けて見よう。","clue":"下は「貝」の形。"}]},
+      {"reading":"としょがかり","readingParts":["と","しょ","がかり"],"before":"","after":"になる。","answer":"図書係","icon":"📚","targetType":"core","chars":[{"char":"図","secret":"外側の囲みを最後にとじる形。","memory":"外側の囲みを最後にとじる形。","clue":"囲みの中の形をよく見よう。"},{"char":"書","secret":"横線が多いので間をそろえよう。","memory":"横線が多いので間をそろえよう。","clue":"上の横線と下の「日」を分けて見よう。"},{"char":"係","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"左を細く、右を大きく。"}]},
+      {"reading":"ぜんいん","readingParts":["ぜん","いん"],"before":"","after":"が集まる。","answer":"全員","icon":"👥","targetType":"core","chars":[{"char":"全","secret":"上の形と下の「王」をよく見よう。","memory":"上の形と下の「王」をよく見よう。","clue":"下の三本線をそろえよう。"},{"char":"員","secret":"上は「口」、下は「貝」。","memory":"上は「口」、下は「貝」。","clue":"上下の大きさをよく見よう。"}]},
+      {"reading":"まつ","readingParts":["まつ"],"before":"","after":"の様子。","answer":"祭","icon":"🏮","targetType":"core","okuri":"り","okuriChoices":["り","る"],"chars":[{"char":"祭","secret":"上の形と下の「示」を分けて見よう。","memory":"上の形と下の「示」を分けて見よう。","clue":"下の「示」の中心をそろえよう。"}]},
+      {"reading":"のうさぎょう","readingParts":["のう","さ","ぎょう"],"before":"","after":"をてつだう。","answer":"農作業","icon":"🌾","targetType":"core","chars":[{"char":"農","secret":"上と下を二つに分けて覚えよう。","memory":"上と下を二つに分けて覚えよう。","clue":"下側のはらいを大きく。"},{"char":"作","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"左を細く、右をしっかり。"},{"char":"業","secret":"上と下の中心をそろえよう。","memory":"上と下の中心をそろえよう。","clue":"横に広がりすぎないように。"}]},
+      {"reading":"お","readingParts":["お"],"before":"かばんをせ","after":"。","answer":"負","icon":"🎒","targetType":"core","okuri":"う","okuriChoices":["う","ける"],"chars":[{"char":"負","secret":"上と下の「貝」の形を分けて見よう。","memory":"上と下の「貝」の形を分けて見よう。","clue":"下は「貝」の形。"}]},
+      {"reading":"かか","readingParts":["かか"],"before":"言葉が","after":"。","answer":"係","icon":"💬","targetType":"core","okuri":"る","okuriChoices":["る","り"],"chars":[{"char":"係","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"左を細く、右を大きく。"}]},
+      {"reading":"ぶんかさい","readingParts":["ぶん","か","さい"],"before":"中学校の","after":"。","answer":"文化祭","icon":"🎪","targetType":"core","chars":[{"char":"文","secret":"点と横線、その下の交わりをよく見よう。","memory":"点と横線、その下の交わりをよく見よう。","clue":"左右のはらいをそろえよう。"},{"char":"化","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"右の曲がる形をよく見よう。"},{"char":"祭","secret":"上の形と下の「示」を分けて見よう。","memory":"上の形と下の「示」を分けて見よう。","clue":"下の「示」の中心をそろえよう。"}]},
+      {"reading":"たいわ","readingParts":["たい","わ"],"before":"自分との","after":"。","answer":"対話","icon":"🗣️","targetType":"core","chars":[{"char":"対","secret":"左右の高さをそろえて書こう。","memory":"左右の高さをそろえて書こう。","clue":"右の「寸」を小さめに。"},{"char":"話","secret":"左は「ごんべん」。","memory":"左は「ごんべん」。","clue":"左を細く、右を大きく。"}]}
     ]
   }
 ];
@@ -160,7 +194,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-10-04-p66';
+let CURRENT_KANJI_PACK_ID = '2026-10-10-p70';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
