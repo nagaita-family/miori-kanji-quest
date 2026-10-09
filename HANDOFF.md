@@ -204,3 +204,14 @@
 - `practice-star-v296-test.cjs` を追加し、pack単位保存、カード操作の誤発火防止、おすすめ優先、旧wishとの分離を回帰確認。
 - `weekly-p66-test.cjs` にiPad landscape no-scrollレイアウト回帰を追加。既存p58/p62、学校10問、漢検島、ベスト字、宝箱までActionsで成功。
 - GitHub Actions run 37184854965 は全検証・Pages deployとも成功。iPad実機での最終見た目は未確認。
+
+
+## 2026-10-10：教材70ページ上半分を今週packへ切替
+- 添付教材70ページの上半分「書く」①〜⑩を新current pack `2026-10-10-p70` として追加。p66は `past` に移行して保持。
+- 本命10問: ①両手 ②負ける ③図書係 ④全員 ⑤祭り ⑥農作業 ⑦負う（教材文は「かばんをせ＋負う」）⑧係る（「言葉が＋係る」）⑨文化祭 ⑩対話。
+- 通常練習は教材の青枠targetのみをstage化。送り仮名targetは ②負ける、⑤祭り、⑦負う、⑧係る。
+- 学校10問テストは従来仕様どおり全文かな表示＋教材本文に漢字で出ている既習漢字も書く対象。追加context target: ④集まる、⑤様子、⑧言葉、⑨中学校、⑩自分。
+- p70 schoolTestは計15target（直線10・波線5）。波線は ②負ける、④集まる、⑤祭り、⑦負う、⑧係る。
+- A4横プリントも同じ15targetを反映。既存の1問1ページ全Canvas、答え合わせ書き順、iPad横向きno-scroll、★もっと練習は変更なし。
+- `weekly-p70-test.cjs` を追加。p58/p62/p66はhistorical regressionとして保持し、pack数/current pointer/cache expectationを更新。
+- GitHub Actions run 38003105899 はweekly/Kanken等の検証成功、Pages deployまで実行（HANDOFF追記前のrun）。
