@@ -60,6 +60,14 @@ assert.ok(paper.includes('>あつまる</span>')&&paper.includes('>ようす</sp
 
 const schoolUi=read('app-v236-school-test.js');
 assert.match(schoolUi,/count}か所を1ページで記入/,'All answer boxes remain on one question page');
+assert.match(schoolUi,/querySelectorAll\('canvas\[data-k\]'\)/,'Each target has its own independent answer canvas');
+assert.match(schoolUi,/answers\[q\]\[targetK\]/,'Each canvas writes into its own target answer record');
+assert.match(schoolUi,/--school-target-h-landscape/,'Landscape target height is sized separately for Pencil writing');
+assert.match(schoolUi,/@media \(orientation:landscape\) and \(min-width:700px\) and \(max-height:900px\)/,'iPad landscape gets a dedicated writing layout');
+assert.match(schoolUi,/grid-template-rows:minmax\(0,1fr\) auto/,'Writing paper and controls share one viewport without document scrolling');
+assert.match(schoolUi,/schoolTargets1V236[\s\S]*width:clamp\(160px,22dvh,192px\)/,'Single-target questions get the largest Pencil writing box');
+assert.match(schoolUi,/\.schoolControlV236\{grid-column:1;grid-row:2[\s\S]*overflow:visible/,'Controls stay in a visible bottom row');
+assert.match(schoolUi,/pointerType==='touch'&&\(pencilSeen\|\|Number\(e\.width\)>=18/,'Existing palm rejection remains intact');
 assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke order');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
 
