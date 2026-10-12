@@ -70,6 +70,31 @@
 .schoolQV236 .schoolBoxV236{height:clamp(80px,11vw,135px)}
 @media(max-width:800px){.schoolCardV236{grid-template-columns:minmax(0,1fr) minmax(160px,190px);gap:7px;padding:7px}.schoolPaperBodyV236{gap:10px}.schoolProblemV236{padding:10px 12px}.schoolPaperBodyV236 .schoolSentenceV236{font-size:clamp(16px,1.9vh,21px)}}
 @media(max-width:600px){.schoolPaperV236{overflow:auto}.schoolQV236{min-width:58px}.schoolCardV236{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}.schoolControlV236{grid-column:1;grid-row:2;flex-direction:row;flex-wrap:wrap;align-items:center;padding:7px}.schoolControlV236 b,.schoolControlV236 p{display:none}.schoolControlV236 button{flex:1 1 42%;padding:8px 4px}.schoolControlV236 .primary{margin:0}.schoolPaperBodyV236{gap:8px}.schoolFullV236 .schoolCanvasWrapV236 canvas{width:min(210px,48vw);height:min(490px,58dvh)}}
+/* iPad landscape writing: spend the viewport on Pencil space, not decoration.
+   The controls stay in a fixed bottom row; the worksheet itself never needs scrolling. */
+@media (orientation:landscape) and (min-width:700px) and (max-height:900px){
+  .schoolFocusV236{padding:4px max(4px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left))}
+  .schoolFocusV236 .schoolCardV236{width:calc(100vw - 8px);height:calc(100dvh - 8px);max-height:none;border-radius:12px;padding:5px;gap:5px;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+  .schoolFocusV236 .schoolProblemV236{grid-column:1;grid-row:1;padding:5px 8px;border-radius:8px;box-shadow:none}
+  .schoolFocusV236 .schoolPaperHeadV236{min-height:28px;padding:0 0 3px;gap:6px;font-size:12px}
+  .schoolFocusV236 .schoolPaperNumberV236{width:25px;height:25px;font-size:14px;border-width:1.5px}
+  .schoolFocusV236 .schoolPaperBodyV236{gap:5px;overflow:hidden}
+  .schoolFocusV236 .schoolFlowV236{column-gap:8px;align-content:space-evenly;justify-content:center;overflow:hidden}
+  .schoolFocusV236 .schoolFlowTextV236{font-size:clamp(17px,2.35vh,21px);line-height:1.05}
+  .schoolFocusV236 .schoolFlowAnswerV236{gap:5px}
+  .schoolFocusV236 .schoolFlowReadingV236{font-size:14px;line-height:1.02}
+  .schoolFocusV236 .schoolCanvasesV236{overflow:visible}
+  .schoolFocusV236 .schoolCanvasWrapV236 canvas{width:clamp(138px,19dvh,168px);height:clamp(154px,21dvh,184px)}
+  .schoolFocusV236 .schoolCanvasWrapV236.long canvas{width:clamp(142px,19.5dvh,174px);height:min(var(--school-target-h-landscape,260px),52dvh)}
+  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236 canvas{width:clamp(160px,22dvh,192px);height:clamp(175px,24dvh,210px)}
+  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236.long canvas{width:clamp(165px,22.5dvh,198px);height:min(var(--school-target-h-landscape,300px),58dvh)}
+  .schoolFocusV236.schoolTargets3V236 .schoolCanvasWrapV236 canvas,.schoolFocusV236.schoolTargets4V236 .schoolCanvasWrapV236 canvas{width:clamp(122px,16.5dvh,146px);height:clamp(138px,18.5dvh,160px)}
+  .schoolFocusV236.schoolTargets3V236 .schoolCanvasWrapV236.long canvas,.schoolFocusV236.schoolTargets4V236 .schoolCanvasWrapV236.long canvas{width:clamp(126px,17dvh,150px);height:min(var(--school-target-h-landscape,250px),44dvh)}
+  .schoolFocusV236 .schoolControlV236{grid-column:1;grid-row:2;min-height:48px;flex-direction:row;align-items:center;gap:5px;padding:4px 5px;border-radius:8px;overflow:visible}
+  .schoolFocusV236 .schoolControlV236 b,.schoolFocusV236 .schoolControlV236 p{display:none}
+  .schoolFocusV236 .schoolControlV236 button{flex:1 1 0;min-height:40px;margin:0;padding:6px 4px;font-size:12px}
+  .schoolFocusV236 .schoolControlV236 .primary{margin:0}
+}
 .schoolVerifyActionsV236{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
 @media (orientation:landscape) and (max-height:900px){
   .schoolVerifyV236{padding:5px}
@@ -108,7 +133,8 @@
   function targetCanvas(q,k){
     const t=targets(q)[k],len=[...t.answer].length,long=t.lineType==='wavy'||len>1;
     const displayH=Math.min(260,115+Math.max(0,len-1)*48);
-    return `<div class="schoolCanvasWrapV236 ${long?'long':''}" data-k="${k}" style="--school-target-h:${displayH}px"><canvas width="${long?440:520}" height="${long?720:520}" data-k="${k}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`;
+    const landscapeH=Math.min(360,160+Math.max(0,len-1)*72);
+    return `<div class="schoolCanvasWrapV236 ${long?'long':''}" data-k="${k}" style="--school-target-h:${displayH}px;--school-target-h-landscape:${landscapeH}px"><canvas width="${long?440:520}" height="${long?720:520}" data-k="${k}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`;
   }
   function practiceFlow(q){
     let k=-1;
