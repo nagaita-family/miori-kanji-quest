@@ -215,3 +215,15 @@
 - A4横プリントも同じ15targetを反映。既存の1問1ページ全Canvas、答え合わせ書き順、iPad横向きno-scroll、★もっと練習は変更なし。
 - `weekly-p70-test.cjs` を追加。p58/p62/p66はhistorical regressionとして保持し、pack数/current pointer/cache expectationを更新。
 - GitHub Actions run 38003105899 はweekly/Kanken等の検証成功、Pages deployまで実行（HANDOFF追記前のrun）。
+
+
+## 2026-10-12：iPad横向きの学校テスト記入欄を拡大
+- 今回は学校10問テストの手書き入力画面を対象に、iPad横向きでApple Pencilの記入面積を増やした。印刷機能は変更していない。
+- 調査時点で、学校テストのデータ仕様は `schoolTest` の各segmentに `lineType/answer` を付け、1 target = 1 Canvas / 1 answer record。current p70は既に教材本文の既習漢字もtarget化済みだったため、推測でtarget追加は行わず既存データを維持。
+- p70で既習漢字を含む複数targetを再確認: ④ 全員＋集まる、⑤ 祭り＋様子、⑧ 言葉＋係る、⑨ 中学校＋文化祭、⑩ 自分＋対話。各targetは `data-k` により独立Canvasへ紐づく。
+- `app-v236-school-test.js` にiPad landscape専用のwriting layoutを追加。横向き・幅700px以上・高さ900px以下では、右側の縦長操作パネルを廃して**問題を上、操作4ボタンを下の固定行**へ配置。カード全体を `100dvh` 内に収め、worksheet / controlsともスクロール不要を基本にした。
+- 不要な余白・装飾を縮小: focus外周padding、カードgap、問題紙padding、見出し高さ、shadowを圧縮。空いた面積をCanvasへ回した。
+- Canvasはtarget数に応じて拡大。1target問題は最大約192–198px幅、2target標準は最大約168–174px幅。複数字・送り仮名は `--school-target-h-landscape` をanswer長から算出し、最大360pxまで縦方向を確保。3–4targetの旧週問題では全欄を同一画面に収めるため少し縮小する。
+- Pencil入力ロジック、pointer capture、座標変換、既存palm rejection条件は変更していない。採点・答え合わせ・保存も変更なし。
+- `weekly-p70-test.cjs` を強化し、既習漢字target、独立Canvas/answer record、landscape専用Canvasサイズ、下部操作行、palm rejection維持を回帰確認。p58/p62/p66のcache expectationも更新。
+- GitHub Actions run 38208089670 はKanji 9、weekly p58/p62/p66/p70、school structure、practice/best-writing/star/island regressionsとPages deployまで全て成功。
