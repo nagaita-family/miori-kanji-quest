@@ -74,25 +74,27 @@
    The controls stay in a fixed bottom row; the worksheet itself never needs scrolling. */
 @media (orientation:landscape) and (min-width:700px) and (max-height:900px){
   .schoolFocusV236{padding:4px max(4px,env(safe-area-inset-right)) max(4px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left))}
-  .schoolFocusV236 .schoolCardV236{width:calc(100vw - 8px);height:calc(100dvh - 8px);max-height:none;border-radius:12px;padding:5px;gap:5px;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
-  .schoolFocusV236 .schoolProblemV236{grid-column:1;grid-row:1;padding:5px 8px;border-radius:8px;box-shadow:none}
-  .schoolFocusV236 .schoolPaperHeadV236{min-height:28px;padding:0 0 3px;gap:6px;font-size:12px}
-  .schoolFocusV236 .schoolPaperNumberV236{width:25px;height:25px;font-size:14px;border-width:1.5px}
+  .schoolFocusV236 .schoolCardV236{box-sizing:border-box;width:calc(100vw - 8px);height:calc(100dvh - 8px);max-height:none;border-radius:12px;padding:4px;gap:4px;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+  .schoolFocusV236 .schoolProblemV236{grid-column:1;grid-row:1;padding:4px 7px;border-radius:8px;box-shadow:none}
+  .schoolFocusV236 .schoolPaperHeadV236{min-height:25px;padding:0 0 2px;gap:5px;font-size:11px}
+  .schoolFocusV236 .schoolPaperNumberV236{width:23px;height:23px;font-size:13px;border-width:1.5px}
   .schoolFocusV236 .schoolPaperBodyV236{gap:5px;overflow:hidden}
-  .schoolFocusV236 .schoolFlowV236{column-gap:8px;align-content:space-evenly;justify-content:center;overflow:hidden}
+  .schoolFocusV236 .schoolFlowV236{column-gap:7px;align-content:space-evenly;justify-content:center;overflow:hidden}
   .schoolFocusV236 .schoolFlowTextV236{font-size:clamp(17px,2.35vh,21px);line-height:1.05}
   .schoolFocusV236 .schoolFlowAnswerV236{gap:5px}
   .schoolFocusV236 .schoolFlowReadingV236{font-size:14px;line-height:1.02}
   .schoolFocusV236 .schoolCanvasesV236{overflow:visible}
-  .schoolFocusV236 .schoolCanvasWrapV236 canvas{width:clamp(138px,19dvh,168px);height:clamp(154px,21dvh,184px)}
-  .schoolFocusV236 .schoolCanvasWrapV236.long canvas{width:clamp(142px,19.5dvh,174px);height:min(var(--school-target-h-landscape,260px),52dvh)}
-  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236 canvas{width:clamp(160px,22dvh,192px);height:clamp(175px,24dvh,210px)}
-  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236.long canvas{width:clamp(165px,22.5dvh,198px);height:min(var(--school-target-h-landscape,300px),58dvh)}
+  .schoolFocusV236 .schoolCanvasWrapV236 canvas{width:clamp(146px,20dvh,178px);height:clamp(162px,22dvh,194px)}
+  .schoolFocusV236 .schoolCanvasWrapV236.long canvas{width:clamp(150px,20.5dvh,184px);height:min(var(--school-target-h-landscape,280px),50dvh)}
+  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236 canvas{width:clamp(178px,24dvh,210px);height:clamp(190px,26dvh,226px)}
+  .schoolFocusV236.schoolTargets1V236 .schoolCanvasWrapV236.long canvas{width:clamp(182px,24.5dvh,214px);height:min(var(--school-target-h-landscape,340px),60dvh)}
+  .schoolFocusV236.schoolTargets2V236 .schoolCanvasWrapV236 canvas{width:clamp(158px,21.5dvh,188px);height:clamp(172px,23.5dvh,202px)}
+  .schoolFocusV236.schoolTargets2V236 .schoolCanvasWrapV236.long canvas{width:clamp(162px,22dvh,192px);height:min(var(--school-target-h-landscape,290px),38dvh)}
   .schoolFocusV236.schoolTargets3V236 .schoolCanvasWrapV236 canvas,.schoolFocusV236.schoolTargets4V236 .schoolCanvasWrapV236 canvas{width:clamp(122px,16.5dvh,146px);height:clamp(138px,18.5dvh,160px)}
   .schoolFocusV236.schoolTargets3V236 .schoolCanvasWrapV236.long canvas,.schoolFocusV236.schoolTargets4V236 .schoolCanvasWrapV236.long canvas{width:clamp(126px,17dvh,150px);height:min(var(--school-target-h-landscape,250px),44dvh)}
-  .schoolFocusV236 .schoolControlV236{grid-column:1;grid-row:2;min-height:48px;flex-direction:row;align-items:center;gap:5px;padding:4px 5px;border-radius:8px;overflow:visible}
+  .schoolFocusV236 .schoolControlV236{grid-column:1;grid-row:2;min-height:44px;flex-direction:row;align-items:center;gap:4px;padding:3px 4px;border-radius:8px;overflow:hidden}
   .schoolFocusV236 .schoolControlV236 b,.schoolFocusV236 .schoolControlV236 p{display:none}
-  .schoolFocusV236 .schoolControlV236 button{flex:1 1 0;min-height:40px;margin:0;padding:6px 4px;font-size:12px}
+  .schoolFocusV236 .schoolControlV236 button{flex:1 1 0;min-height:38px;margin:0;padding:5px 4px;font-size:12px}
   .schoolFocusV236 .schoolControlV236 .primary{margin:0}
 }
 .schoolVerifyActionsV236{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
@@ -133,7 +135,7 @@
   function targetCanvas(q,k){
     const t=targets(q)[k],len=[...t.answer].length,long=t.lineType==='wavy'||len>1;
     const displayH=Math.min(260,115+Math.max(0,len-1)*48);
-    const landscapeH=Math.min(360,160+Math.max(0,len-1)*72);
+    const landscapeH=Math.min(380,190+Math.max(0,len-1)*82);
     return `<div class="schoolCanvasWrapV236 ${long?'long':''}" data-k="${k}" style="--school-target-h:${displayH}px;--school-target-h-landscape:${landscapeH}px"><canvas width="${long?440:520}" height="${long?720:520}" data-k="${k}" aria-label="${t.lineType==='wavy'?'漢字と送り仮名':'漢字'}の記入欄"></canvas></div>`;
   }
   function practiceFlow(q){
