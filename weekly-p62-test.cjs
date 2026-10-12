@@ -53,5 +53,5 @@ for(const file of ['app-v236-school-test.js','app-v204-patch.js','app-v240-relea
   assert.ok(!read(file).includes("ACTIVE_KANJI_PACK_ID==='2026-09-21-p58'"),file+' must not hardcode p58 as the current school pack');
 }
 assert.ok(read('index.html').includes('data-packs.js?v=20261010-p70'));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261012-writing-room'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261012-writing-room2'));
 console.log('PASS p62 historical: ten questions, learned-kanji targets, A4 lines, p58 history, and generic school flow remain intact.');
