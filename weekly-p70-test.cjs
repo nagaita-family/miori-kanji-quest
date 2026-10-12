@@ -65,8 +65,9 @@ assert.match(schoolUi,/answers\[q\]\[targetK\]/,'Each canvas writes into its own
 assert.match(schoolUi,/--school-target-h-landscape/,'Landscape target height is sized separately for Pencil writing');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(min-width:700px\) and \(max-height:900px\)/,'iPad landscape gets a dedicated writing layout');
 assert.match(schoolUi,/grid-template-rows:minmax\(0,1fr\) auto/,'Writing paper and controls share one viewport without document scrolling');
-assert.match(schoolUi,/schoolTargets1V236[\s\S]*width:clamp\(160px,22dvh,192px\)/,'Single-target questions get the largest Pencil writing box');
-assert.match(schoolUi,/\.schoolControlV236\{grid-column:1;grid-row:2[\s\S]*overflow:visible/,'Controls stay in a visible bottom row');
+assert.match(schoolUi,/schoolTargets1V236[\s\S]*width:clamp\(182px,24\.5dvh,214px\)/,'Single-target long answers get the largest Pencil writing box');
+assert.match(schoolUi,/schoolTargets2V236[\s\S]*width:clamp\(162px,22dvh,192px\)/,'Two-target questions keep both independent Pencil boxes large');
+assert.match(schoolUi,/\.schoolControlV236\{grid-column:1;grid-row:2[\s\S]*overflow:hidden/,'Controls stay in a fixed bottom row without their own scrolling');
 assert.match(schoolUi,/pointerType==='touch'&&\(pencilSeen\|\|Number\(e\.width\)>=18/,'Existing palm rejection remains intact');
 assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke order');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
