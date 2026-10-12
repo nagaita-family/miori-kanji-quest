@@ -223,7 +223,7 @@
 - p70で既習漢字を含む複数targetを再確認: ④ 全員＋集まる、⑤ 祭り＋様子、⑧ 言葉＋係る、⑨ 中学校＋文化祭、⑩ 自分＋対話。各targetは `data-k` により独立Canvasへ紐づく。
 - `app-v236-school-test.js` にiPad landscape専用のwriting layoutを追加。横向き・幅700px以上・高さ900px以下では、右側の縦長操作パネルを廃して**問題を上、操作4ボタンを下の固定行**へ配置。カード全体を `100dvh` 内に収め、worksheet / controlsともスクロール不要を基本にした。
 - 不要な余白・装飾を縮小: focus外周padding、カードgap、問題紙padding、見出し高さ、shadowを圧縮。空いた面積をCanvasへ回した。
-- Canvasはtarget数に応じて拡大。1target問題は最大約192–198px幅、2target標準は最大約168–174px幅。複数字・送り仮名は `--school-target-h-landscape` をanswer長から算出し、最大360pxまで縦方向を確保。3–4targetの旧週問題では全欄を同一画面に収めるため少し縮小する。
+- Canvasはtarget数に応じて拡大。最終調整では1target問題は最大約210–214px幅、2target問題は最大約188–192px幅。複数字・送り仮名は `--school-target-h-landscape` をanswer長から算出し、最大380pxまで縦方向を確保。3–4targetの旧週問題では全欄を同一画面に収めるため少し縮小する。
 - Pencil入力ロジック、pointer capture、座標変換、既存palm rejection条件は変更していない。採点・答え合わせ・保存も変更なし。
 - `weekly-p70-test.cjs` を強化し、既習漢字target、独立Canvas/answer record、landscape専用Canvasサイズ、下部操作行、palm rejection維持を回帰確認。p58/p62/p66のcache expectationも更新。
-- GitHub Actions run 38208089670 はKanji 9、weekly p58/p62/p66/p70、school structure、practice/best-writing/star/island regressionsとPages deployまで全て成功。
+- 最終layoutに追従した回帰修正後、GitHub Actions run 38208218477 はKanji 9、weekly p58/p62/p66/p70、school structure、practice/best-writing/star/island regressionsとPages deployまで全て成功。
