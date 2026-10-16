@@ -75,5 +75,5 @@ assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke 
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
 
 assert.ok(read('index.html').includes('data-packs.js?v=20261017-p74'));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261012-writing-room2'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-ipad-footer'));
 console.log('PASS p70 historical: upper ten questions, learned-kanji targets, okurigana lines, A4, and school review UX.');

@@ -118,6 +118,44 @@
   .schoolVerifyActionsV236{grid-column:1/-1;grid-row:3;display:flex;flex-wrap:nowrap;gap:6px}
   .schoolVerifyActionsV236 button{flex:1;margin:0;padding:7px 9px;font-size:12px}
 }
+
+/* Landscape worksheet: reserve a real footer inside the fixed viewport.
+   Do not rely on the worksheet's content height or a 900px height cutoff. */
+@media (orientation:landscape) and (min-width:700px){
+  .schoolFocusV236{
+    box-sizing:border-box;display:flex;align-items:stretch;justify-content:stretch;
+    padding:max(4px,env(safe-area-inset-top)) max(4px,env(safe-area-inset-right))
+      max(4px,env(safe-area-inset-bottom)) max(4px,env(safe-area-inset-left));
+  }
+  .schoolFocusV236 .schoolCardV236{
+    position:relative;box-sizing:border-box;flex:1 1 auto;width:100%;height:100%;
+    min-height:0;max-height:100%;padding:4px 4px 58px;gap:0;
+    grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);
+  }
+  .schoolFocusV236 .schoolProblemV236{
+    grid-column:1;grid-row:1;min-width:0;min-height:0;overflow:hidden;
+  }
+  .schoolFocusV236 .schoolPaperBodyV236{min-height:0;overflow:hidden}
+  .schoolFocusV236 .schoolFlowV236{max-width:100%;max-height:100%;overflow:hidden}
+  .schoolFocusV236 .schoolControlV236{
+    box-sizing:border-box;position:absolute;left:4px;right:4px;bottom:4px;
+    height:50px;min-height:50px;display:flex;flex-direction:row;flex-wrap:nowrap;
+    align-items:center;gap:4px;padding:3px 4px;overflow:visible;z-index:3;
+  }
+  .schoolFocusV236 .schoolControlV236 b,
+  .schoolFocusV236 .schoolControlV236 p{display:none}
+  .schoolFocusV236 .schoolControlV236 button{
+    flex:1 1 0;min-width:0;min-height:39px;box-sizing:border-box;
+    padding:5px 2px;margin:0;white-space:nowrap;font-size:clamp(11px,1.55dvh,13px);
+  }
+  .schoolFocusV236 .schoolControlV236 .primary{margin:0}
+}
+/* Also keep the blue answer-check button clear of the iPad home indicator. */
+.schoolV236 .schoolActionsV236{
+  flex:0 0 auto;box-sizing:border-box;height:auto;min-height:57px;
+  padding:5px 8px max(7px,env(safe-area-inset-bottom));
+}
+.schoolV236 .schoolActionsV236 button{min-height:40px}
 `;document.head.appendChild(style);
   function start(){if(!available())return window.openPrintTestV230Legacy?.();answers=questions().map(row=>row.filter(s=>s.lineType).map(record));pencilSeen=false;selected=0;reviewedQuestions=[];render();}
   function render(){
@@ -150,6 +188,38 @@
     const count=targets(q).length;
     return `<div class="schoolCardV236"><section class="schoolProblemV236"><header class="schoolPaperHeadV236"><span class="schoolPaperNumberV236">${q+1}</span><span>今週の学校テスト · ${count}か所を1ページで記入</span></header><div class="schoolPaperBodyV236">${practiceFlow(q)}</div></section><aside class="schoolControlV236"><b>✏️ 線の横に書こう</b><p>この問題の記入欄はぜんぶ同じページにあるよ。書きたい欄をタップして書こう。</p><button id="schoolUndoV236">↩ 1画もどす</button><button id="schoolClearV236">この欄を消す</button><button id="schoolBackV236">プリントにもどる</button><button id="schoolNextV236" class="primary">${q+1<questions().length?'次の問題 →':'✓ プリントにもどる'}</button></aside></div>`;
   }
+
+  // A multi-target sentence may create more vertical columns than fit on an iPad.
+  // Fit just its displayed canvases; intrinsic canvas pixels and stored strokes stay intact.
+  function fitSchoolFocusV236(el){
+    if(!el?.isConnected||!window.matchMedia?.('(orientation:landscape) and (min-width:700px)').matches)return;
+    const body=el.querySelector('.schoolPaperBodyV236'),flow=el.querySelector('.schoolFlowV236');
+    if(!body||!flow)return;
+    const canvases=[...el.querySelectorAll('.schoolCanvasWrapV236 canvas')];
+    canvases.forEach(c=>{c.style.width='';c.style.height=''});
+    const initial=canvases.map(c=>{const r=c.getBoundingClientRect();return {w:r.width,h:r.height}});
+    const fits=()=>{
+      const bounds=body.getBoundingClientRect();
+      return flow.scrollWidth<=flow.clientWidth+2&&flow.scrollHeight<=flow.clientHeight+2
+        &&[...flow.children].every(node=>{
+          const r=node.getBoundingClientRect();
+          return r.left>=bounds.left-2&&r.right<=bounds.right+2
+            &&r.top>=bounds.top-2&&r.bottom<=bounds.bottom+2;
+        });
+    };
+    for(let step=0;step<16&&!fits();step++){
+      const factor=Math.pow(.93,step+1);
+      canvases.forEach((c,i)=>{
+        c.style.width=Math.max(76,Math.round(initial[i].w*factor))+'px';
+        c.style.height=Math.max(96,Math.round(initial[i].h*factor))+'px';
+      });
+    }
+    redraw();
+  }
+  window.addEventListener('resize',()=>{
+    const el=byId('schoolFocusV236');
+    if(el)requestAnimationFrame(()=>fitSchoolFocusV236(el));
+  });
   function openFocus(q,k=0){
     selected=q;focus={q,k:Math.max(0,Math.min(k,targets(q).length-1)),ci:0};byId('schoolFocusV236')?.remove();
     const el=document.createElement('section');
@@ -160,7 +230,7 @@
       const targetK=Number(canvas.dataset.k);attach(canvas,answers[q][targetK],targetK);
     });
     el.querySelectorAll('.schoolCanvasWrapV236[data-k]').forEach(w=>w.onclick=()=>active(Number(w.dataset.k)));
-    active(focus.k);redraw();
+    active(focus.k);redraw();requestAnimationFrame(()=>fitSchoolFocusV236(el));
     byId('schoolUndoV236').onclick=()=>{const a=answers[q][focus.k];a.strokes[0].pop();redraw()};
     byId('schoolClearV236').onclick=()=>{const a=answers[q][focus.k];a.strokes[0]=[];a.images=[];redraw()};
     byId('schoolBackV236').onclick=()=>{snapshot();el.remove();render()};
