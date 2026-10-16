@@ -216,7 +216,7 @@
     }
     redraw();
   }
-  window.addEventListener('resize',()=>{
+  window.addEventListener?.('resize',()=>{
     const el=byId('schoolFocusV236');
     if(el)requestAnimationFrame(()=>fitSchoolFocusV236(el));
   });
