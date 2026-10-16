@@ -5,9 +5,9 @@ const ctx=vm.createContext({window:{},console,document:{createElement:()=>({text
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
 
-assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-10-p70');
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-10-p70');
-assert.equal(run('KANJI_PACKS.length'),5);
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-17-p74');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-17-p74');
+assert.equal(run('KANJI_PACKS.length'),6);
 assert.equal(run("KANJI_PACKS.find(p=>p.id==='2026-10-04-p66').status"),'past');
 
 run("useKanjiPack('2026-10-04-p66')");
@@ -43,6 +43,6 @@ assert.equal((paper.match(/print-mark wavy/g)||[]).length,5);
 const schoolUi=read('app-v236-school-test.js');
 assert.match(schoolUi,/書き順も見てみよう/);
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/);
-assert.ok(read('index.html').includes('data-packs.js?v=20261010-p70'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261017-p74'));
 assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261012-writing-room2'));
 console.log('PASS p66 historical: ten questions, learned-kanji targets, A4 marks, and school review UX remain intact.');

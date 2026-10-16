@@ -227,3 +227,12 @@
 - Pencil入力ロジック、pointer capture、座標変換、既存palm rejection条件は変更していない。採点・答え合わせ・保存も変更なし。
 - `weekly-p70-test.cjs` を強化し、既習漢字target、独立Canvas/answer record、landscape専用Canvasサイズ、下部操作行、palm rejection維持を回帰確認。p58/p62/p66のcache expectationも更新。
 - 最終layoutに追従した回帰修正後、GitHub Actions run 38208218477 はKanji 9、weekly p58/p62/p66/p70、school structure、practice/best-writing/star/island regressionsとPages deployまで全て成功。
+
+
+## 2026-10-17：教材74ページ上半分を今週の学校テストへ追加
+- 写真の教材74ページ「漢字の組み立て①」上段「書く」①〜⑩を新current pack `2026-10-17-p74` として登録。p70はpastへ切り替えて保持。旧週・漢検島・保存データに変更なし。
+- 本命10語: ①鉄板 ②電柱 ③油田 ④空港 ⑤板 ⑥柱 ⑦油 ⑧港 ⑨部分 ⑩押さえる。下段「ほかの言葉にチャレンジ！」は今週の学校テスト対象外。
+- 学校テストは教材文の漢字もtarget化: ②太い、④行き、⑤木・切る、⑥立てる、⑧船・出る、⑨漢字。全文かな表示で計18target（直線12・波線6）。波線は太い・行き・切る・立てる・出る・押さえる。「押さえる」の送り仮名は「さえる」。
+- 通常練習は上段の空欄10語のみ。共通schoolTestデータからA4横印刷も反映。完成済みのiPad Pencil用拡大Canvas、1問1ページ・全target同時表示、1target1Canvas、答え合わせ書き順・左右比較、★もっと練習、保存方式には触れない。
+- `weekly-p74-test.cjs` を追加し、p58/p62/p66/p70の既存fixture期待値を更新。CIにp74テスト追加。配信用`index.html`のdata-packsキャッシュ値は`20261017-p74`。
+- GitHub Actionsの実行結果・公開サイト反映・iPad実機での筆記動作は確認してから別途報告する。

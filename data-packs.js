@@ -140,7 +140,7 @@ const KANJI_PACKS = [
     shortLabel: '70ページ',
     source: '教材70ページ・上半分「書く」',
     addedAt: '2026-10-10',
-    status: 'current',
+    status: 'past',
     // Show the whole prompt in kana for the school test. Any kanji printed in
     // the textbook sentence, including previously learned context, is writable.
     schoolTest: [
@@ -166,6 +166,40 @@ const KANJI_PACKS = [
       {"reading":"かか","readingParts":["かか"],"before":"言葉が","after":"。","answer":"係","icon":"💬","targetType":"core","okuri":"る","okuriChoices":["る","り"],"chars":[{"char":"係","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"左を細く、右を大きく。"}]},
       {"reading":"ぶんかさい","readingParts":["ぶん","か","さい"],"before":"中学校の","after":"。","answer":"文化祭","icon":"🎪","targetType":"core","chars":[{"char":"文","secret":"点と横線、その下の交わりをよく見よう。","memory":"点と横線、その下の交わりをよく見よう。","clue":"左右のはらいをそろえよう。"},{"char":"化","secret":"左は「にんべん」。","memory":"左は「にんべん」。","clue":"右の曲がる形をよく見よう。"},{"char":"祭","secret":"上の形と下の「示」を分けて見よう。","memory":"上の形と下の「示」を分けて見よう。","clue":"下の「示」の中心をそろえよう。"}]},
       {"reading":"たいわ","readingParts":["たい","わ"],"before":"自分との","after":"。","answer":"対話","icon":"🗣️","targetType":"core","chars":[{"char":"対","secret":"左右の高さをそろえて書こう。","memory":"左右の高さをそろえて書こう。","clue":"右の「寸」を小さめに。"},{"char":"話","secret":"左は「ごんべん」。","memory":"左は「ごんべん」。","clue":"左を細く、右を大きく。"}]}
+    ]
+  },
+  {
+    id: '2026-10-17-p74',
+    label: '74ページ・上半分（書く①〜⑩）',
+    shortLabel: '74ページ',
+    source: '教材74ページ・上半分「書く」／漢字の組み立て①',
+    addedAt: '2026-10-17',
+    status: 'current',
+    // Every kanji printed in the textbook sentence is a writable school-test target.
+    // The lower 'ほかの言葉にチャレンジ！' section is not part of this test.
+    schoolTest: [
+      [{"text":"てっぱん","lineType":"straight","answer":"鉄板"},{"text":"でふたをする。"}],
+      [{"text":"ふとい","lineType":"wavy","answer":"太い","kanji":"太","okuri":"い"},{"text":"でんちゅう","lineType":"straight","answer":"電柱"},{"text":"。"}],
+      [{"text":"ゆでん","lineType":"straight","answer":"油田"},{"text":"をほる。"}],
+      [{"text":"くうこう","lineType":"straight","answer":"空港"},{"text":"いき","lineType":"wavy","answer":"行き","kanji":"行","okuri":"き"},{"text":"のバス。"}],
+      [{"text":"き","lineType":"straight","answer":"木"},{"text":"の"},{"text":"いた","lineType":"straight","answer":"板"},{"text":"を"},{"text":"きる","lineType":"wavy","answer":"切る","kanji":"切","okuri":"る"},{"text":"。"}],
+      [{"text":"はしら","lineType":"straight","answer":"柱"},{"text":"を"},{"text":"たてる","lineType":"wavy","answer":"立てる","kanji":"立","okuri":"てる"},{"text":"。"}],
+      [{"text":"あぶら","lineType":"straight","answer":"油"},{"text":"でいためる。"}],
+      [{"text":"みなと","lineType":"straight","answer":"港"},{"text":"から"},{"text":"ふね","lineType":"straight","answer":"船"},{"text":"が"},{"text":"でる","lineType":"wavy","answer":"出る","kanji":"出","okuri":"る"},{"text":"。"}],
+      [{"text":"かんじ","lineType":"straight","answer":"漢字"},{"text":"を"},{"text":"ぶぶん","lineType":"straight","answer":"部分"},{"text":"にわける。"}],
+      [{"text":"ペンを"},{"text":"おさえる","lineType":"wavy","answer":"押さえる","kanji":"押","okuri":"さえる"},{"text":"。"}]
+    ],
+    stages: [
+      {"reading":"てっぱん","readingParts":["てっ","ぱん"],"before":"","after":"でふたをする。","answer":"鉄板","icon":"🍳","targetType":"core","chars":[{"char":"鉄","secret":"左は金へん、右は失。","memory":"左は金へん、右は失。","clue":"左は金へん、右は失。"},{"char":"板","secret":"左は木へん、右は反。","memory":"左は木へん、右は反。","clue":"左は木へん、右は反。"}]},
+      {"reading":"でんちゅう","readingParts":["でん","ちゅう"],"before":"太い","after":"。","answer":"電柱","icon":"⚡","targetType":"core","chars":[{"char":"電","secret":"上は雨かんむり。","memory":"上は雨かんむり。","clue":"上は雨かんむり。"},{"char":"柱","secret":"左は木へん、右は主。","memory":"左は木へん、右は主。","clue":"左は木へん、右は主。"}]},
+      {"reading":"ゆでん","readingParts":["ゆ","でん"],"before":"","after":"をほる。","answer":"油田","icon":"🛢️","targetType":"core","chars":[{"char":"油","secret":"左はさんずい、右は由。","memory":"左はさんずい、右は由。","clue":"左はさんずい、右は由。"},{"char":"田","secret":"中のたて線と横線をそろえよう。","memory":"中のたて線と横線をそろえよう。","clue":"中のたて線と横線をそろえよう。"}]},
+      {"reading":"くうこう","readingParts":["くう","こう"],"before":"","after":"行きのバス。","answer":"空港","icon":"✈️","targetType":"core","chars":[{"char":"空","secret":"上はあなかんむり、下は工。","memory":"上はあなかんむり、下は工。","clue":"上はあなかんむり、下は工。"},{"char":"港","secret":"左はさんずい。","memory":"左はさんずい。","clue":"左はさんずい。"}]},
+      {"reading":"いた","readingParts":["いた"],"before":"木の","after":"を切る。","answer":"板","icon":"🪵","targetType":"core","chars":[{"char":"板","secret":"左は木へん、右は反。","memory":"左は木へん、右は反。","clue":"左は木へん、右は反。"}]},
+      {"reading":"はしら","readingParts":["はしら"],"before":"","after":"を立てる。","answer":"柱","icon":"🏛️","targetType":"core","chars":[{"char":"柱","secret":"左は木へん、右は主。","memory":"左は木へん、右は主。","clue":"左は木へん、右は主。"}]},
+      {"reading":"あぶら","readingParts":["あぶら"],"before":"","after":"でいためる。","answer":"油","icon":"🍳","targetType":"core","chars":[{"char":"油","secret":"左はさんずい、右は由。","memory":"左はさんずい、右は由。","clue":"左はさんずい、右は由。"}]},
+      {"reading":"みなと","readingParts":["みなと"],"before":"","after":"から船が出る。","answer":"港","icon":"🚢","targetType":"core","chars":[{"char":"港","secret":"左はさんずい。","memory":"左はさんずい。","clue":"左はさんずい。"}]},
+      {"reading":"ぶぶん","readingParts":["ぶ","ぶん"],"before":"漢字を","after":"にわける。","answer":"部分","icon":"🧩","targetType":"core","chars":[{"char":"部","secret":"右はおおざと。","memory":"右はおおざと。","clue":"右はおおざと。"},{"char":"分","secret":"上は八、下は刀。","memory":"上は八、下は刀。","clue":"上は八、下は刀。"}]},
+      {"reading":"お","readingParts":["お"],"before":"ペンを","after":"。","answer":"押","icon":"✏️","targetType":"core","okuri":"さえる","okuriChoices":["さえる","える"],"chars":[{"char":"押","secret":"左はてへん、右は甲。","memory":"左はてへん、右は甲。","clue":"左はてへん、右は甲。"}]}
     ]
   }
 ];
@@ -194,7 +228,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-10-10-p70';
+let CURRENT_KANJI_PACK_ID = '2026-10-17-p74';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){

@@ -1,15 +1,16 @@
-// Lightweight regression for the current p70 upper-half school pack.
+// Historical regression for the p70 upper-half school pack.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const read=p=>fs.readFileSync(p,'utf8');
 const ctx=vm.createContext({window:{},console,document:{createElement:()=>({textContent:''}),head:{appendChild(){}},getElementById(){return null}}});
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
 
-assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-10-p70');
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-10-p70');
-assert.equal(run('KANJI_PACKS.length'),5);
-assert.equal(run("KANJI_PACKS.find(p=>p.id==='2026-10-04-p66').status"),'past');
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-17-p74');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-17-p74');
+assert.equal(run('KANJI_PACKS.length'),6);
+assert.equal(run("KANJI_PACKS.find(p=>p.id==='2026-10-10-p70').status"),'past');
 
+run("useKanjiPack('2026-10-10-p70')");
 const stages=JSON.parse(run('JSON.stringify(QUEST_STAGES)'));
 assert.equal(stages.length,10);
 assert.deepEqual(stages.map(s=>s.answer+(s.okuri||'')),[
@@ -25,7 +26,7 @@ for(const s of stages){
   if(s.okuri)assert.ok(s.okuriChoices.includes(s.okuri));
 }
 
-const school=JSON.parse(run('JSON.stringify(currentKanjiPack().schoolTest)'));
+const school=JSON.parse(run("JSON.stringify(kanjiPackById('2026-10-10-p70').schoolTest)"));
 assert.equal(school.length,10);
 assert.deepEqual(school.map(q=>q.map(x=>x.text).join('')),[
   'りょうてでおさえる。','ゲームにまける。','としょがかりになる。','ぜんいんがあつまる。','まつりのようす。',
@@ -52,6 +53,7 @@ assert.deepEqual(school[9].filter(x=>x.lineType).map(x=>[x.text,x.answer]),[
   ['じぶん','自分'],['たいわ','対話']
 ]);
 
+run("CURRENT_KANJI_PACK_ID='2026-10-10-p70';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const paper=ctx.window.weeklyPaperHtmlV235(stages);
 assert.equal((paper.match(/print-mark straight/g)||[]).length,10,'A4 prints p70 straight targets');
@@ -72,6 +74,6 @@ assert.match(schoolUi,/pointerType==='touch'&&\(pencilSeen\|\|Number\(e\.width\)
 assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke order');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
 
-assert.ok(read('index.html').includes('data-packs.js?v=20261010-p70'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261017-p74'));
 assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261012-writing-room2'));
-console.log('PASS p70: current upper ten questions, learned-kanji targets, okurigana lines, A4, and school review UX.');
+console.log('PASS p70 historical: upper ten questions, learned-kanji targets, okurigana lines, A4, and school review UX.');
