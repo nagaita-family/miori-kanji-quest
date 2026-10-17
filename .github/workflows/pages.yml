@@ -54,6 +54,7 @@ jobs:
           node --check app-v296-practice-star.js
           node --check app-v297-daily-practice.js
           node --check app-v298-word-drill.js
+          node --check app-v300-season2.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
           node kanken9-v284-smoke-test.cjs
@@ -87,6 +88,7 @@ jobs:
           node practice-star-v296-test.cjs
           node daily-practice-v297-test.cjs
           node island-storage-integrity-test.cjs
+          node season2-v300-test.cjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
