@@ -266,5 +266,7 @@
 - 通常の「お手本と見くらべよう」に漢字別の「▶ 書き順を見る」ボタンを常設、任意でKanjiVGの筆順アニメーションを開き、再生も可。学校テスト答え合わせにも明示的な「▶ 書き順を見る」を設置（既存の自動再生と各漢字タップも保持）。書き順取得が失敗した場合は完成字と再試行の案内を表示する。取得はネット接続を要する。
 - 複数字の「たくさん練習／練習ノート」クリックでは、`app-v298-word-drill.js` が既存の1文字目／2文字目だけの旧導線をcaptureで置換。語の **全targetを同じシートへ並べ**、各文字3マス（1マス目は薄い字）をApple Pencilで自由に記入。すべて書けば「もう1枚 練習」で内容を記録して白紙へ戻り、何周でも練習できる。「今日はここまで」で部分的な書き込みもその字の回数だけ保存する。保存先は既存 `save.practiceNotebookV270` と同一、他の進捗/採点には触れない。単字ノートの既存6マス方式はそのまま。
 - 通常の紙面練習の横向き（幅700px以上、高さ950px以下）では余白・ヘルプ周辺を縮め、紙面の伸縮領域と下部の操作ボタンを区別。ベスト字比較と新練習シートの横画面も高さへ応じて縮小し、必要な場合は紙面部分だけスクロールを許す。iPad実機でスクロール不要を保証する検証は未完了。
-- 新規: `app-v297-daily-practice.js`、`app-v298-word-drill.js`、`daily-practice-v297-test.cjs`。Pages workflowの構文・テストに追加。index loader `?v=2971`、school script `?v=20261017-stroke-replay`、best script `?v=2955`、新スクリプトそれぞれcache-bust。旧週・漢検島・localStorage保存形式は変更なし。
+- 新規: `app-v297-daily-practice.js`、`app-v298-word-drill.js`、`daily-practice-v297-test.cjs`。Pages workflowの構文・テストに追加。index loader `?v=2971`、school script `?v=20261017-stroke-fit2`、best script `?v=2955`、新スクリプトそれぞれcache-bust。旧週・漢検島・localStorage保存形式は変更なし。
 - 本ターンのコード構文はV8で確認。GitHub Actionsの全検証結果、公開URL実ファイル更新、iPad/Apple Pencil実機での見た目と動作は確認結果が取れない限り完了としない。
+
+- 同日追補: 学校テスト横向きfitが最大縮小後も不成立のときは紙面部分のみスクロール可能にし、解答欄がoverflow:hiddenで見えなくなる事態を防ぐ。書き順ボタンの余白も圧縮。配信クエリは`20261017-stroke-fit2`。
