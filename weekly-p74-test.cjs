@@ -41,5 +41,5 @@ assert.match(ui,/position:absolute;left:4px;right:4px;bottom:4px/,'iPad writing 
 assert.match(ui,/function fitSchoolFocusV236\(el\)/,'overflowing multi-target questions are fitted');
 assert.match(ui,/flow\.scrollWidth<=flow\.clientWidth/,'column overflow is measured instead of silently clipped');
 assert.match(ui,/requestAnimationFrame\(\(\)=>fitSchoolFocusV236\(el\)\)/,'fit runs when each question opens');
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-ipad-footer'),'iPad home-screen cache is busted');
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-stroke-fit2'),'iPad home-screen cache is busted');
 console.log('PASS p74: ten prompts, 18 learned-kanji targets, 6 okurigana targets, A4, Pencil layout, and previous-pack isolation.');
