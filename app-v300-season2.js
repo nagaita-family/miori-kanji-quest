@@ -377,6 +377,6 @@
   `;
   document.head.appendChild(css);
   // Expose read-only metadata for independent regression tests and future extensions.
-  window.MioriSkySeason2V300={catalog:ITEMS.map(x=>({...x})),islands:ISLANDS.map(x=>({...x})),openShop:shop,render};
+  window.MioriSkySeason2V300={catalog:ITEMS.map(x=>({...x})),islands:ISLANDS.map(x=>({...x})),openShop:shop,render,snapshot:()=>JSON.parse(JSON.stringify(state())),credit:awardNewClears};
   render();
 })();
