@@ -40,6 +40,10 @@
       check.disabled=false;
       check.textContent=document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':current?.okuri?'できた！送り仮名と見くらべる':'できた！見くらべる';
       check.onclick=openBestReview;
+    }else if(check?.onclick===openBestReview){
+      // An older weekly-test screen may reuse this base button after practice.
+      // Give it back to its own grading handler rather than leaking best mode.
+      check.onclick=judgeCurrent;
     }
     const status=document.getElementById('statusLine');
     if(regular&&status&&/判定|見ています|おしい/.test(status.textContent||''))status.textContent='書けたら、お手本と見くらべよう ✏️';
