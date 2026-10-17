@@ -21,7 +21,7 @@ assert.match(code,/selfReviewed/,'Progress is credited from self-review');
 assert.doesNotMatch(code,/judgeCurrent\s*\(/,'New self-review module must not call automatic right\/wrong judgement');
 assert.doesNotMatch(code,/gradeKanjiStrokeV230/,'New regular practice does not call handwriting OCR grading');
 assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2954/,'Best-writing module loads after regular practice modules');
-assert.match(html,/app-v240-release\.js\?v=2951/,'Fresh loader is used on iPad');
+assert.match(html,/app-v240-release\.js\?v=2952/,'Fresh loader is used on iPad');
 assert.match(code,/reading=.*current\.reading[\s\S]*current\.okuri/,'Full okurigana reading is shown');
 assert.match(code,/title\.textContent=reading/,'Answer kanji is hidden in the mission title');
 assert.match(code,/sentence\.innerHTML/,'Prompt shows the full reading and suffix');
@@ -99,8 +99,9 @@ const legacy=read('app-v234-stability.js');
 const study=read('app-v250-study.js');
 assert.match(legacy,/if\(window\.MioriBestWritingV295\?\.open&&checkButton\.onclick===window\.MioriBestWritingV295\.open\)return;/,
   'Old capturing suffix guard must not swallow best-writing clicks');
+assert.match(legacy,/selfReview\?'選んだよ。漢字も書けたら見くらべよう！'/,'Suffix hint respects self-review');
 assert.match(study,/if\(b\.onclick!==window\.MioriBestWritingV295\?\.open\)oneFix\(\)/,
   'Old recognition preprocessing cannot rewrite the learner handwriting');
 assert.match(release,/app-v250-study\.js\?v=2704/);
-assert.match(html,/app-v234-stability\.js\?v=2342/);
+assert.match(html,/app-v234-stability\.js\?v=2343/);
 console.log('PASS complete regular-practice audit: 60 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
