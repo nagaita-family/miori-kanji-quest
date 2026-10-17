@@ -256,6 +256,6 @@
 - 通常練習「今日のベスト」選択後は、完了・学習記録保存後に現在の問題番号+1へ直接進む。最後の10問目では最初に戻る。旧 `nextRecommendBtn` の文字表示やclick handlerには依存せず、3問集中の境界でも自動的に次問へ進み、集中カウンタを0へ戻してから次セットを始める。島へ戻る操作は手動で引き続き可能。
 - `app-v234-stability.js` の旧送り仮名自動判定のcapture guardは、`MioriBestWritingV295` のcheck handlerが現在のボタンを管理しているときのみ処理しない。ベスト字モード自身が選択済みの正しい送り仮名を確認する。
 - `app-v250-study.js` の旧「一」の筆跡補正は、ベスト字自己比較ボタンが現に有効なときのみ適用しない（書いた筆跡を勝手に書き換えない）。
-- `best-writing-flow-test.cjs` は全50問の漢字/記入対象整合、全50問のschoolTest構造、送り仮名選択肢、出題前答え漏れ、p74①〜⑩の全文、旧capture干渉防止、3問区切りをまたぐ連続遷移、iPad cache-bustを検証する。
-- 配信キャッシュ: `index.html` のapp-v234=2342・app-v240 loader=2950、`app-v240-release.js` のapp-v250-study=2704・app-v295=2953。保存形式・漢検島・学校10問テスト紙面は変更なし。
+- `best-writing-flow-test.cjs` は全60問（返却済みTest13を含む）の漢字/記入対象整合、全50問のschoolTest構造、送り仮名選択肢、出題前答え漏れ、p74①〜⑩の全文、旧capture干渉防止、3問区切りをまたぐ連続遷移、iPad cache-bustを検証する。
+- 配信キャッシュ: `index.html` のapp-v234=2342・app-v240 loader=2951、`app-v240-release.js` のapp-v250-study=2704・app-v295=2954。保存形式・漢検島・学校10問テスト紙面は変更なし。
 - CIと公開URLの実ファイル確認・iPad実機確認は各結果が取れるまで未完了とする。
