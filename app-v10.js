@@ -84,8 +84,8 @@ function renderHome(){
 function startStage(i){
   stageIndex=Number(i);charIndex=0;helpLevel=0;checkAttempts=0;
   const s=QUEST_STAGES[stageIndex],lv=levelInfo();
-  $("stageLabel").textContent=`MISSION ${stageIndex+1}`;$("wordTitle").textContent=s.answer;$("playLevel").textContent=`LV ${lv.level}`;
-  $("verticalQuestion").innerHTML=`${esc(s.before)}<span class="target">${esc(s.reading)}</span>${esc(s.after)}`;
+  $("stageLabel").textContent=`MISSION ${stageIndex+1}`;$("wordTitle").textContent=s.reading+(s.okuri||"");$("playLevel").textContent=`LV ${lv.level}`;
+  $("verticalQuestion").innerHTML=`${esc(s.before)}<span class="target">${esc(s.reading+(s.okuri||""))}</span>${esc(s.after)}`;
   $("questionIcon").textContent=s.icon;
   showScreen("challengeScreen");renderChar();
 }
