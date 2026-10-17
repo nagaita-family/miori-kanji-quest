@@ -166,6 +166,8 @@
     document.body.appendChild(ov);
     ov.addEventListener('click',e=>{const b=e.target.closest('[data-best-stroke]');if(b)window.MioriDailyPracticeV297?.showStroke?.(b.dataset.bestStroke);});
     const card=ov.querySelector('.bestWritingCardV295');
+    // The learner must always be able to finish even when the comparison is tall.
+    ov.querySelector('#bestChooseV295')?.setAttribute('aria-label','今日のベストにして次の問題へ');
     renderCompare(ov,captured,selected);
     ov.querySelectorAll('[data-attempt]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.attempt);renderCompare(ov,captured,selected)});
     ov.querySelector('.bestCloseV295').onclick=()=>ov.remove();
@@ -256,6 +258,31 @@
 .bestBadgeV295{display:inline-block;margin-top:5px;border-radius:999px;background:#fff3c3;border:1px solid #efd67d;color:#7a6121;padding:3px 7px;font-size:9px;font-weight:950}
 #manualFallbackV250[hidden]{display:none!important}
 @media(max-width:620px){.bestWritingCardV295{padding:16px 10px}.bestWritingCardV295 h2{font-size:23px}.bestCompareGridV295{grid-template-columns:1fr}.bestActionsV295{display:grid;grid-template-columns:1fr}.bestActionsV295 button{width:100%}}
+/* Landscape iPad: fit comparison within the visible viewport, keep actions pinned. */
+.bestWritingV295{height:100dvh;box-sizing:border-box;overflow:hidden}
+.bestWritingCardV295{display:flex;flex-direction:column;max-height:calc(100dvh - 20px);box-sizing:border-box;overflow:hidden;min-height:0}
+.bestCompareGridV295{flex:1 1 auto;min-height:0;overflow:auto;align-content:start;overscroll-behavior:contain}
+.bestActionsV295{flex:0 0 auto;position:relative;z-index:2;padding:9px 0 2px;margin-top:6px;background:#fffdf6;border-top:1px solid #e7dfcf}
+.bestCompareCardV295{min-width:0}
+.bestPairV295{min-width:0}
+.bestOwnV295,.bestModelV295{width:100%;max-height:min(30dvh,245px);aspect-ratio:1;margin-inline:auto}
+@media(orientation:landscape) and (max-height:850px){
+.bestWritingV295{padding:8px}
+.bestWritingCardV295{width:min(1200px,98vw);max-height:calc(100dvh - 16px);padding:10px 15px 8px}
+.bestWritingCardV295 h2{font-size:21px;margin:1px 0}
+.bestEyebrowV295{font-size:9px}
+.bestLeadV295{font-size:11px;margin:0 0 3px}
+.bestLookPointsV295{margin:3px 0 5px}
+.bestLookPointsV295 span{padding:2px 7px}
+.bestAttemptsV295{margin-bottom:5px}
+.bestCompareGridV295{grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:7px}
+.bestCompareCardV295{padding:6px}
+.bestCompareTitleV295{margin-bottom:2px}
+.bestCompareTitleV295 b{font-size:21px}
+.bestOwnV295,.bestModelV295{max-height:min(27dvh,210px)}
+.bestModelV295,.bestOverlayGlyphV295{font-size:clamp(54px,10vh,95px)}
+.bestActionsV295 button{padding:9px 11px}
+}
 `;document.head.appendChild(s);
   }
 
