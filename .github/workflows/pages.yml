@@ -52,6 +52,8 @@ jobs:
           node --check app-v270-practice-note.js
           node --check app-v295-best-writing.js
           node --check app-v296-practice-star.js
+          node --check app-v297-daily-practice.js
+          node --check app-v298-word-drill.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
           node kanken9-v284-smoke-test.cjs
@@ -83,6 +85,7 @@ jobs:
           node practice-note-access-test.cjs
           node best-writing-flow-test.cjs
           node practice-star-v296-test.cjs
+          node daily-practice-v297-test.cjs
           node island-storage-integrity-test.cjs
 
       - name: Setup Pages
