@@ -52,8 +52,10 @@
     './kanken9-paper-guard-v287.js?v=2870',
     './kanken9-layout-v288.js?v=2910',
     './kanken9-travel-v293.js?v=2940',
-    './app-v295-best-writing.js?v=2954',
-    './app-v296-practice-star.js?v=2960'
+    './app-v295-best-writing.js?v=2955',
+    './app-v296-practice-star.js?v=2960',
+    './app-v297-daily-practice.js?v=2971',
+    './app-v298-word-drill.js?v=2981'
   ],()=>{
     refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();
     window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();
