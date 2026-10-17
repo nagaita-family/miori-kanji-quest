@@ -78,6 +78,8 @@
   };
 
   function artForV15(id){return id==="moko"?mokoSvgV15():(ART_V15[id]?ART_V15[id]():ART_V15.sprout())}
+  // Preserve the original vector-art look in Season 2.
+  window.MioriIslandArtV15={artFor:artForV15};
   function rewardAtV15(n){return REWARDS_V15[(Math.max(1,n)-1)%REWARDS_V15.length]}
 
   function islandBaseV15(stage){
