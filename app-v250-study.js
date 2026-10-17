@@ -91,7 +91,7 @@
   }
   function wireOne(){
     const b=$('checkBtn');if(!b||b.dataset.one251)return;b.dataset.one251='1';
-    b.addEventListener('click',()=>{if(!window.MioriBestWritingV295?.open)oneFix();[80,250,600,1200,2200,4000].forEach(ms=>setTimeout(polishPracticeWords,ms));},true);
+    b.addEventListener('click',()=>{if(b.onclick!==window.MioriBestWritingV295?.open)oneFix();[80,250,600,1200,2200,4000].forEach(ms=>setTimeout(polishPracticeWords,ms));},true);
   }
 
   function removeLegacyReward(){['rewardV15','growthRewardV13','islandRewardV14','focusResultV250'].forEach(id=>document.getElementById(id)?.remove());}
