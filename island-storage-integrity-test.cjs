@@ -23,7 +23,7 @@ assert.match(study,/MutationObserver/,'Island redraws are watched');
 assert.match(study,/observe\(art,\{childList:true,subtree:true\}\)/,'Decoration redraws trigger storage resync');
 assert.match(study,/watchIslandStorageV251\(\);requestAnimationFrame/,'Home render reinstalls the redraw watcher before polishing');
 
-assert.match(release,/app-v250-study\.js\?v=2703/,'Fresh storage-aware study patch is loaded');
+assert.match(release,/app-v250-study\.js\?v=2704/,'Fresh storage-aware study patch is loaded');
 assert.match(html,/app-v204-patch\.js\?v=2043/,'Fresh treasure controller is loaded');
 assert.match(html,/app-v240-release\.js\?v=2947/,'Fresh dynamic loader reaches iPad');
 console.log('PASS island storage: earned, island, and treasure states stay synchronized across toggles and decoration redraws.');
