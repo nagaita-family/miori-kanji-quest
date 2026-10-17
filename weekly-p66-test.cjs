@@ -44,5 +44,5 @@ const schoolUi=read('app-v236-school-test.js');
 assert.match(schoolUi,/書き順も見てみよう/);
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/);
 assert.ok(read('index.html').includes('data-packs.js?v=20261017-p74'));
-assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-stroke-replay'));
+assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-stroke-fit2'));
 console.log('PASS p66 historical: ten questions, learned-kanji targets, A4 marks, and school review UX remain intact.');
