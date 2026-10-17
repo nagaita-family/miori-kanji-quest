@@ -151,7 +151,7 @@ body.paperModeV220 #checkBtn:not(:disabled){opacity:1!important;pointer-events:a
     checkButton.addEventListener('click',e=>{
       // Later best-writing mode owns its own suffix validation and comparison.
       // Do not swallow its click in the legacy automatic-grading capture guard.
-      if(window.MioriBestWritingV295?.open)return;
+      if(window.MioriBestWritingV295?.open&&checkButton.onclick===window.MioriBestWritingV295.open)return;
       const stage=stageNow();
       if(!stage?.okuri||!document.body.classList.contains('paperModeV220')||document.body.classList.contains('weeklyTestModeV20'))return;
       ensureOkuri();
