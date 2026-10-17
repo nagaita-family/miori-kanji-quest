@@ -59,6 +59,7 @@
 .schoolVerifyCardV236 .strokes.fullSentenceV236 img{height:min(34vh,260px);width:auto;max-width:90%;border:1px solid #b8c9da}
 .schoolVerifyCardV236 .compare.fullSentenceV236{writing-mode:vertical-rl;text-orientation:upright;text-align:left;max-height:220px;margin:5px auto;white-space:normal;font-size:18px;line-height:1.5}
 .schoolVerifyCardV236 .schoolComparisonV236{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;margin:10px 0}.schoolVerifyCardV236 .schoolComparisonV236>div{min-width:0;border:1px solid #d3dce7;border-radius:10px;padding:8px;display:flex;flex-direction:column;align-items:center}.schoolVerifyCardV236 .schoolComparisonV236 p{margin:0 0 7px}.schoolVerifyCardV236 .schoolComparisonV236 .strokes{flex:1;align-items:center}.schoolVerifyCardV236 .schoolComparisonV236 img{height:min(47vh,360px);width:auto;max-width:100%;object-fit:contain}.schoolVerifyCardV236 .schoolComparisonV236 .compare{writing-mode:vertical-rl;text-orientation:upright;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:clamp(32px,6vh,54px);line-height:1.25;max-height:47vh;white-space:nowrap;margin:auto}
+.schoolVerifyCardV236 .schoolStrokeReplayV297{margin:0 auto 4px;padding:4px 8px;font-size:12px}
 .schoolStrokeReplayV297{border:1px solid #b6cde8;background:#e9f3ff;color:#22548c;border-radius:9px;padding:5px 10px;font-weight:900;align-self:center;touch-action:manipulation}
 .schoolStrokeOrderV236{margin:10px auto 12px;padding:10px;border:1px solid #d7e0eb;border-radius:12px;background:#f8fbff}.schoolStrokeOrderV236>p{margin:0 0 7px;font-weight:900;color:#405b7c}.schoolStrokeButtonsV236{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}.schoolStrokeButtonsV236 button{min-width:42px;padding:7px 10px;border-radius:10px;font-family:'Yu Mincho','Noto Serif JP',serif;font-size:22px}.schoolStrokeButtonsV236 button.on{background:#496ed8;color:#fff;border-color:#496ed8}.schoolStrokeDemoV236{display:flex;align-items:center;justify-content:center;gap:10px}.schoolStrokeDemoV236 svg{width:118px;height:118px;border:1px solid #c9d5e2;border-radius:10px;background:#fff}.schoolStrokeDemoV236 path{fill:none;stroke:#273142;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round}.schoolStrokeMsgV236{min-width:90px;text-align:left;font-size:12px;font-weight:850;color:#66758b}
 /* The small ten-question overview keeps its right-to-left paper layout. */
@@ -197,6 +198,7 @@
     const body=el.querySelector('.schoolPaperBodyV236'),flow=el.querySelector('.schoolFlowV236');
     if(!body||!flow)return;
     const canvases=[...el.querySelectorAll('.schoolCanvasWrapV236 canvas')];
+    body.style.overflow='';body.style.touchAction='';flow.style.overflow='';
     canvases.forEach(c=>{c.style.width='';c.style.height=''});
     const initial=canvases.map(c=>{const r=c.getBoundingClientRect();return {w:r.width,h:r.height}});
     const fits=()=>{
@@ -215,6 +217,9 @@
         c.style.height=Math.max(96,Math.round(initial[i].h*factor))+'px';
       });
     }
+    // If a very long sentence still cannot fit, make the paper scrollable
+    // rather than silently clipping a required answer box. The footer stays fixed.
+    if(!fits()){body.style.overflow='auto';body.style.touchAction='pan-x pan-y';flow.style.overflow='visible';}
     redraw();
   }
   window.addEventListener?.('resize',()=>{
