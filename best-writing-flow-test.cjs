@@ -20,12 +20,14 @@ assert.match(code,/nextAfterReview\(\)/,'Single-character flow keeps existing ch
 assert.match(code,/selfReviewed/,'Progress is credited from self-review');
 assert.doesNotMatch(code,/judgeCurrent\s*\(/,'New self-review module must not call automatic right\/wrong judgement');
 assert.doesNotMatch(code,/gradeKanjiStrokeV230/,'New regular practice does not call handwriting OCR grading');
-assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2951/,'Best-writing module loads after regular practice modules');
-assert.match(html,/app-v240-release\.js\?v=2948/,'Fresh loader is used on iPad');
+assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2952/,'Best-writing module loads after regular practice modules');
+assert.match(html,/app-v240-release\.js\?v=2949/,'Fresh loader is used on iPad');
 assert.match(code,/reading=.*current\.reading[\s\S]*current\.okuri/,'Full okurigana reading is shown');
 assert.match(code,/title\.textContent=reading/,'Answer kanji is hidden in the mission title');
 assert.match(code,/sentence\.innerHTML/,'Prompt shows the full reading and suffix');
-assert.match(code,/next\.click\(\)/,'Best choice automatically advances into the next step');
-assert.match(code,/pick===stageIndex/,'Next problem cannot repeat the just-completed stage');
+assert.match(code,/startStage\(nextIndex\)/,'Best choice opens the next question directly');
+assert.match(code,/sessionStorage\.setItem\(FOCUS_KEY,'0'\)/,'The 3-question break does not strand navigation');
+assert.doesNotMatch(code,/next\.click\(\)/,'Navigation never depends on mutable result button handlers');
+assert.match(code,/\(completedIndex\+1\)%QUEST_STAGES\.length/,'Next problem follows the current stage in order');
 assert.match(code,/current\?\.okuri&&host/,'Suffix is chosen before self-review');
 console.log('PASS best-writing: write -> compare -> refine -> choose best, with no automatic correctness gate.');
