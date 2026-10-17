@@ -27,7 +27,7 @@
   refresh();paperStyles();
   loadSequence([
     './app-v250-island.js?v=2700',
-    './app-v250-study.js?v=2701',
+    './app-v250-study.js?v=2703',
     './app-v252-cell-erase.js?v=2700',
     './app-v260-target-first.js?v=2700',
     './app-v270-practice-note.js?v=2702',
@@ -52,7 +52,7 @@
     './kanken9-paper-guard-v287.js?v=2870',
     './kanken9-layout-v288.js?v=2910',
     './kanken9-travel-v293.js?v=2940',
-    './app-v295-best-writing.js?v=2951',
+    './app-v295-best-writing.js?v=2952',
     './app-v296-practice-star.js?v=2960'
   ],()=>{
     refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();
