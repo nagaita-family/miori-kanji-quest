@@ -215,7 +215,15 @@
     // The existing Next handler takes us to the next problem (or the normal
     // 3-problem island break), preserving the focus-set state machine.
     const next=document.getElementById('nextRecommendBtn');
-    if(next&&document.getElementById('resultScreen')?.classList.contains('active'))next.click();
+    if(!next||!document.getElementById('resultScreen')?.classList.contains('active'))return;
+    if(next.textContent.includes('次の問題へ')){
+      // The adaptive recommender may pick the same stage again. "Next" must
+      // actually lead to a different problem, including from the last stage.
+      const pick=recommendStage();
+      startStage(pick===stageIndex&&QUEST_STAGES.length>1?(stageIndex+1)%QUEST_STAGES.length:pick);
+    }else{
+      next.click(); // Keep the normal 3-question island break.
+    }
   }
 
   function polishResult(){
