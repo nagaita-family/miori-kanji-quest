@@ -26,7 +26,8 @@
   function polish(){
     const current=stage();
     const challenge=document.getElementById('challengeScreen')?.classList.contains('active');
-    if(challenge&&current){
+    const regular=challenge&&!document.body.classList.contains('weeklyTestModeV20');
+    if(regular&&current){
       // Reading only: never expose the answer kanji in the mission header.
       const reading=`${current.reading||''}${current.okuri||''}`;
       const title=document.getElementById('wordTitle');
@@ -35,19 +36,19 @@
       if(sentence)sentence.innerHTML=`${esc(current.before||'')}<span class="target">${esc(reading)}</span>${esc(current.after||'')}`;
     }
     const check=document.getElementById('checkBtn');
-    if(check){
+    if(check&&regular){
       check.disabled=false;
       check.textContent=document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':current?.okuri?'できた！送り仮名と見くらべる':'できた！見くらべる';
       check.onclick=openBestReview;
     }
     const status=document.getElementById('statusLine');
-    if(status&&/判定|見ています|おしい/.test(status.textContent||''))status.textContent='書けたら、お手本と見くらべよう ✏️';
+    if(regular&&status&&/判定|見ています|おしい/.test(status.textContent||''))status.textContent='書けたら、お手本と見くらべよう ✏️';
     const prompt=document.getElementById('charPrompt');
-    if(prompt&&challenge&&current?.okuri)prompt.textContent=`「${current.reading}${current.okuri}」の「${current.reading}」を漢字で書こう`;
-    else if(prompt&&/判定/.test(prompt.textContent||''))prompt.textContent=prompt.textContent.replace(/判定.*$/,'見くらべよう');
+    if(prompt&&regular&&current?.okuri)prompt.textContent=`「${current.reading}${current.okuri}」の「${current.reading}」を漢字で書こう`;
+    else if(regular&&prompt&&/判定/.test(prompt.textContent||''))prompt.textContent=prompt.textContent.replace(/判定.*$/,'見くらべよう');
     const okuriGuide=document.querySelector('#preOkuriV234 .feedback');
-    if(okuriGuide&&/判定/.test(okuriGuide.textContent||''))okuriGuide.textContent='送り仮名を選んだら、見くらべよう！';
-    const fallback=document.getElementById('manualFallbackV250');if(fallback)fallback.hidden=true;
+    if(regular&&okuriGuide&&/判定/.test(okuriGuide.textContent||''))okuriGuide.textContent='送り仮名を選んだら、見くらべよう！';
+    const fallback=document.getElementById('manualFallbackV250');if(regular&&fallback)fallback.hidden=true;
     setVersion();
   }
 
