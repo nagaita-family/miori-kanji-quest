@@ -210,20 +210,19 @@
       return;
     }
     if(state.batch)charIndex=Math.max(0,st.chars.length-1);
-    finishStage(); // Save completion, XP, focus count and island rewards.
-    // "Choose today's best" also means "continue": no second Next tap.
-    // The existing Next handler takes us to the next problem (or the normal
-    // 3-problem island break), preserving the focus-set state machine.
-    const next=document.getElementById('nextRecommendBtn');
-    if(!next||!document.getElementById('resultScreen')?.classList.contains('active'))return;
-    if(next.textContent.includes('次の問題へ')){
-      // The adaptive recommender may pick the same stage again. "Next" must
-      // actually lead to a different problem, including from the last stage.
-      const pick=recommendStage();
-      startStage(pick===stageIndex&&QUEST_STAGES.length>1?(stageIndex+1)%QUEST_STAGES.length:pick);
-    }else{
-      next.click(); // Keep the normal 3-question island break.
-    }
+    const completedIndex=stageIndex;
+    finishStage(); // Save completion and focus/reward records through existing wrappers.
+    // The old focus flow sends the third completed question back to the island.
+    // Here the learner explicitly chose "today's best": always continue to the
+    // following worksheet question without another tap, including at 3/3.
+    // Keep the completed-stage reward while restarting the next focus set.
+    try{
+      const FOCUS_KEY='miori-kanji-focus-v251';
+      if(Number(sessionStorage.getItem(FOCUS_KEY)||0)>=3)sessionStorage.setItem(FOCUS_KEY,'0');
+    }catch(e){}
+    if(!QUEST_STAGES.length)return;
+    const nextIndex=(completedIndex+1)%QUEST_STAGES.length;
+    startStage(nextIndex);
   }
 
   function polishResult(){
