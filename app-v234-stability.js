@@ -53,6 +53,8 @@ body.paperModeV220 #checkBtn:not(:disabled){opacity:1!important;pointer-events:a
 
   function setCheckReady(){
     const check=$('checkBtn');if(!check)return;
+    // The self-review module owns this control while regular practice is active.
+    if(window.MioriBestWritingV295?.open&&check.onclick===window.MioriBestWritingV295.open)return;
     check.disabled=false;
     const stage=stageNow();
     const label=(document.body.classList.contains('batchWriteV221')&&stage?.chars?.length>1)?'まとめて判定':stage?.okuri?'漢字＋送り仮名を判定':'できた！判定';
@@ -63,7 +65,8 @@ body.paperModeV220 #checkBtn:not(:disabled){opacity:1!important;pointer-events:a
     const stage=stageNow();if(!stage?.okuri)return;
     selectedOkuri=value;
     host.querySelectorAll('button').forEach(b=>{b.classList.toggle('selected',b===btn);b.classList.remove('wrong','correct');});
-    setText(host.querySelector('.feedback'),'選んだよ。漢字も書けたらまとめて判定！');
+    const selfReview=window.MioriBestWritingV295?.open&&$('checkBtn')?.onclick===window.MioriBestWritingV295.open;
+    setText(host.querySelector('.feedback'),selfReview?'選んだよ。漢字も書けたら見くらべよう！':'選んだよ。漢字も書けたらまとめて判定！');
     if(!pendingKanjiPass)return;
     if(selectedOkuri===stage.okuri){
       btn.classList.add('correct');
