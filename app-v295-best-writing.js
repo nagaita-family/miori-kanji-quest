@@ -122,7 +122,7 @@
     grid.innerHTML=attempt.indices.map((ci,j)=>{
       const info=st.chars[ci],old=previousBest(ci);
       return `<article class="bestCompareCardV295">
-        <div class="bestCompareTitleV295"><b>${esc(info.char)}</b><span>${attempt.indices.length>1?`${ci+1}文字目`:''}</span></div>
+        <div class="bestCompareTitleV295"><b>${esc(info.char)}</b><span>${attempt.indices.length>1?`${ci+1}文字目`:''}</span><button type="button" class="bestStrokeBtnV297" data-best-stroke="${esc(info.char)}">▶ 書き順を見る</button></div>
         <div class="bestPairV295">
           <div><small>みおりの字</small><div class="bestOwnV295"><img src="${attempt.images[j]}" alt="みおりが書いた${esc(info.char)}"><span class="bestOverlayGlyphV295">${esc(info.char)}</span></div></div>
           <div><small>お手本</small><div class="bestModelV295">${esc(info.char)}</div></div>
@@ -164,6 +164,7 @@
       </div>
     </div>`;
     document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{const b=e.target.closest('[data-best-stroke]');if(b)window.MioriDailyPracticeV297?.showStroke?.(b.dataset.bestStroke);});
     const card=ov.querySelector('.bestWritingCardV295');
     renderCompare(ov,captured,selected);
     ov.querySelectorAll('[data-attempt]').forEach(b=>b.onclick=()=>{selected=Number(b.dataset.attempt);renderCompare(ov,captured,selected)});
@@ -226,7 +227,8 @@
       if(Number(sessionStorage.getItem(FOCUS_KEY)||0)>=3)sessionStorage.setItem(FOCUS_KEY,'0');
     }catch(e){}
     if(!QUEST_STAGES.length)return;
-    const nextIndex=(completedIndex+1)%QUEST_STAGES.length;
+    const nextIndex=window.MioriDailyPracticeV297?.afterBest?.(completedIndex) ?? (completedIndex+1)%QUEST_STAGES.length;
+    if(nextIndex<0){renderHome();window.MioriDailyPracticeV297?.showCompleted?.();return;}
     startStage(nextIndex);
   }
 
@@ -249,6 +251,7 @@
 .bestCompareGridV295{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.bestCompareCardV295{background:#fff;border:1px solid #ddd6c8;border-radius:17px;padding:10px}.bestCompareTitleV295{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:7px}.bestCompareTitleV295 b{font-family:"Yu Mincho","Noto Serif JP",serif;font-size:27px}.bestCompareTitleV295 span{font-size:10px;color:#8894a2}
 .bestPairV295{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bestPairV295 small{display:block;font-size:10px;color:#7f8994;font-weight:850;margin-bottom:4px}.bestOwnV295,.bestModelV295{position:relative;aspect-ratio:1;border:1px solid #cbd4dc;background:#fff;display:grid;place-items:center;overflow:hidden}.bestOwnV295 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2}.bestModelV295{font-family:"Yu Mincho","Noto Serif JP",serif;font-size:clamp(70px,11vw,118px);font-weight:800;color:#202a36}.bestOverlayGlyphV295{position:absolute;inset:0;display:grid;place-items:center;font-family:"Yu Mincho","Noto Serif JP",serif;font-size:clamp(70px,11vw,118px);font-weight:800;color:#4f77b8;opacity:0;z-index:3;pointer-events:none}.showOverlay .bestOverlayGlyphV295{opacity:.23}
 .previousBestV295{margin-top:8px;border-top:1px dashed #ddd6c8;padding-top:7px;display:flex;align-items:center;justify-content:center;gap:8px;color:#9a7b31;font-size:10px;font-weight:900}.previousBestV295 img{width:54px;height:54px;object-fit:contain;border:1px solid #e1d7c2;background:#fff}
+.bestStrokeBtnV297{border:1px solid #d5dfeb;border-radius:8px;background:#f3f8ff;color:#335a87;font-size:11px;padding:5px 8px;font-weight:900;touch-action:manipulation}
 .bestActionsV295{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}.bestActionsV295 button{border:1px solid #cad5e2;background:#fff;color:#445f7d;border-radius:13px;padding:11px 14px;font-weight:900}.bestActionsV295 .primary{background:#526fce;border-color:#526fce;color:#fff}
 .bestBadgeV295{display:inline-block;margin-top:5px;border-radius:999px;background:#fff3c3;border:1px solid #efd67d;color:#7a6121;padding:3px 7px;font-size:9px;font-weight:950}
 #manualFallbackV250[hidden]{display:none!important}
