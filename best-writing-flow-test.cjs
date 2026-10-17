@@ -31,3 +31,63 @@ assert.doesNotMatch(code,/next\.click\(\)/,'Navigation never depends on mutable 
 assert.match(code,/\(completedIndex\+1\)%QUEST_STAGES\.length/,'Next problem follows the current stage in order');
 assert.match(code,/current\?\.okuri&&host/,'Suffix is chosen before self-review');
 console.log('PASS best-writing: write -> compare -> refine -> choose best, with no automatic correctness gate.');
+
+
+// Audit every regular practice stage, including previous weekly packs: 
+// the intended kanji, readable complete prompt, suffix choices and no answer leak.
+const vm=require('node:vm');
+const context=vm.createContext({window:{},console,document:{
+  createElement:()=>({textContent:''}),head:{appendChild(){}},getElementById:()=>null
+}});
+for(const filename of ['data-v10.js','data-v11-patch.js','data-packs.js']){
+  vm.runInContext(read(filename),context,{filename});
+}
+const packs=JSON.parse(vm.runInContext('JSON.stringify(KANJI_PACKS)',context));
+const weekly=packs.filter(p=>Array.isArray(p.schoolTest));
+assert.equal(weekly.length,5,'Past weekly packs remain available');
+let inspected=0;
+for(const pack of weekly){
+  assert.equal(pack.stages.length,10,pack.id+' requires ten regular missions');
+  assert.equal(pack.schoolTest.length,10,pack.id+' requires ten school-test questions');
+  for(const [index,s] of pack.stages.entries()){
+    const label=pack.id+' Q'+(index+1);
+    assert.ok(s.reading&&s.chars?.length,label+' needs reading and writable characters');
+    assert.equal(s.answer,s.chars.map(x=>x.char).join(''),label+' kanji and handwriting targets disagree');
+    assert.equal(typeof s.before,'string',label+' missing leading sentence');
+    assert.equal(typeof s.after,'string',label+' missing trailing sentence');
+    if(s.okuri){
+      assert.ok(s.okuriChoices?.includes(s.okuri),label+' missing correct suffix choice');
+    }
+    assert.ok(s.reading+(s.okuri||''),label+' complete phonetic reading missing');
+    assert.ok(!(s.before+s.after).includes(s.answer),label+' leaks its answer kanji before writing');
+    inspected++;
+  }
+  for(const [index,segments] of pack.schoolTest.entries()){
+    assert.ok(segments.some(seg=>seg.lineType),pack.id+' school Q'+(index+1)+' has no handwriting target');
+    for(const seg of segments.filter(seg=>seg.lineType)){
+      assert.ok(seg.text&&seg.answer,pack.id+' school handwriting target lacks reading/answer');
+      assert.ok(['straight','wavy'].includes(seg.lineType),pack.id+' target line type invalid');
+    }
+  }
+}
+assert.equal(inspected,50);
+const p74=weekly.find(p=>p.id==='2026-10-17-p74');
+assert.ok(p74,'Current p74 pack must remain available');
+assert.deepEqual(p74.stages.map(s=>s.before+s.reading+(s.okuri||'')+s.after),[
+  'てっぱんでふたをする。','太いでんちゅう。','ゆでんをほる。','くうこう行きのバス。',
+  '木のいたを切る。','はしらを立てる。','あぶらでいためる。',
+  'みなとから船が出る。','漢字をぶぶんにわける。','ペンをおさえる。'
+],'All ten p74 ordinary reading prompts must be complete and accurate');
+assert.equal(p74.stages[9].okuri,'さえる');
+assert.equal(p74.schoolTest[9].find(seg=>seg.lineType==='wavy')?.answer,'押さえる');
+assert.equal(p74.schoolTest.flat().filter(seg=>seg.lineType).length,18);
+
+const legacy=read('app-v234-stability.js');
+const study=read('app-v250-study.js');
+assert.match(legacy,/if\(window\.MioriBestWritingV295\?\.open\)return;/,
+  'Old capturing suffix guard must not swallow best-writing clicks');
+assert.match(study,/if\(!window\.MioriBestWritingV295\?\.open\)oneFix\(\)/,
+  'Old recognition preprocessing cannot rewrite the learner handwriting');
+assert.match(release,/app-v250-study\.js\?v=2703/);
+assert.match(html,/app-v234-stability\.js\?v=2341/);
+console.log('PASS complete regular-practice audit: 50 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
