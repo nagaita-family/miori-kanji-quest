@@ -136,6 +136,7 @@
     awardNewClears();
     const s=state(),island=ISLANDS.find(x=>x.id===s.activeIsland)||ISLANDS[0];
     hideLegacy(!legacyView);
+    document.querySelector('.hero.v15Hero')?.classList.toggle('s2ActiveV300',!legacyView);
     let world=$('s2WorldV300');
     if(!world){world=document.createElement('div');world.id='s2WorldV300';artRoot.appendChild(world);}
     world.className='worldV15 stage4 s2WorldV300 s2Theme-'+island.theme;
@@ -160,8 +161,10 @@
       +'<button type="button" data-s2="legacy">📖 Season 1</button></div>';
     const title=document.querySelector('.hero.v15Hero .heroCopy h1');
     if(title&&!legacyView)title.innerHTML='みおりの <em>空島</em> <span class="s2TitleLabelV300">Season 2</span>';
+    if(title&&legacyView)title.innerHTML='みおりの <em>空島</em>';
     const copy=document.querySelector('.hero.v15Hero .heroCopy > p');
     if(copy&&!legacyView)copy.textContent='漢字を練習してコインをためよう。好きなものを買って島を育てよう！';
+    if(copy&&legacyView)copy.textContent='モコといっしょに、ことばの力で島を育てよう。';
     const back=$('s2ReturnV300');
     if(legacyView){
       if(!back){
@@ -325,6 +328,7 @@
   css.id='s2StyleV300';
   css.textContent=`
   .s2WorldV300{z-index:2}.s2WorldV300[hidden]{display:none!important}
+  .hero.v15Hero.s2ActiveV300 #treasureFallbackV202{display:none!important}
   .s2WorldV300 .islandPlayV15{width:min(970px,90vw)}
   .s2WorldV300 .islandHudV15,.s2WorldV300 .nextGiftV15{display:none}
   .s2WorldV300.s2Theme-forest{background:linear-gradient(180deg,#a6d9f0 0%,#c3ebd8 65%,#fff3d9 100%)}
