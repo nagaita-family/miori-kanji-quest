@@ -20,8 +20,8 @@ assert.match(code,/nextAfterReview\(\)/,'Single-character flow keeps existing ch
 assert.match(code,/selfReviewed/,'Progress is credited from self-review');
 assert.doesNotMatch(code,/judgeCurrent\s*\(/,'New self-review module must not call automatic right\/wrong judgement');
 assert.doesNotMatch(code,/gradeKanjiStrokeV230/,'New regular practice does not call handwriting OCR grading');
-assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2952/,'Best-writing module loads after regular practice modules');
-assert.match(html,/app-v240-release\.js\?v=2949/,'Fresh loader is used on iPad');
+assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2953/,'Best-writing module loads after regular practice modules');
+assert.match(html,/app-v240-release\.js\?v=2950/,'Fresh loader is used on iPad');
 assert.match(code,/reading=.*current\.reading[\s\S]*current\.okuri/,'Full okurigana reading is shown');
 assert.match(code,/title\.textContent=reading/,'Answer kanji is hidden in the mission title');
 assert.match(code,/sentence\.innerHTML/,'Prompt shows the full reading and suffix');
@@ -30,6 +30,7 @@ assert.match(code,/sessionStorage\.setItem\(FOCUS_KEY,'0'\)/,'The 3-question bre
 assert.doesNotMatch(code,/next\.click\(\)/,'Navigation never depends on mutable result button handlers');
 assert.match(code,/\(completedIndex\+1\)%QUEST_STAGES\.length/,'Next problem follows the current stage in order');
 assert.match(code,/current\?\.okuri&&host/,'Suffix is chosen before self-review');
+assert.match(code,/regular=challenge&&!document\.body\.classList\.contains\('weeklyTestModeV20'\)/,'The school test keeps its own grading flow');
 console.log('PASS best-writing: write -> compare -> refine -> choose best, with no automatic correctness gate.');
 
 
@@ -84,10 +85,10 @@ assert.equal(p74.schoolTest.flat().filter(seg=>seg.lineType).length,18);
 
 const legacy=read('app-v234-stability.js');
 const study=read('app-v250-study.js');
-assert.match(legacy,/if\(window\.MioriBestWritingV295\?\.open\)return;/,
+assert.match(legacy,/if\(window\.MioriBestWritingV295\?\.open&&checkButton\.onclick===window\.MioriBestWritingV295\.open\)return;/,
   'Old capturing suffix guard must not swallow best-writing clicks');
-assert.match(study,/if\(!window\.MioriBestWritingV295\?\.open\)oneFix\(\)/,
+assert.match(study,/if\(b\.onclick!==window\.MioriBestWritingV295\?\.open\)oneFix\(\)/,
   'Old recognition preprocessing cannot rewrite the learner handwriting');
-assert.match(release,/app-v250-study\.js\?v=2703/);
-assert.match(html,/app-v234-stability\.js\?v=2341/);
+assert.match(release,/app-v250-study\.js\?v=2704/);
+assert.match(html,/app-v234-stability\.js\?v=2342/);
 console.log('PASS complete regular-practice audit: 50 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
