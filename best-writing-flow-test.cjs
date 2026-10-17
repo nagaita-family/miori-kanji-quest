@@ -72,6 +72,17 @@ for(const pack of weekly){
   }
 }
 assert.equal(inspected,50);
+// The first returned test remains playable through the history picker.
+const legacyPack=packs.find(p=>p.id==='2026-09-previous');
+assert.equal(legacyPack?.stages.length,10,'Returned Test 13 retains all ten practice missions');
+for(const [index,s] of legacyPack.stages.entries()){
+  const label='returned test Q'+(index+1);
+  assert.ok(s.reading&&s.chars?.length,label+' needs a full prompt and writing targets');
+  assert.equal(s.answer,s.chars.map(c=>c.char).join(''),label+' kanji mismatch');
+  if(s.okuri)assert.ok(s.okuriChoices?.includes(s.okuri),label+' invalid suffix options');
+  assert.ok(!(s.before+s.after).includes(s.answer),label+' leaks the answer');
+}
+assert.equal(inspected+legacyPack.stages.length,60);
 const p74=weekly.find(p=>p.id==='2026-10-17-p74');
 assert.ok(p74,'Current p74 pack must remain available');
 assert.deepEqual(p74.stages.map(s=>s.before+s.reading+(s.okuri||'')+s.after),[
@@ -91,4 +102,4 @@ assert.match(study,/if\(b\.onclick!==window\.MioriBestWritingV295\?\.open\)oneFi
   'Old recognition preprocessing cannot rewrite the learner handwriting');
 assert.match(release,/app-v250-study\.js\?v=2704/);
 assert.match(html,/app-v234-stability\.js\?v=2342/);
-console.log('PASS complete regular-practice audit: 50 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
+console.log('PASS complete regular-practice audit: 60 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
