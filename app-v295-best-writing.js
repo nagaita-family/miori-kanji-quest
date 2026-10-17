@@ -2,7 +2,7 @@
 // Regular practice no longer lets automatic recognition decide right/wrong.
 (() => {
   'use strict';
-  const VERSION='v2.9.5';
+  const VERSION='v2.9.6';
   const attemptsByKey=new Map();
   const credited=new Set();
 
@@ -24,15 +24,29 @@
   }
 
   function polish(){
+    const current=stage();
+    const challenge=document.getElementById('challengeScreen')?.classList.contains('active');
+    if(challenge&&current){
+      // Reading only: never expose the answer kanji in the mission header.
+      const reading=`${current.reading||''}${current.okuri||''}`;
+      const title=document.getElementById('wordTitle');
+      if(title)title.textContent=reading||'漢字れんしゅう';
+      const sentence=document.getElementById('verticalQuestion');
+      if(sentence)sentence.innerHTML=`${esc(current.before||'')}<span class="target">${esc(reading)}</span>${esc(current.after||'')}`;
+    }
     const check=document.getElementById('checkBtn');
     if(check){
-      check.textContent=document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':'できた！見くらべる';
+      check.disabled=false;
+      check.textContent=document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':current?.okuri?'できた！送り仮名と見くらべる':'できた！見くらべる';
       check.onclick=openBestReview;
     }
     const status=document.getElementById('statusLine');
     if(status&&/判定|見ています|おしい/.test(status.textContent||''))status.textContent='書けたら、お手本と見くらべよう ✏️';
     const prompt=document.getElementById('charPrompt');
-    if(prompt&&/判定/.test(prompt.textContent||''))prompt.textContent=prompt.textContent.replace(/判定.*$/,'見くらべよう');
+    if(prompt&&challenge&&current?.okuri)prompt.textContent=`「${current.reading}${current.okuri}」の「${current.reading}」を漢字で書こう`;
+    else if(prompt&&/判定/.test(prompt.textContent||''))prompt.textContent=prompt.textContent.replace(/判定.*$/,'見くらべよう');
+    const okuriGuide=document.querySelector('#preOkuriV234 .feedback');
+    if(okuriGuide&&/判定/.test(okuriGuide.textContent||''))okuriGuide.textContent='送り仮名を選んだら、見くらべよう！';
     const fallback=document.getElementById('manualFallbackV250');if(fallback)fallback.hidden=true;
     setVersion();
   }
@@ -116,6 +130,16 @@
 
   function openBestReview(ev){
     ev?.preventDefault?.();ev?.stopPropagation?.();
+    // Keep the suffix learning step, but never use automatic handwriting grading.
+    const current=stage(),host=document.getElementById('preOkuriV234');
+    if(current?.okuri&&host){
+      const chosen=host.querySelector('button.selected')?.dataset.okuri;
+      if(chosen!==current.okuri){
+        const feedback=host.querySelector('.feedback');
+        if(feedback)feedback.textContent=chosen?'送り仮名がちがうみたい。もう一度選んでみよう。':'先に送り仮名を選んでね。';
+        return;
+      }
+    }
     const captured=captureAttempt();if(!captured)return;
     document.getElementById('bestWritingV295')?.remove();
     const ov=document.createElement('section');ov.id='bestWritingV295';ov.className='bestWritingV295';
@@ -169,14 +193,29 @@
       store[bestKey(ci)]={image:attempt.images[j],char:info.char,word:st.answer,at:new Date().toISOString(),attempts:state.list.length};
       credit(ci,attempt.help,state.list.length);
     });
+    // Old automatic-grading flow never runs here. Give the correctly chosen
+    // okurigana its learning credit without running an OCR pass.
+    if(st.okuri){
+      const k=`${st.answer}|${st.okuri}`;
+      save.okuriStats=save.okuriStats||{};
+      const stat=save.okuriStats[k]||(save.okuriStats[k]={seen:0,correct:0,wrong:0,mastery:0,last:0});
+      stat.correct=(stat.correct||0)+1;
+      stat.mastery=Math.min(100,(stat.mastery||0)+12);
+      stat.last=Date.now();
+    }
     try{persist();}catch(e){}
     ov.remove();
-    if(state.batch){
-      charIndex=Math.max(0,st.chars.length-1);
-      finishStage();
-    }else{
-      nextAfterReview();
+    if(!state.batch&&charIndex<st.chars.length-1){
+      nextAfterReview(); // Next kanji inside the same multi-character word.
+      return;
     }
+    if(state.batch)charIndex=Math.max(0,st.chars.length-1);
+    finishStage(); // Save completion, XP, focus count and island rewards.
+    // "Choose today's best" also means "continue": no second Next tap.
+    // The existing Next handler takes us to the next problem (or the normal
+    // 3-problem island break), preserving the focus-set state machine.
+    const next=document.getElementById('nextRecommendBtn');
+    if(next&&document.getElementById('resultScreen')?.classList.contains('active'))next.click();
   }
 
   function polishResult(){
@@ -206,8 +245,8 @@
   }
 
   const oldStart=startStage,oldRender=renderChar,oldHome=renderHome,oldFinish=finishStage;
-  startStage=function(i){attemptsByKey.clear();credited.clear();oldStart(i);polish();setTimeout(polish,80);};
-  renderChar=function(){oldRender();polish();};
+  startStage=function(i){attemptsByKey.clear();credited.clear();oldStart(i);polish();[80,160,420].forEach(ms=>setTimeout(polish,ms));};
+  renderChar=function(){oldRender();polish();setTimeout(polish,160);};
   renderHome=function(){oldHome();decorateHome();setVersion();};
   finishStage=function(){oldFinish();polishResult();decorateHome();setVersion();};
 
