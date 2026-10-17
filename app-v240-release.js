@@ -55,7 +55,8 @@
     './app-v295-best-writing.js?v=2955',
     './app-v296-practice-star.js?v=2960',
     './app-v297-daily-practice.js?v=2971',
-    './app-v298-word-drill.js?v=2981'
+    './app-v298-word-drill.js?v=2981',
+    './app-v300-season2.js?v=3001'
   ],()=>{
     refresh();window.MioriV250?.polishIsland?.();window.MioriKanken9V280?.count?.();
     window.MioriKankenViewportV282?.adapt?.();window.MioriKankenPaperV283?.decorate?.();
