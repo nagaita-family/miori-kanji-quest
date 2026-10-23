@@ -46,7 +46,7 @@ for(const filename of ['data-v10.js','data-v11-patch.js','data-packs.js']){
 }
 const packs=JSON.parse(vm.runInContext('JSON.stringify(KANJI_PACKS)',context));
 const weekly=packs.filter(p=>Array.isArray(p.schoolTest));
-assert.equal(weekly.length,5,'Past weekly packs remain available');
+assert.equal(weekly.length,6,'Past weekly packs and the new school week remain available');
 let inspected=0;
 for(const pack of weekly){
   assert.equal(pack.stages.length,10,pack.id+' requires ten regular missions');
@@ -72,7 +72,7 @@ for(const pack of weekly){
     }
   }
 }
-assert.equal(inspected,50);
+assert.equal(inspected,60);
 // The first returned test remains playable through the history picker.
 const legacyPack=packs.find(p=>p.id==='2026-09-previous');
 assert.equal(legacyPack?.stages.length,10,'Returned Test 13 retains all ten practice missions');
@@ -83,9 +83,9 @@ for(const [index,s] of legacyPack.stages.entries()){
   if(s.okuri)assert.ok(s.okuriChoices?.includes(s.okuri),label+' invalid suffix options');
   assert.ok(!(s.before+s.after).includes(s.answer),label+' leaks the answer');
 }
-assert.equal(inspected+legacyPack.stages.length,60);
+assert.equal(inspected+legacyPack.stages.length,70);
 const p74=weekly.find(p=>p.id==='2026-10-17-p74');
-assert.ok(p74,'Current p74 pack must remain available');
+assert.ok(p74,'Historical p74 pack must remain available');
 assert.deepEqual(p74.stages.map(s=>s.before+s.reading+(s.okuri||'')+s.after),[
   'てっぱんでふたをする。','太いでんちゅう。','ゆでんをほる。','くうこう行きのバス。',
   '木のいたを切る。','はしらを立てる。','あぶらでいためる。',
@@ -104,4 +104,4 @@ assert.match(study,/if\(b\.onclick!==window\.MioriBestWritingV295\?\.open\)oneFi
   'Old recognition preprocessing cannot rewrite the learner handwriting');
 assert.match(release,/app-v250-study\.js\?v=2704/);
 assert.match(html,/app-v234-stability\.js\?v=2343/);
-console.log('PASS complete regular-practice audit: 60 missions, 50 school prompts, suffix/answer exposure and sequential navigation.');
+console.log('PASS complete regular-practice audit: 70 missions, 60 school prompts, suffix/answer exposure and sequential navigation.');
