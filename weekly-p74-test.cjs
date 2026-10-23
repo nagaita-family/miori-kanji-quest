@@ -29,6 +29,8 @@ for(const [question,expected] of [[1,["太い","電柱"]],[3,["空港","行き"]
  assert.deepEqual(school[question].filter(x=>x.lineType).map(x=>x.answer),expected);
 }
 assert.equal(school[9].find(x=>x.lineType).okuri,'さえる');
+// Render the historical school sheet as that week's selected pack.
+run("CURRENT_KANJI_PACK_ID='2026-10-17-p74';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const paper=ctx.window.weeklyPaperHtmlV235(stages);
 assert.equal((paper.match(/print-mark straight/g)||[]).length,12);
