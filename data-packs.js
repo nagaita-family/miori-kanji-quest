@@ -174,7 +174,7 @@ const KANJI_PACKS = [
     shortLabel: '74ページ',
     source: '教材74ページ・上半分「書く」／漢字の組み立て①',
     addedAt: '2026-10-17',
-    status: 'current',
+    status: 'past',
     // Every kanji printed in the textbook sentence is a writable school-test target.
     // The lower 'ほかの言葉にチャレンジ！' section is not part of this test.
     schoolTest: [
@@ -200,6 +200,503 @@ const KANJI_PACKS = [
       {"reading":"みなと","readingParts":["みなと"],"before":"","after":"から船が出る。","answer":"港","icon":"🚢","targetType":"core","chars":[{"char":"港","secret":"左はさんずい。","memory":"左はさんずい。","clue":"左はさんずい。"}]},
       {"reading":"ぶぶん","readingParts":["ぶ","ぶん"],"before":"漢字を","after":"にわける。","answer":"部分","icon":"🧩","targetType":"core","chars":[{"char":"部","secret":"右はおおざと。","memory":"右はおおざと。","clue":"右はおおざと。"},{"char":"分","secret":"上は八、下は刀。","memory":"上は八、下は刀。","clue":"上は八、下は刀。"}]},
       {"reading":"お","readingParts":["お"],"before":"ペンを","after":"。","answer":"押","icon":"✏️","targetType":"core","okuri":"さえる","okuriChoices":["さえる","える"],"chars":[{"char":"押","secret":"左はてへん、右は甲。","memory":"左はてへん、右は甲。","clue":"左はてへん、右は甲。"}]}
+    ]
+  },
+  {
+    "id": "2026-10-24-p78",
+    "label": "78ページ・上半分（書く①〜⑩）",
+    "shortLabel": "78ページ",
+    "source": "教材78ページ・上半分「書く」／漢字の組み立て②",
+    "addedAt": "2026-10-24",
+    "status": "current",
+    "schoolTest": [
+      [
+        {
+          "text": "めぐすり",
+          "lineType": "straight",
+          "answer": "目薬"
+        },
+        {
+          "text": "をさす。"
+        }
+      ],
+      [
+        {
+          "text": "くさぶえ",
+          "lineType": "straight",
+          "answer": "草笛"
+        },
+        {
+          "text": "をふく。"
+        }
+      ],
+      [
+        {
+          "text": "ちゅうい",
+          "lineType": "straight",
+          "answer": "注意"
+        },
+        {
+          "text": "して"
+        },
+        {
+          "text": "きく",
+          "lineType": "wavy",
+          "answer": "聞く",
+          "kanji": "聞",
+          "okuri": "く"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "たいちょう",
+          "lineType": "straight",
+          "answer": "体調"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "わるい",
+          "lineType": "wavy",
+          "answer": "悪い",
+          "kanji": "悪",
+          "okuri": "い"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "にんきもの",
+          "lineType": "straight",
+          "answer": "人気者"
+        },
+        {
+          "text": "になる。"
+        }
+      ],
+      [
+        {
+          "text": "やっきょく",
+          "lineType": "straight",
+          "answer": "薬局"
+        },
+        {
+          "text": "で"
+        },
+        {
+          "text": "かい",
+          "lineType": "wavy",
+          "answer": "買い",
+          "kanji": "買",
+          "okuri": "い"
+        },
+        {
+          "text": "もの",
+          "lineType": "straight",
+          "answer": "物"
+        },
+        {
+          "text": "をする。"
+        }
+      ],
+      [
+        {
+          "text": "きてき",
+          "lineType": "straight",
+          "answer": "汽笛"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "きこえる",
+          "lineType": "wavy",
+          "answer": "聞こえる",
+          "kanji": "聞",
+          "okuri": "こえる"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "お"
+        },
+        {
+          "text": "ちゃ",
+          "lineType": "straight",
+          "answer": "茶"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "そそぐ",
+          "lineType": "wavy",
+          "answer": "注ぐ",
+          "kanji": "注",
+          "okuri": "ぐ"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "あくじ",
+          "lineType": "straight",
+          "answer": "悪事"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "みつかる",
+          "lineType": "wavy",
+          "answer": "見つかる",
+          "kanji": "見",
+          "okuri": "つかる"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "ひっしゃ",
+          "lineType": "straight",
+          "answer": "筆者"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "かんがえ",
+          "lineType": "wavy",
+          "answer": "考え",
+          "kanji": "考",
+          "okuri": "え"
+        },
+        {
+          "text": "。"
+        }
+      ]
+    ],
+    "bonusWords": [
+      {
+        "reading": "くすりゆび",
+        "answer": "薬指"
+      },
+      {
+        "reading": "くちぶえ",
+        "answer": "口笛"
+      },
+      {
+        "reading": "ちゅうもく",
+        "answer": "注目"
+      },
+      {
+        "reading": "あくにん",
+        "answer": "悪人"
+      },
+      {
+        "reading": "わるもの",
+        "answer": "悪者"
+      },
+      {
+        "reading": "やくそう",
+        "answer": "薬草"
+      },
+      {
+        "reading": "よこぶえ",
+        "answer": "横笛"
+      },
+      {
+        "reading": "ちゅうもん",
+        "answer": "注文"
+      },
+      {
+        "reading": "あくよう",
+        "answer": "悪用"
+      },
+      {
+        "reading": "がくしゃ",
+        "answer": "学者"
+      }
+    ],
+    "stages": [
+      {
+        "reading": "めぐすり",
+        "readingParts": [
+          "め",
+          "ぐすり"
+        ],
+        "before": "",
+        "after": "をさす。",
+        "answer": "目薬",
+        "icon": "👁️",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "目",
+            "secret": "中の横線をそろえよう。",
+            "memory": "中の横線をそろえよう。",
+            "clue": "中の横線をそろえよう。"
+          },
+          {
+            "char": "薬",
+            "secret": "上はくさかんむり、下は楽。",
+            "memory": "上はくさかんむり、下は楽。",
+            "clue": "上はくさかんむり、下は楽。"
+          }
+        ]
+      },
+      {
+        "reading": "くさぶえ",
+        "readingParts": [
+          "くさ",
+          "ぶえ"
+        ],
+        "before": "",
+        "after": "をふく。",
+        "answer": "草笛",
+        "icon": "🎶",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "草",
+            "secret": "くさかんむりの下は早。",
+            "memory": "くさかんむりの下は早。",
+            "clue": "くさかんむりの下は早。"
+          },
+          {
+            "char": "笛",
+            "secret": "上はたけかんむり、下は由。",
+            "memory": "上はたけかんむり、下は由。",
+            "clue": "上はたけかんむり、下は由。"
+          }
+        ]
+      },
+      {
+        "reading": "ちゅうい",
+        "readingParts": [
+          "ちゅう",
+          "い"
+        ],
+        "before": "",
+        "after": "して聞く。",
+        "answer": "注意",
+        "icon": "👂",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "注",
+            "secret": "左はさんずい、右は主。",
+            "memory": "左はさんずい、右は主。",
+            "clue": "左はさんずい、右は主。"
+          },
+          {
+            "char": "意",
+            "secret": "上から立・日・心の形。",
+            "memory": "上から立・日・心の形。",
+            "clue": "上から立・日・心の形。"
+          }
+        ]
+      },
+      {
+        "reading": "わる",
+        "readingParts": [
+          "わる"
+        ],
+        "before": "体調が",
+        "after": "。",
+        "answer": "悪",
+        "icon": "🌡️",
+        "targetType": "core",
+        "okuri": "い",
+        "okuriChoices": [
+          "い",
+          "く",
+          "さ"
+        ],
+        "chars": [
+          {
+            "char": "悪",
+            "secret": "下の心を大きく書こう。",
+            "memory": "下の心を大きく書こう。",
+            "clue": "下の心を大きく書こう。"
+          }
+        ]
+      },
+      {
+        "reading": "にんきもの",
+        "readingParts": [
+          "にん",
+          "き",
+          "もの"
+        ],
+        "before": "",
+        "after": "になる。",
+        "answer": "人気者",
+        "icon": "🌟",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "人",
+            "secret": "二画目を大きくはらおう。",
+            "memory": "二画目を大きくはらおう。",
+            "clue": "二画目を大きくはらおう。"
+          },
+          {
+            "char": "気",
+            "secret": "外の形と内側の線をよく見よう。",
+            "memory": "外の形と内側の線をよく見よう。",
+            "clue": "外の形と内側の線をよく見よう。"
+          },
+          {
+            "char": "者",
+            "secret": "下の日の形を整えよう。",
+            "memory": "下の日の形を整えよう。",
+            "clue": "下の日の形を整えよう。"
+          }
+        ]
+      },
+      {
+        "reading": "やっきょく",
+        "readingParts": [
+          "やっ",
+          "きょく"
+        ],
+        "before": "",
+        "after": "で買い物をする。",
+        "answer": "薬局",
+        "icon": "💊",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "薬",
+            "secret": "上はくさかんむり、下は楽。",
+            "memory": "上はくさかんむり、下は楽。",
+            "clue": "上はくさかんむり、下は楽。"
+          },
+          {
+            "char": "局",
+            "secret": "下に口があるよ。",
+            "memory": "下に口があるよ。",
+            "clue": "下に口があるよ。"
+          }
+        ]
+      },
+      {
+        "reading": "きてき",
+        "readingParts": [
+          "き",
+          "てき"
+        ],
+        "before": "",
+        "after": "が聞こえる。",
+        "answer": "汽笛",
+        "icon": "🚂",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "汽",
+            "secret": "左はさんずい、右は气の形。",
+            "memory": "左はさんずい、右は气の形。",
+            "clue": "左はさんずい、右は气の形。"
+          },
+          {
+            "char": "笛",
+            "secret": "上はたけかんむり、下は由。",
+            "memory": "上はたけかんむり、下は由。",
+            "clue": "上はたけかんむり、下は由。"
+          }
+        ]
+      },
+      {
+        "reading": "そそ",
+        "readingParts": [
+          "そそ"
+        ],
+        "before": "お茶を",
+        "after": "。",
+        "answer": "注",
+        "icon": "🍵",
+        "targetType": "core",
+        "okuri": "ぐ",
+        "okuriChoices": [
+          "ぐ",
+          "く",
+          "る"
+        ],
+        "chars": [
+          {
+            "char": "注",
+            "secret": "左はさんずい、右は主。",
+            "memory": "左はさんずい、右は主。",
+            "clue": "左はさんずい、右は主。"
+          }
+        ]
+      },
+      {
+        "reading": "あくじ",
+        "readingParts": [
+          "あく",
+          "じ"
+        ],
+        "before": "",
+        "after": "が見つかる。",
+        "answer": "悪事",
+        "icon": "🔎",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "悪",
+            "secret": "下の心を大きく書こう。",
+            "memory": "下の心を大きく書こう。",
+            "clue": "下の心を大きく書こう。"
+          },
+          {
+            "char": "事",
+            "secret": "真ん中の縦画の位置をそろえよう。",
+            "memory": "真ん中の縦画の位置をそろえよう。",
+            "clue": "真ん中の縦画の位置をそろえよう。"
+          }
+        ]
+      },
+      {
+        "reading": "ひっしゃ",
+        "readingParts": [
+          "ひっ",
+          "しゃ"
+        ],
+        "before": "",
+        "after": "の考え。",
+        "answer": "筆者",
+        "icon": "✏️",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "筆",
+            "secret": "上はたけかんむり。",
+            "memory": "上はたけかんむり。",
+            "clue": "上はたけかんむり。"
+          },
+          {
+            "char": "者",
+            "secret": "下の日の形を整えよう。",
+            "memory": "下の日の形を整えよう。",
+            "clue": "下の日の形を整えよう。"
+          }
+        ]
+      }
     ]
   }
 ];
@@ -228,7 +725,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-10-17-p74';
+let CURRENT_KANJI_PACK_ID = '2026-10-24-p78';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
