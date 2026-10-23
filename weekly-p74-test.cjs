@@ -1,13 +1,15 @@
-// p74 (教材74ページ) current upper school test regression.
+// Historical p74 (教材74ページ) upper school test regression.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const read=p=>fs.readFileSync(p,'utf8');
 const ctx=vm.createContext({window:{},console,document:{createElement:()=>({textContent:''}),head:{appendChild(){}},getElementById(){return null}}});
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
-assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-17-p74');
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-17-p74');
-assert.equal(run('KANJI_PACKS.length'),6);
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-24-p78');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-24-p78');
+assert.equal(run('KANJI_PACKS.length'),7);
 assert.equal(run("kanjiPackById('2026-10-10-p70').status"),'past');
+assert.equal(run("kanjiPackById('2026-10-17-p74').status"),'past');
+run("useKanjiPack('2026-10-17-p74')");
 const stages=JSON.parse(run('JSON.stringify(QUEST_STAGES)'));
 assert.equal(stages.length,10);
 assert.deepEqual(stages.map(s=>s.answer+(s.okuri||'')),["鉄板","電柱","油田","空港","板","柱","油","港","部分","押さえる"]);
@@ -17,7 +19,7 @@ for(const s of stages){
  assert.equal(s.readingParts.join(''),s.reading);
  if(s.okuri)assert.ok(s.okuriChoices.includes(s.okuri));
 }
-const school=JSON.parse(run('JSON.stringify(currentKanjiPack().schoolTest)'));
+const school=JSON.parse(run("JSON.stringify(kanjiPackById('2026-10-17-p74').schoolTest)"));
 assert.deepEqual(school.map(q=>q.map(x=>x.text).join('')),["てっぱんでふたをする。","ふといでんちゅう。","ゆでんをほる。","くうこういきのバス。","きのいたをきる。","はしらをたてる。","あぶらでいためる。","みなとからふねがでる。","かんじをぶぶんにわける。","ペンをおさえる。"]);
 const targets=school.flat().filter(x=>x.lineType);
 assert.equal(targets.length,18);
@@ -35,7 +37,7 @@ const ui=read('app-v236-school-test.js');
 assert.match(ui,/querySelectorAll\('canvas\[data-k\]'\)/);
 assert.match(ui,/answers\[q\]\[targetK\]/);
 assert.match(ui,/@media \(orientation:landscape\) and \(min-width:700px\) and \(max-height:900px\)/);
-assert.ok(read('index.html').includes('data-packs.js?v=20261017-p74'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261024-p78'));
 assert.match(ui,/Landscape worksheet: reserve a real footer/);
 assert.match(ui,/position:absolute;left:4px;right:4px;bottom:4px/,'iPad writing buttons have a viewport-anchored footer');
 assert.match(ui,/function fitSchoolFocusV236\(el\)/,'overflowing multi-target questions are fitted');
