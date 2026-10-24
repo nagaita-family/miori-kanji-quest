@@ -29,7 +29,7 @@ assert.match(code,/startStage\(nextIndex\)/,'Best choice opens the next question
 assert.match(code,/sessionStorage\.setItem\(FOCUS_KEY,'0'\)/,'The 3-question break does not strand navigation');
 assert.doesNotMatch(code,/next\.click\(\)/,'Navigation never depends on mutable result button handlers');
 assert.match(code,/\(completedIndex\+1\)%QUEST_STAGES\.length/,'Next problem follows the current stage in order');
-assert.match(code,/current\?\.okuri&&host/,'Suffix is chosen before self-review');
+assert.match(code,/if\(current\?\.okuri\)/,'Suffix must be selected even if the choice UI is not yet mounted');
 assert.match(code,/regular=challenge&&!document\.body\.classList\.contains\('weeklyTestModeV20'\)/,'The school test keeps its own grading flow');
 assert.match(code,/check\.onclick=judgeCurrent/,'Leaving best-writing restores legacy grading');
 assert.match(code,/check\.addEventListener\('click',[\s\S]*?ev\.stopImmediatePropagation\(\)[\s\S]*?openBestReview\(ev\);[\s\S]*?\},true\)/,'Click capture reaches self-review');
