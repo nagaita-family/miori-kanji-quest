@@ -23,6 +23,34 @@
     window.MioriBestWritingVersion=VERSION;
   }
 
+  const regularChallenge=()=>!!document.getElementById('challengeScreen')?.classList.contains('active')&&!document.body.classList.contains('weeklyTestModeV20');
+  function clearCheckHint(){
+    const check=document.getElementById('checkBtn');
+    if(check)delete check.dataset.bestBlockV301;
+  }
+  function showCheckHint(message,label){
+    const status=document.getElementById('statusLine');
+    if(status){status.textContent=message;status.setAttribute('role','status');}
+    const check=document.getElementById('checkBtn');
+    if(check){check.dataset.bestBlockV301=label;check.textContent=label;check.disabled=false;}
+  }
+  function wireCheck(){
+    const check=document.getElementById('checkBtn');
+    if(!check||check.dataset.bestClickV301)return;
+    check.dataset.bestClickV301='1';
+    // The regular self-review has priority over a legacy onclick assignment.
+    // Do not intercept the school-test controls.
+    check.addEventListener('click',ev=>{
+      if(!regularChallenge())return;
+      ev.preventDefault();ev.stopImmediatePropagation();
+      openBestReview(ev);
+    },true);
+    document.getElementById('writeCanvas')?.addEventListener('pointerdown',clearCheckHint,true);
+  }
+  document.addEventListener('click',ev=>{
+    if(ev.target?.closest?.('#preOkuriV234 [data-okuri]'))clearCheckHint();
+  },true);
+
   function polish(){
     const current=stage();
     const challenge=document.getElementById('challengeScreen')?.classList.contains('active');
@@ -38,7 +66,7 @@
     const check=document.getElementById('checkBtn');
     if(check&&regular){
       check.disabled=false;
-      check.textContent=document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':current?.okuri?'できた！送り仮名と見くらべる':'できた！見くらべる';
+      check.textContent=check.dataset.bestBlockV301||(document.body.classList.contains('batchWriteV221')?'できた！まとめて見くらべる':current?.okuri?'できた！送り仮名と見くらべる':'できた！見くらべる');
       check.onclick=openBestReview;
     }else if(check?.onclick===openBestReview){
       // An older weekly-test screen may reuse this base button after practice.
@@ -101,8 +129,8 @@
     if(!shot)return null;
     const missing=shot.filled.findIndex(x=>!x);
     if(missing>=0){
-      const status=document.getElementById('statusLine');
-      if(status)status.textContent=batch?`${missing+1}文字目がまだ白紙だよ。全部書いてから見くらべよう！`:'まだ白紙だよ。まず自分で書いてみよう！';
+      const msg=batch?`${missing+1}文字目がまだ白紙だよ。全部書いてから見くらべよう！`:'まだ白紙だよ。まず自分で書いてみよう！';
+      showCheckHint(msg,batch?`✏️ ${missing+1}文字目を書いてね`:'✏️ 書いてからもう一度');
       return null;
     }
     const key=sessionKey(batch),list=attemptsByKey.get(key)||[];
@@ -137,15 +165,24 @@
     ev?.preventDefault?.();ev?.stopPropagation?.();
     // Keep the suffix learning step, but never use automatic handwriting grading.
     const current=stage(),host=document.getElementById('preOkuriV234');
-    if(current?.okuri&&host){
-      const chosen=host.querySelector('button.selected')?.dataset.okuri;
+    if(current?.okuri){
+      const chosen=host?.querySelector('button.selected')?.dataset.okuri;
       if(chosen!==current.okuri){
-        const feedback=host.querySelector('.feedback');
-        if(feedback)feedback.textContent=chosen?'送り仮名がちがうみたい。もう一度選んでみよう。':'先に送り仮名を選んでね。';
+        const msg=chosen?'送り仮名がちがうみたい。もう一度選んでみよう。':'先に送り仮名を選んでね。';
+        const feedback=host?.querySelector('.feedback');
+        if(feedback)feedback.textContent=msg;
+        showCheckHint(msg,'↘ 送り仮名をえらんでね');
         return;
       }
     }
-    const captured=captureAttempt();if(!captured)return;
+    let captured;
+    try{captured=captureAttempt();}catch(error){
+      console.error('Kanji Quest: cannot prepare writing comparison',error);
+      showCheckHint('見くらべる画面を開けなかったよ。もう一度おしてね。','⚠ もう一度おしてね');
+      return;
+    }
+    if(!captured)return;
+    clearCheckHint();
     document.getElementById('bestWritingV295')?.remove();
     const ov=document.createElement('section');ov.id='bestWritingV295';ov.className='bestWritingV295';
     let selected=captured.list.length-1;
@@ -287,11 +324,11 @@
   }
 
   const oldStart=startStage,oldRender=renderChar,oldHome=renderHome,oldFinish=finishStage;
-  startStage=function(i){attemptsByKey.clear();credited.clear();oldStart(i);polish();[80,160,420].forEach(ms=>setTimeout(polish,ms));};
+  startStage=function(i){attemptsByKey.clear();credited.clear();clearCheckHint();oldStart(i);wireCheck();polish();[80,160,420].forEach(ms=>setTimeout(polish,ms));};
   renderChar=function(){oldRender();polish();setTimeout(polish,160);};
   renderHome=function(){oldHome();decorateHome();setVersion();};
   finishStage=function(){oldFinish();polishResult();decorateHome();setVersion();};
 
-  installStyle();polish();decorateHome();setVersion();
+  installStyle();wireCheck();polish();decorateHome();setVersion();
   window.MioriBestWritingV295={open:openBestReview,store:()=>ensureStore(),attempts:()=>attemptsByKey};
 })();

@@ -20,8 +20,8 @@ assert.match(code,/nextAfterReview\(\)/,'Single-character flow keeps existing ch
 assert.match(code,/selfReviewed/,'Progress is credited from self-review');
 assert.doesNotMatch(code,/judgeCurrent\s*\(/,'New self-review module must not call automatic right\/wrong judgement');
 assert.doesNotMatch(code,/gradeKanjiStrokeV230/,'New regular practice does not call handwriting OCR grading');
-assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2955/,'Best-writing module loads after regular practice modules');
-assert.match(html,/app-v240-release\.js\?v=3001/,'Fresh loader is used on iPad');
+assert.match(release,/app-v270-practice-note\.js\?v=2702[\s\S]*app-v295-best-writing\.js\?v=2956/,'Best-writing module loads after regular practice modules');
+assert.match(html,/app-v240-release\.js\?v=3002/,'Fresh loader is used on iPad');
 assert.match(code,/reading=.*current\.reading[\s\S]*current\.okuri/,'Full okurigana reading is shown');
 assert.match(code,/title\.textContent=reading/,'Answer kanji is hidden in the mission title');
 assert.match(code,/sentence\.innerHTML/,'Prompt shows the full reading and suffix');
@@ -32,6 +32,10 @@ assert.match(code,/\(completedIndex\+1\)%QUEST_STAGES\.length/,'Next problem fol
 assert.match(code,/current\?\.okuri&&host/,'Suffix is chosen before self-review');
 assert.match(code,/regular=challenge&&!document\.body\.classList\.contains\('weeklyTestModeV20'\)/,'The school test keeps its own grading flow');
 assert.match(code,/check\.onclick=judgeCurrent/,'Leaving best-writing restores legacy grading');
+assert.match(code,/check\.addEventListener\('click',[\s\S]*?ev\.stopImmediatePropagation\(\)[\s\S]*?openBestReview\(ev\);[\s\S]*?\},true\)/,'Click capture reaches self-review');
+assert.match(code,/if\(!regularChallenge\(\)\)return/,'School-test handlers are not intercepted');
+assert.match(code,/showCheckHint\(msg,batch/,'Missing handwriting is explained on the button');
+assert.match(code,/showCheckHint\(msg,'↘ 送り仮名をえらんでね'\)/,'Missing suffix is explained on the button');
 console.log('PASS best-writing: write -> compare -> refine -> choose best, with no automatic correctness gate.');
 
 

@@ -59,6 +59,6 @@ assert.match(sheet,/stopImmediatePropagation\(\);open\(\)/,'Multi-kanji access d
 assert.match(daily,/orientation:landscape/,'Regular practice has a landscape viewport layout');
 assert.match(release,/app-v297-daily-practice\.js\?v=2971/);
 assert.match(release,/app-v298-word-drill\.js\?v=2981/);
-assert.match(index,/app-v240-release\.js\?v=3001/);
+assert.match(index,/app-v240-release\.js\?v=3002/);
 assert.match(index,/app-v236-school-test\.js\?v=20261017-stroke-fit2/);
 console.log('PASS daily five, optional stroke review, whole-word repeated note, landscape, and cache keys');
