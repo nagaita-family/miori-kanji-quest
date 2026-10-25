@@ -9,7 +9,7 @@ const loader=fs.readFileSync('app-v240-release.js','utf8');
 const index=fs.readFileSync('index.html','utf8');
 assert.match(original,/window\.MioriIslandArtV15=\{artFor:artForV15\}/);
 assert.match(loader,/app-v300-season2\.js\?v=3001/);
-assert.match(index,/app-v240-release\.js\?v=3002/);
+assert.match(index,/app-v240-release\.js\?v=3022/);
 assert.ok(loader.indexOf('app-v298-word-drill.js')<loader.indexOf('app-v300-season2.js'));
 assert.ok(!source.includes('localStorage.clear('));
 const saved={
