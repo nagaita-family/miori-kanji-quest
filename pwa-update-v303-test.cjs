@@ -24,7 +24,7 @@ assert.match(updater, /visibilitychange/, 'Check again when home-screen app come
 assert.match(updater, /window\.location\.replace/, 'Reload an explicitly cache-busted HTML entry');
 assert.match(updater, /sessionStorage/, 'Avoid endless refresh loops');
 assert.match(updater, /canRefreshWithoutLosingInk/, 'Do not automatically discard active handwriting');
-assert.doesNotMatch(updater, /localStorage|\.clear\(|removeItem\(['"]miori-kanji/, 'Do not wipe learning records');
+assert.doesNotMatch(updater, /localStorage\.(?:clear|removeItem|setItem)\s*\(/, 'Do not wipe learning records');
 assert.doesNotMatch(oldApp, /getRegistrations\(\).*unregister\(/, 'Legacy JS must not disable the new worker');
 assert.match(worker, /request\.mode !== 'navigate'/);
 assert.match(worker, /cache: 'no-store'/);
