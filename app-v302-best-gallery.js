@@ -53,7 +53,8 @@
    sheet.append(grid);shade.append(sheet);document.body.append(shade);close.focus();
  }
  function install(){
-   if(document.getElementById('bestGalleryOpen'))return;
+   const existing=document.getElementById('bestGalleryOpen');
+   if(existing){existing.addEventListener('click',openGallery);return;}
    const home=document.querySelector('#homeScreen .selectSection')||document.querySelector('#homeScreen .recommendCard');
    if(!home)return;
    const button=document.createElement('button');button.id='bestGalleryOpen';button.className='bestGalleryOpen';button.type='button';button.textContent='⭐ わたしのベスト字を見る';
