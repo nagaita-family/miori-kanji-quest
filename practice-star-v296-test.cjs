@@ -17,5 +17,5 @@ assert.match(star,/みおりが「もっと練習したい」と星をつけた�
 assert.doesNotMatch(star,/practiceWishV18\[/,'Stage stars do not reuse character-level legacy wishes and leak across repeated kanji');
 
 assert.match(release,/app-v295-best-writing\.js\?v=2956[\s\S]*app-v296-practice-star\.js\?v=2960/,'Practice-star module loads after best-writing');
-assert.match(html,/app-v240-release\.js\?v=3002/,'Fresh loader reaches iPad');
+assert.match(html,/app-v240-release\.js\?v=3022/,'Fresh loader reaches iPad');
 console.log('PASS practice star: pack-scoped self-selection, safe card toggle, and recommendation priority.');
