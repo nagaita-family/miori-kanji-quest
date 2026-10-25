@@ -94,7 +94,7 @@ async function main(){
   assert.deepEqual(saved.printTestsV230['2026-09-previous'],oldSave.printTestsV230['2026-09-previous']);
   assert.deepEqual(saved.kanken9V280,oldSave.kanken9V280);
   assert.deepEqual(saved.specialItemsV234,oldSave.specialItemsV234);
-  for(const [name,version] of [['app-v10.js','20261017-okuri-prompt'],['app-v11-patch.js','20260921']])assert.ok(read('index.html').includes(`${name}?v=${version}`));
+  for(const [name,version] of [['app-v10.js','20261025-pwa303'],['app-v11-patch.js','20260921']])assert.ok(read('index.html').includes(`${name}?v=${version}`));
   console.log('PASS p58: exact ten questions, printed こむ, no answer leakage, old pack and scores, completion isolation, correct/wrong suffix grading, Kanken and rewards retained.');
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

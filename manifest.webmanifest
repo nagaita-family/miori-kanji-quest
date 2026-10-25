@@ -2,7 +2,7 @@
   "name": "Miori Kanji Quest",
   "short_name": "Kanji Quest",
   "id": "./",
-  "start_url": "./",
+  "start_url": "./index.html?entry=3031",
   "scope": "./",
   "display": "standalone",
   "background_color": "#edf7ff",

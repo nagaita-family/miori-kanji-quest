@@ -263,5 +263,5 @@ $("reviewStrokeBtn").onclick=openStrokeReview;$("reviewNextBtn").onclick=nextAft
 $("nextRecommendBtn").onclick=nextRecommended;$("resultHomeBtn").onclick=renderHome;$("resetProgressBtn").onclick=()=>{if(confirm("レベルと練習記録を最初からにする？")){save=defaultSave();persist();renderHome()}};
 const canvas=$("writeCanvas");canvas.addEventListener("pointerdown",beginInk,{passive:false});canvas.addEventListener("pointermove",moveInk,{passive:false});canvas.addEventListener("pointerup",endInk,{passive:false});canvas.addEventListener("pointercancel",endInk,{passive:false});
 document.addEventListener("selectstart",e=>{if(document.body.classList.contains("playing"))e.preventDefault()});document.addEventListener("contextmenu",e=>{if(document.body.classList.contains("playing"))e.preventDefault()});document.addEventListener("dragstart",e=>{if(document.body.classList.contains("playing"))e.preventDefault()});
-if("serviceWorker" in navigator)navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});if(window.caches)caches.keys().then(keys=>keys.filter(k=>/miori-kanji/i.test(k)).forEach(k=>caches.delete(k))).catch(()=>{});
+// PWA update and cache lifecycle are owned by pwa-update-v303.js and sw.js.
 renderHome();

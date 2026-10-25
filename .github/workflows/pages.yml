@@ -55,6 +55,8 @@ jobs:
           node --check app-v297-daily-practice.js
           node --check app-v298-word-drill.js
           node --check app-v300-season2.js
+          node --check pwa-update-v303.js
+          node --check sw.js
           node kanken9-smoke-test.cjs
           node kanken9-exam-smoke-test.cjs
           node kanken9-v284-smoke-test.cjs
@@ -90,6 +92,7 @@ jobs:
           node daily-practice-v297-test.cjs
           node island-storage-integrity-test.cjs
           node season2-v300-test.cjs
+          node pwa-update-v303-test.cjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
