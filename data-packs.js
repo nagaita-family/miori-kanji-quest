@@ -802,19 +802,24 @@ const KANJI_PACKS = [
     ],
     [
       {
-        "text": "げき",
-        "lineType": "straight",
-        "answer": "劇"
+        "text": "げきのやくが"
       },
       {
-        "text": "のやくがきまる。"
+        "text": "きまる",
+        "lineType": "wavy",
+        "answer": "決まる",
+        "kanji": "決",
+        "okuri": "まる"
+      },
+      {
+        "text": "。"
       }
     ],
     [
       {
-        "text": "かめん",
+        "text": "がめん",
         "lineType": "straight",
-        "answer": "仮面"
+        "answer": "画面"
       },
       {
         "text": "をよくみる。"
@@ -1015,46 +1020,53 @@ const KANJI_PACKS = [
       ]
     },
     {
-      "reading": "げき",
+      "reading": "き",
       "readingParts": [
-        "げき"
+        "き"
       ],
-      "before": "",
-      "after": "のやくがきまる。",
-      "answer": "劇",
+      "before": "げきのやくが",
+      "after": "。",
+      "answer": "決",
       "icon": "🎭",
       "targetType": "core",
+      "okuri": "まる",
+      "okuriChoices": [
+        "まる",
+        "る",
+        "きまる"
+      ],
       "chars": [
         {
-          "char": "劇",
-          "secret": "字の形と書き順をよく見よう。",
-          "memory": "字の形と書き順をよく見よう。",
-          "clue": "字の形と書き順をよく見よう。"
+          "char": "決",
+          "secret": "左はさんずい、右の形もよく見よう。",
+          "memory": "左はさんずい、右の形もよく見よう。",
+          "clue": "左はさんずい、右の形もよく見よう。"
         }
       ]
     },
     {
-      "reading": "かめん",
+      "reading": "がめん",
       "readingParts": [
-        "かめん"
+        "が",
+        "めん"
       ],
       "before": "",
-      "after": "をよくみる。",
-      "answer": "仮面",
-      "icon": "🎭",
+      "after": "をよく見る。",
+      "answer": "画面",
+      "icon": "🖥️",
       "targetType": "core",
       "chars": [
         {
-          "char": "仮",
-          "secret": "字の形と書き順をよく見よう。",
-          "memory": "字の形と書き順をよく見よう。",
-          "clue": "字の形と書き順をよく見よう。"
+          "char": "画",
+          "secret": "上の横線と中の形を見よう。",
+          "memory": "上の横線と中の形を見よう。",
+          "clue": "上の横線と中の形を見よう。"
         },
         {
           "char": "面",
-          "secret": "字の形と書き順をよく見よう。",
-          "memory": "字の形と書き順をよく見よう。",
-          "clue": "字の形と書き順をよく見よう。"
+          "secret": "中の線をそろえて書こう。",
+          "memory": "中の線をそろえて書こう。",
+          "clue": "中の線をそろえて書こう。"
         }
       ]
     }
