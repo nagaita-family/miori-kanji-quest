@@ -39,7 +39,7 @@ const ui=read('app-v236-school-test.js');
 assert.match(ui,/querySelectorAll\('canvas\[data-k\]'\)/);
 assert.match(ui,/answers\[q\]\[targetK\]/);
 assert.match(ui,/@media \(orientation:landscape\) and \(min-width:700px\) and \(max-height:900px\)/);
-assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82-corrected'));
 assert.match(ui,/Landscape worksheet: reserve a real footer/);
 assert.match(ui,/position:absolute;left:4px;right:4px;bottom:4px/,'iPad writing buttons have a viewport-anchored footer');
 assert.match(ui,/function fitSchoolFocusV236\(el\)/,'overflowing multi-target questions are fitted');
