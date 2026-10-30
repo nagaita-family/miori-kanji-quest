@@ -18,7 +18,7 @@ assert.equal(stages.length,10);
 assert.deepEqual(stages.map(s=>s.answer+(s.okuri||'')),['泳ぐ','練習','助言','童話','申し','食品','商品','水泳','練る','助ける']);
 assert.deepEqual(stages.map(s=>s.before+s.reading+(s.okuri||'')+s.after),['海でおよぐ。','サッカーのれんしゅうをする。','兄のじょげんを聞く。','どうわの絵本を読む。','手紙でもうしこむ。','しょくひんを売る。','しょうひんを買う。','すいえい教室に通う。','アイデアをねる。','子ねこをたすける。']);
 assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-09-21-p58');
-assert.equal(run('KANJI_PACKS.length'),7,'The previous, p58, p62, p66, p70, p74, and p78 packs are retained');
+assert.equal(run('KANJI_PACKS.length'),8,'Historical packs and new p82 pack are retained');
 assert.equal(run('JSON.stringify(pastKanjiPacks()[0].stages)'),oldStages);
 assert.equal(run('kanjiTestHistory().find(x=>x.testNo===13).score'),65);
 assert.equal(run('kanjiTestHistory().find(x=>x.testNo===14).score'),85);
