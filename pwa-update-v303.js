@@ -1,7 +1,7 @@
 // Home-screen iPad web-app update check. Never touches saved learning data.
 (() => {
   'use strict';
-  const BUILD = '20261025.3';
+  const BUILD = '20261031.1';
   const BASE = new URL('./', document.currentScript?.src || location.href);
   const ATTEMPT_KEY = 'miori-pwa-update-attempt-v303';
   const CHECK_MS = 5 * 60 * 1000;
