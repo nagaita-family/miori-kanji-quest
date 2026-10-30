@@ -208,7 +208,7 @@ const KANJI_PACKS = [
     "shortLabel": "78ページ",
     "source": "教材78ページ・上半分「書く」／漢字の組み立て②",
     "addedAt": "2026-10-24",
-    "status": "current",
+    "status": "past",
     "schoolTest": [
       [
         {
