@@ -1,4 +1,4 @@
-// p78 current weekly pack: 78-page upper school test and preserved old packs.
+// p78 historical weekly pack: 78-page upper school test and preserved old packs.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const read=p=>fs.readFileSync(p,'utf8');
 const ctx=vm.createContext({window:{},console,document:{createElement:()=>({textContent:''}),head:{appendChild(){}},getElementById(){return null}}});
@@ -9,6 +9,7 @@ assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-31-p82');
 assert.equal(run('KANJI_PACKS.length'),8);
 assert.equal(run("kanjiPackById('2026-10-17-p74').status"),'past');
 assert.equal(run('currentKanjiPack().testDate'),undefined,'No invented test date');
+run("CURRENT_KANJI_PACK_ID='2026-10-24-p78';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 const stages=JSON.parse(run('JSON.stringify(QUEST_STAGES)'));
 assert.equal(stages.length,10);
 assert.deepEqual(stages.map(s=>s.answer+(s.okuri||'')),["目薬","草笛","注意","悪い","人気者","薬局","汽笛","注ぐ","悪事","筆者"]);
