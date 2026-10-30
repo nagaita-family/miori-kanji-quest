@@ -46,5 +46,5 @@ assert.match(ui,/querySelectorAll\('canvas\[data-k\]'\)/);
 assert.match(ui,/answers\[q\]\[targetK\]/);
 assert.match(ui,/function fitSchoolFocusV236\(el\)/);
 assert.match(ui,/position:absolute;left:4px;right:4px;bottom:4px/);
-assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82-corrected'));
 console.log('PASS p78: 10 core words, 18 target lines, 7 okurigana, 10 bonus words archived, print and layout checks.');
