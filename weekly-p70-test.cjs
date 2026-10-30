@@ -5,9 +5,9 @@ const ctx=vm.createContext({window:{},console,document:{createElement:()=>({text
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
 
-assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-24-p78');
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-24-p78');
-assert.equal(run('KANJI_PACKS.length'),7);
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-10-31-p82');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-10-31-p82');
+assert.equal(run('KANJI_PACKS.length'),8);
 assert.equal(run("KANJI_PACKS.find(p=>p.id==='2026-10-10-p70').status"),'past');
 
 run("useKanjiPack('2026-10-10-p70')");
@@ -74,6 +74,6 @@ assert.match(schoolUi,/pointerType==='touch'&&\(pencilSeen\|\|Number\(e\.width\)
 assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke order');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
 
-assert.ok(read('index.html').includes('data-packs.js?v=20261024-p78'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82'));
 assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-stroke-fit2'));
 console.log('PASS p70 historical: upper ten questions, learned-kanji targets, okurigana lines, A4, and school review UX.');
