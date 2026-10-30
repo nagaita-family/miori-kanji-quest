@@ -33,7 +33,7 @@ assert.equal(answerSegments.flat().filter(seg=>seg.lineType==='straight').length
 assert.deepEqual(answerSegments.flat().filter(seg=>seg.lineType==='wavy').map(seg=>[seg.answer,seg.kanji,seg.okuri]),[
  ['勝つ','勝','つ'],['放つ','放','つ'],['決まる','決','まる']
 ]);
-assert.equal(pack.schoolTest[8][0].text,'げき');
+assert.equal(pack.schoolTest[8][0].text,'げきのやくが');
 assert.equal(pack.schoolTest[8][0].lineType,undefined,'The contextual 劇 is not writable');
 assert.equal(pack.schoolTest[8].filter(seg=>seg.lineType).length,1);
 assert.equal(pack.schoolTest[9][0].answer,'画面');
