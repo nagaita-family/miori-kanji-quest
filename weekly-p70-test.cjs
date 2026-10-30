@@ -74,6 +74,6 @@ assert.match(schoolUi,/pointerType==='touch'&&\(pencilSeen\|\|Number\(e\.width\)
 assert.match(schoolUi,/書き順も見てみよう/,'Answer review keeps stroke order');
 assert.match(schoolUi,/@media \(orientation:landscape\) and \(max-height:900px\)/,'iPad landscape no-scroll review stays enabled');
 
-assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261031-p82-corrected'));
 assert.ok(read('index.html').includes('app-v236-school-test.js?v=20261017-stroke-fit2'));
 console.log('PASS p70 historical: upper ten questions, learned-kanji targets, okurigana lines, A4, and school review UX.');
