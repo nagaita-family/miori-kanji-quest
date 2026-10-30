@@ -698,7 +698,368 @@ const KANJI_PACKS = [
         ]
       }
     ]
-  }
+  },
+  {
+  "id": "2026-10-31-p82",
+  "label": "82ページ・上半分（書く①〜⑩）",
+  "shortLabel": "82ページ",
+  "source": "教材82ページ・上半分「書く」／漢字の組み立て③",
+  "addedAt": "2026-10-31",
+  "status": "current",
+  "schoolTest": [
+    [
+      {
+        "text": "しょうぶ",
+        "lineType": "straight",
+        "answer": "勝負"
+      },
+      {
+        "text": "をする。"
+      }
+    ],
+    [
+      {
+        "text": "しゃこ",
+        "lineType": "straight",
+        "answer": "車庫"
+      },
+      {
+        "text": "のくるま。"
+      }
+    ],
+    [
+      {
+        "text": "でんぱ",
+        "lineType": "straight",
+        "answer": "電波"
+      },
+      {
+        "text": "がとどく。"
+      }
+    ],
+    [
+      {
+        "text": "ほうそう",
+        "lineType": "straight",
+        "answer": "放送"
+      },
+      {
+        "text": "がながれる。"
+      }
+    ],
+    [
+      {
+        "text": "べんきょう",
+        "lineType": "straight",
+        "answer": "勉強"
+      },
+      {
+        "text": "がはかどる。"
+      }
+    ],
+    [
+      {
+        "text": "しあいに"
+      },
+      {
+        "text": "かつ",
+        "lineType": "wavy",
+        "answer": "勝つ",
+        "kanji": "勝",
+        "okuri": "つ"
+      },
+      {
+        "text": "。"
+      }
+    ],
+    [
+      {
+        "text": "かぜがふいて"
+      },
+      {
+        "text": "なみ",
+        "lineType": "straight",
+        "answer": "波"
+      },
+      {
+        "text": "がたつ。"
+      }
+    ],
+    [
+      {
+        "text": "やを"
+      },
+      {
+        "text": "はなつ",
+        "lineType": "wavy",
+        "answer": "放つ",
+        "kanji": "放",
+        "okuri": "つ"
+      },
+      {
+        "text": "。"
+      }
+    ],
+    [
+      {
+        "text": "げき",
+        "lineType": "straight",
+        "answer": "劇"
+      },
+      {
+        "text": "のやくがきまる。"
+      }
+    ],
+    [
+      {
+        "text": "かめん",
+        "lineType": "straight",
+        "answer": "仮面"
+      },
+      {
+        "text": "をよくみる。"
+      }
+    ]
+  ],
+  "stages": [
+    {
+      "reading": "しょうぶ",
+      "readingParts": [
+        "しょうぶ"
+      ],
+      "before": "",
+      "after": "をする。",
+      "answer": "勝負",
+      "icon": "🏆",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "勝",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "負",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "しゃこ",
+      "readingParts": [
+        "しゃこ"
+      ],
+      "before": "",
+      "after": "のくるま。",
+      "answer": "車庫",
+      "icon": "🚗",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "車",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "庫",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "でんぱ",
+      "readingParts": [
+        "でんぱ"
+      ],
+      "before": "",
+      "after": "がとどく。",
+      "answer": "電波",
+      "icon": "📡",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "電",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "波",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "ほうそう",
+      "readingParts": [
+        "ほうそう"
+      ],
+      "before": "",
+      "after": "がながれる。",
+      "answer": "放送",
+      "icon": "📺",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "放",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "送",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "べんきょう",
+      "readingParts": [
+        "べんきょう"
+      ],
+      "before": "",
+      "after": "がはかどる。",
+      "answer": "勉強",
+      "icon": "📚",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "勉",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "強",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "か",
+      "readingParts": [
+        "か"
+      ],
+      "before": "しあいに",
+      "after": "。",
+      "answer": "勝",
+      "icon": "🏅",
+      "targetType": "core",
+      "okuri": "つ",
+      "okuriChoices": [
+        "つ",
+        "かつ"
+      ],
+      "chars": [
+        {
+          "char": "勝",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "なみ",
+      "readingParts": [
+        "なみ"
+      ],
+      "before": "かぜがふいて",
+      "after": "が立つ。",
+      "answer": "波",
+      "icon": "🌊",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "波",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "はな",
+      "readingParts": [
+        "はな"
+      ],
+      "before": "やを",
+      "after": "。",
+      "answer": "放",
+      "icon": "🏹",
+      "targetType": "core",
+      "okuri": "つ",
+      "okuriChoices": [
+        "つ",
+        "はなつ"
+      ],
+      "chars": [
+        {
+          "char": "放",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "げき",
+      "readingParts": [
+        "げき"
+      ],
+      "before": "",
+      "after": "のやくがきまる。",
+      "answer": "劇",
+      "icon": "🎭",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "劇",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    },
+    {
+      "reading": "かめん",
+      "readingParts": [
+        "かめん"
+      ],
+      "before": "",
+      "after": "をよくみる。",
+      "answer": "仮面",
+      "icon": "🎭",
+      "targetType": "core",
+      "chars": [
+        {
+          "char": "仮",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        },
+        {
+          "char": "面",
+          "secret": "字の形と書き順をよく見よう。",
+          "memory": "字の形と書き順をよく見よう。",
+          "clue": "字の形と書き順をよく見よう。"
+        }
+      ]
+    }
+  ]
+}
 ];
 
 const KANJI_TEST_HISTORY = [
@@ -725,7 +1086,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-10-24-p78';
+let CURRENT_KANJI_PACK_ID = '2026-10-31-p82';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
