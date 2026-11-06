@@ -52,6 +52,8 @@ assert.equal(pack.stages[9].reading,'がめん');
 assert.equal(pack.stages[9].answer,'画面');
 assert.equal(pack.stages[9].after,'をよく見る。');
 assert.equal(run("kanjiPackById('2026-10-24-p78').status"),'past');
+// Historical fixture must be selected before the printable A4 check.
+run("CURRENT_KANJI_PACK_ID='2026-10-31-p82';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const paper=ctx.window.weeklyPaperHtmlV235(pack.stages);
 assert.equal((paper.match(/print-mark straight/g)||[]).length,7);
