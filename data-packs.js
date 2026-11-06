@@ -705,7 +705,7 @@ const KANJI_PACKS = [
   "shortLabel": "82ページ",
   "source": "教材82ページ・上半分「書く」／漢字の組み立て③",
   "addedAt": "2026-10-31",
-  "status": "current",
+  "status": "past",
   "schoolTest": [
     [
       {
@@ -1071,7 +1071,421 @@ const KANJI_PACKS = [
       ]
     }
   ]
-}
+},
+  {
+    "id": "2026-11-07-test6-p23",
+    "label": "漢字テスト6・書く①〜⑩",
+    "shortLabel": "テスト6",
+    "source": "添付「漢字テスト6.pdf」／光3・下 5〜23／ちいちゃんのかげおくり①／上段「書く」",
+    "addedAt": "2026-11-07",
+    "status": "current",
+    "schoolTest": [
+      [
+        {
+          "text": "かんそう",
+          "lineType": "straight",
+          "answer": "感想"
+        },
+        {
+          "text": "をつたえる。"
+        }
+      ],
+      [
+        {
+          "text": "はなを"
+        },
+        {
+          "text": "しゃせい",
+          "lineType": "straight",
+          "answer": "写生"
+        },
+        {
+          "text": "する。"
+        }
+      ],
+      [
+        {
+          "text": "しんそう",
+          "lineType": "straight",
+          "answer": "真相"
+        },
+        {
+          "text": "があきらかになる。"
+        }
+      ],
+      [
+        {
+          "text": "れっしゃ",
+          "lineType": "straight",
+          "answer": "列車"
+        },
+        {
+          "text": "がとおる。"
+        }
+      ],
+      [
+        {
+          "text": "ち",
+          "lineType": "straight",
+          "answer": "血"
+        },
+        {
+          "text": "がにじむ。"
+        }
+      ],
+      [
+        {
+          "text": "くらい",
+          "lineType": "wavy",
+          "answer": "暗い",
+          "kanji": "暗",
+          "okuri": "い"
+        },
+        {
+          "text": "みちをとおる。"
+        }
+      ],
+      [
+        {
+          "text": "ふるい"
+        },
+        {
+          "text": "はし",
+          "lineType": "straight",
+          "answer": "橋"
+        },
+        {
+          "text": "をわたる。"
+        }
+      ],
+      [
+        {
+          "text": "まごころ",
+          "lineType": "straight",
+          "answer": "真心"
+        },
+        {
+          "text": "をこめる。"
+        }
+      ],
+      [
+        {
+          "text": "あんごう",
+          "lineType": "straight",
+          "answer": "暗号"
+        },
+        {
+          "text": "をとく。"
+        }
+      ],
+      [
+        {
+          "text": "ほどうきょう",
+          "lineType": "straight",
+          "answer": "歩道橋"
+        },
+        {
+          "text": "をわたる。"
+        }
+      ]
+    ],
+    "bonusWords": [
+      {
+        "reading": "りそう",
+        "answer": "理想"
+      },
+      {
+        "reading": "しょしゃ",
+        "answer": "書写"
+      },
+      {
+        "reading": "しゃしん",
+        "answer": "写真"
+      },
+      {
+        "reading": "ぎょうれつ",
+        "answer": "行列"
+      },
+      {
+        "reading": "けっしょく",
+        "answer": "血色"
+      },
+      {
+        "reading": "あんこく",
+        "answer": "暗黒"
+      },
+      {
+        "reading": "いしばし",
+        "answer": "石橋"
+      },
+      {
+        "reading": "しんり",
+        "answer": "真理"
+      },
+      {
+        "reading": "あんぜん",
+        "answer": "安全"
+      },
+      {
+        "reading": "てっきょう",
+        "answer": "鉄橋"
+      }
+    ],
+    "stages": [
+      {
+        "reading": "かんそう",
+        "readingParts": [
+          "かん",
+          "そう"
+        ],
+        "before": "",
+        "after": "をつたえる。",
+        "answer": "感想",
+        "icon": "💭",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "感",
+            "secret": "上の形と下の心を分けて書こう。",
+            "memory": "上の形と下の心を分けて書こう。",
+            "clue": "上の形と下の心を分けて書こう。"
+          },
+          {
+            "char": "想",
+            "secret": "上の相と下の心を分けて見よう。",
+            "memory": "上の相と下の心を分けて見よう。",
+            "clue": "上の相と下の心を分けて見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "しゃせい",
+        "readingParts": [
+          "しゃ",
+          "せい"
+        ],
+        "before": "はなを",
+        "after": "する。",
+        "answer": "写生",
+        "icon": "🎨",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "写",
+            "secret": "上のわかんむりを小さく書こう。",
+            "memory": "上のわかんむりを小さく書こう。",
+            "clue": "上のわかんむりを小さく書こう。"
+          },
+          {
+            "char": "生",
+            "secret": "中心のたて線と横線をそろえよう。",
+            "memory": "中心のたて線と横線をそろえよう。",
+            "clue": "中心のたて線と横線をそろえよう。"
+          }
+        ]
+      },
+      {
+        "reading": "しんそう",
+        "readingParts": [
+          "しん",
+          "そう"
+        ],
+        "before": "",
+        "after": "があきらかになる。",
+        "answer": "真相",
+        "icon": "🔎",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "真",
+            "secret": "中の線と下の八の形をよく見よう。",
+            "memory": "中の線と下の八の形をよく見よう。",
+            "clue": "中の線と下の八の形をよく見よう。"
+          },
+          {
+            "char": "相",
+            "secret": "左は木へん、右は目。",
+            "memory": "左は木へん、右は目。",
+            "clue": "左は木へん、右は目。"
+          }
+        ]
+      },
+      {
+        "reading": "れっしゃ",
+        "readingParts": [
+          "れっ",
+          "しゃ"
+        ],
+        "before": "",
+        "after": "がとおる。",
+        "answer": "列車",
+        "icon": "🚆",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "列",
+            "secret": "右はりっとう。",
+            "memory": "右はりっとう。",
+            "clue": "右はりっとう。"
+          },
+          {
+            "char": "車",
+            "secret": "中心のたて線をそろえよう。",
+            "memory": "中心のたて線をそろえよう。",
+            "clue": "中心のたて線をそろえよう。"
+          }
+        ]
+      },
+      {
+        "reading": "ち",
+        "readingParts": [
+          "ち"
+        ],
+        "before": "",
+        "after": "がにじむ。",
+        "answer": "血",
+        "icon": "🩸",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "血",
+            "secret": "下の皿の形をよく見よう。",
+            "memory": "下の皿の形をよく見よう。",
+            "clue": "下の皿の形をよく見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "くら",
+        "readingParts": [
+          "くら"
+        ],
+        "before": "",
+        "after": "みちをとおる。",
+        "answer": "暗",
+        "icon": "🌙",
+        "targetType": "core",
+        "okuri": "い",
+        "okuriChoices": [
+          "い",
+          "く",
+          "る"
+        ],
+        "chars": [
+          {
+            "char": "暗",
+            "secret": "左は日へん、右は音。",
+            "memory": "左は日へん、右は音。",
+            "clue": "左は日へん、右は音。"
+          }
+        ]
+      },
+      {
+        "reading": "はし",
+        "readingParts": [
+          "はし"
+        ],
+        "before": "ふるい",
+        "after": "をわたる。",
+        "answer": "橋",
+        "icon": "🌉",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "橋",
+            "secret": "左は木へん、右の形に気をつけよう。",
+            "memory": "左は木へん、右の形に気をつけよう。",
+            "clue": "左は木へん、右の形に気をつけよう。"
+          }
+        ]
+      },
+      {
+        "reading": "まごころ",
+        "readingParts": [
+          "ま",
+          "ごころ"
+        ],
+        "before": "",
+        "after": "をこめる。",
+        "answer": "真心",
+        "icon": "💝",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "真",
+            "secret": "中の線と下の八の形をよく見よう。",
+            "memory": "中の線と下の八の形をよく見よう。",
+            "clue": "中の線と下の八の形をよく見よう。"
+          },
+          {
+            "char": "心",
+            "secret": "はねと点の位置をよく見よう。",
+            "memory": "はねと点の位置をよく見よう。",
+            "clue": "はねと点の位置をよく見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "あんごう",
+        "readingParts": [
+          "あん",
+          "ごう"
+        ],
+        "before": "",
+        "after": "をとく。",
+        "answer": "暗号",
+        "icon": "🔐",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "暗",
+            "secret": "左は日へん、右は音。",
+            "memory": "左は日へん、右は音。",
+            "clue": "左は日へん、右は音。"
+          },
+          {
+            "char": "号",
+            "secret": "上は口、下は曲がる形。",
+            "memory": "上は口、下は曲がる形。",
+            "clue": "上は口、下は曲がる形。"
+          }
+        ]
+      },
+      {
+        "reading": "ほどうきょう",
+        "readingParts": [
+          "ほ",
+          "どう",
+          "きょう"
+        ],
+        "before": "",
+        "after": "をわたる。",
+        "answer": "歩道橋",
+        "icon": "🚶",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "歩",
+            "secret": "上の止と下の形を分けよう。",
+            "memory": "上の止と下の形を分けよう。",
+            "clue": "上の止と下の形を分けよう。"
+          },
+          {
+            "char": "道",
+            "secret": "しんにょうの形をよく見よう。",
+            "memory": "しんにょうの形をよく見よう。",
+            "clue": "しんにょうの形をよく見よう。"
+          },
+          {
+            "char": "橋",
+            "secret": "左は木へん、右の形に気をつけよう。",
+            "memory": "左は木へん、右の形に気をつけよう。",
+            "clue": "左は木へん、右の形に気をつけよう。"
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 const KANJI_TEST_HISTORY = [
@@ -1098,7 +1512,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-10-31-p82';
+let CURRENT_KANJI_PACK_ID = '2026-11-07-test6-p23';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
