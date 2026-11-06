@@ -50,7 +50,7 @@ for(const filename of ['data-v10.js','data-v11-patch.js','data-packs.js']){
 }
 const packs=JSON.parse(vm.runInContext('JSON.stringify(KANJI_PACKS)',context));
 const weekly=packs.filter(p=>Array.isArray(p.schoolTest));
-assert.equal(weekly.length,7,'All seven weekly school packs are retained');
+assert.equal(weekly.length,8,'All eight weekly school packs are retained');
 let inspected=0;
 for(const pack of weekly){
   assert.equal(pack.stages.length,10,pack.id+' requires ten regular missions');
@@ -108,4 +108,4 @@ assert.match(study,/if\(b\.onclick!==window\.MioriBestWritingV295\?\.open\)oneFi
   'Old recognition preprocessing cannot rewrite the learner handwriting');
 assert.match(release,/app-v250-study\.js\?v=2704/);
 assert.match(html,/app-v234-stability\.js\?v=2343/);
-console.log('PASS complete regular-practice audit: 70 missions, 60 school prompts, suffix/answer exposure and sequential navigation.');
+console.log('PASS complete regular-practice audit: 80 missions, 70 school prompts, suffix/answer exposure and sequential navigation.');
