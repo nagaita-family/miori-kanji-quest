@@ -1078,7 +1078,7 @@ const KANJI_PACKS = [
     "shortLabel": "テスト6",
     "source": "添付「漢字テスト6.pdf」／光3・下 5〜23／ちいちゃんのかげおくり①／上段「書く」",
     "addedAt": "2026-11-07",
-    "status": "current",
+    "status": "past",
     "schoolTest": [
       [
         {
@@ -1485,6 +1485,405 @@ const KANJI_PACKS = [
         ]
       }
     ]
+  },
+  {
+    "id": "2026-11-10-ch10-p30",
+    "label": "ちいちゃんのかげおくり②・書く①〜⑩",
+    "shortLabel": "かげおくり②",
+    "source": "2026-11-10受領写真／光3・下 24〜30／ちいちゃんのかげおくり②／10「書く」上段",
+    "addedAt": "2026-11-10",
+    "status": "current",
+    "schoolTest": [
+      [
+        {
+          "text": "あつい",
+          "lineType": "wavy",
+          "answer": "暑い",
+          "kanji": "暑",
+          "okuri": "い"
+        },
+        {
+          "text": "ひがつづく。"
+        }
+      ],
+      [
+        {
+          "text": "さむい",
+          "lineType": "wavy",
+          "answer": "寒い",
+          "kanji": "寒",
+          "okuri": "い"
+        },
+        {
+          "text": "きせつ。"
+        }
+      ],
+      [
+        {
+          "text": "かばんが"
+        },
+        {
+          "text": "かるい",
+          "lineType": "wavy",
+          "answer": "軽い",
+          "kanji": "軽",
+          "okuri": "い"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "おさない"
+        },
+        {
+          "text": "いのち",
+          "lineType": "straight",
+          "answer": "命"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "だいいち",
+          "lineType": "straight",
+          "answer": "第一"
+        },
+        {
+          "text": "にかんがえる。"
+        }
+      ],
+      [
+        {
+          "text": "しょちゅう",
+          "lineType": "straight",
+          "answer": "暑中"
+        },
+        {
+          "text": "みまいをかく。"
+        }
+      ],
+      [
+        {
+          "text": "かん",
+          "lineType": "straight",
+          "answer": "寒"
+        },
+        {
+          "text": "ぷうがふきつける。"
+        }
+      ],
+      [
+        {
+          "text": "けいしょく",
+          "lineType": "straight",
+          "answer": "軽食"
+        },
+        {
+          "text": "をとる。"
+        }
+      ],
+      [
+        {
+          "text": "めい",
+          "lineType": "straight",
+          "answer": "命"
+        },
+        {
+          "text": "れいにしたがう。"
+        }
+      ],
+      [
+        {
+          "text": "たいよう",
+          "lineType": "straight",
+          "answer": "太陽"
+        },
+        {
+          "text": "がでてくる。"
+        }
+      ]
+    ],
+    "bonusWords": [
+      {
+        "reading": "ざんしょ",
+        "answer": "残暑"
+      },
+      {
+        "reading": "かんちゅう",
+        "answer": "寒中"
+      },
+      {
+        "reading": "かるいし",
+        "answer": "軽石"
+      },
+      {
+        "reading": "めいちゅう",
+        "answer": "命中"
+      },
+      {
+        "reading": "らくだい",
+        "answer": "落第"
+      },
+      {
+        "reading": "もうしょ",
+        "answer": "猛暑"
+      },
+      {
+        "reading": "さむぞら",
+        "answer": "寒空"
+      },
+      {
+        "reading": "けいゆ",
+        "answer": "軽油"
+      },
+      {
+        "reading": "せいめい",
+        "answer": "生命"
+      },
+      {
+        "reading": "ようき",
+        "answer": "陽気"
+      }
+    ],
+    "stages": [
+      {
+        "reading": "あつ",
+        "readingParts": [
+          "あつ"
+        ],
+        "before": "",
+        "after": "日がつづく。",
+        "answer": "暑",
+        "icon": "☀️",
+        "targetType": "core",
+        "okuri": "い",
+        "okuriChoices": [
+          "い",
+          "く"
+        ],
+        "chars": [
+          {
+            "char": "暑",
+            "secret": "上は日、下は者。形を二つに分けて見よう。",
+            "memory": "上は日、下は者。形を二つに分けて見よう。",
+            "clue": "上は日、下は者。形を二つに分けて見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "さむ",
+        "readingParts": [
+          "さむ"
+        ],
+        "before": "",
+        "after": "きせつ。",
+        "answer": "寒",
+        "icon": "❄️",
+        "targetType": "core",
+        "okuri": "い",
+        "okuriChoices": [
+          "い",
+          "く"
+        ],
+        "chars": [
+          {
+            "char": "寒",
+            "secret": "うかんむりの下の線と点の位置を見よう。",
+            "memory": "うかんむりの下の線と点の位置を見よう。",
+            "clue": "うかんむりの下の線と点の位置を見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "かる",
+        "readingParts": [
+          "かる"
+        ],
+        "before": "かばんが",
+        "after": "。",
+        "answer": "軽",
+        "icon": "🎒",
+        "targetType": "core",
+        "okuri": "い",
+        "okuriChoices": [
+          "い",
+          "く"
+        ],
+        "chars": [
+          {
+            "char": "軽",
+            "secret": "左は車へん、右の形をよく見よう。",
+            "memory": "左は車へん、右の形をよく見よう。",
+            "clue": "左は車へん、右の形をよく見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "いのち",
+        "readingParts": [
+          "いのち"
+        ],
+        "before": "おさない",
+        "after": "。",
+        "answer": "命",
+        "icon": "💗",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "命",
+            "secret": "上は人と一、下に口と卩の形。",
+            "memory": "上は人と一、下に口と卩の形。",
+            "clue": "上は人と一、下に口と卩の形。"
+          }
+        ]
+      },
+      {
+        "reading": "だいいち",
+        "readingParts": [
+          "だい",
+          "いち"
+        ],
+        "before": "",
+        "after": "に考える。",
+        "answer": "第一",
+        "icon": "🥇",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "第",
+            "secret": "竹かんむりの下の形を丁寧に。",
+            "memory": "竹かんむりの下の形を丁寧に。",
+            "clue": "竹かんむりの下の形を丁寧に。"
+          },
+          {
+            "char": "一",
+            "secret": "横線一本をまっすぐ引こう。",
+            "memory": "横線一本をまっすぐ引こう。",
+            "clue": "横線一本をまっすぐ引こう。"
+          }
+        ]
+      },
+      {
+        "reading": "しょちゅう",
+        "readingParts": [
+          "しょ",
+          "ちゅう"
+        ],
+        "before": "",
+        "after": "みまいを書く。",
+        "answer": "暑中",
+        "icon": "✉️",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "暑",
+            "secret": "上は日、下は者。形を二つに分けて見よう。",
+            "memory": "上は日、下は者。形を二つに分けて見よう。",
+            "clue": "上は日、下は者。形を二つに分けて見よう。"
+          },
+          {
+            "char": "中",
+            "secret": "口の中心をたて線が通る。",
+            "memory": "口の中心をたて線が通る。",
+            "clue": "口の中心をたて線が通る。"
+          }
+        ]
+      },
+      {
+        "reading": "かん",
+        "readingParts": [
+          "かん"
+        ],
+        "before": "",
+        "after": "風がふきつける。",
+        "answer": "寒",
+        "icon": "🌬️",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "寒",
+            "secret": "うかんむりの下の線と点の位置を見よう。",
+            "memory": "うかんむりの下の線と点の位置を見よう。",
+            "clue": "うかんむりの下の線と点の位置を見よう。"
+          }
+        ]
+      },
+      {
+        "reading": "けいしょく",
+        "readingParts": [
+          "けい",
+          "しょく"
+        ],
+        "before": "",
+        "after": "をとる。",
+        "answer": "軽食",
+        "icon": "🥪",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "軽",
+            "secret": "左は車へん、右の形をよく見よう。",
+            "memory": "左は車へん、右の形をよく見よう。",
+            "clue": "左は車へん、右の形をよく見よう。"
+          },
+          {
+            "char": "食",
+            "secret": "上の人の形と下の形を分けよう。",
+            "memory": "上の人の形と下の形を分けよう。",
+            "clue": "上の人の形と下の形を分けよう。"
+          }
+        ]
+      },
+      {
+        "reading": "めい",
+        "readingParts": [
+          "めい"
+        ],
+        "before": "",
+        "after": "れいにしたがう。",
+        "answer": "命",
+        "icon": "📢",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "命",
+            "secret": "上は人と一、下に口と卩の形。",
+            "memory": "上は人と一、下に口と卩の形。",
+            "clue": "上は人と一、下に口と卩の形。"
+          }
+        ]
+      },
+      {
+        "reading": "たいよう",
+        "readingParts": [
+          "たい",
+          "よう"
+        ],
+        "before": "",
+        "after": "が出てくる。",
+        "answer": "太陽",
+        "icon": "🌅",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "太",
+            "secret": "大の中に点を打つ。",
+            "memory": "大の中に点を打つ。",
+            "clue": "大の中に点を打つ。"
+          },
+          {
+            "char": "陽",
+            "secret": "左はこざとへん。右の上下の形を見よう。",
+            "memory": "左はこざとへん。右の上下の形を見よう。",
+            "clue": "左はこざとへん。右の上下の形を見よう。"
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -1512,7 +1911,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-11-07-test6-p23';
+let CURRENT_KANJI_PACK_ID = '2026-11-10-ch10-p30';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
