@@ -1,5 +1,5 @@
 // Regression for 2026-11-10 光3・下 24–30, ちいちゃんのかげおくり②.
-// Only the top ten blue boxes are writing targets; lower words are bonus only.
+// Test includes all printed kanji, including context kanji outside blue boxes. Bonus words excluded.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const read=p=>fs.readFileSync(p,'utf8');
 const ctx=vm.createContext({window:{},console,document:{
@@ -19,15 +19,28 @@ const prompts=['あついひがつづく。','さむいきせつ。','かばん�
 assert.deepEqual(pack.stages.map(s=>s.answer+(s.okuri||'')),answers);
 assert.deepEqual(pack.schoolTest.map(q=>q.map(seg=>seg.text).join('')),prompts);
 const lines=pack.schoolTest.map(q=>q.filter(s=>s.lineType));
-assert.deepEqual(lines.map(q=>q.map(seg=>seg.answer)),answers.map(a=>[a]));
-assert.equal(lines.flat().filter(s=>s.lineType==='wavy').length,3);
-assert.equal(lines.flat().filter(s=>s.lineType==='straight').length,7);
-assert.deepEqual(lines.flat().filter(s=>s.lineType==='wavy').map(s=>[s.answer,s.kanji,s.okuri]),
- [['暑い','暑','い'],['寒い','寒','い'],['軽い','軽','い']]);
-assert.deepEqual([lines[6][0].answer,lines[8][0].answer],['寒','命'],
- '寒風の「風」、命令の「れい」は書く欄ではない');
-assert.equal(pack.schoolTest.flat().filter(s=>s.lineType).length,10,
- 'Printed surrounding characters must not become additional targets');
+const targets=[
+ ['暑い','日'],['寒い'],['軽い'],['命'],['第一','考える'],
+ ['暑中','書く'],['寒','風'],['軽食'],['命'],['太陽','出てくる']
+];
+const kinds=[
+ ['wavy','straight'],['wavy'],['wavy'],['straight'],['straight','wavy'],
+ ['straight','wavy'],['straight','straight'],['straight'],['straight'],['straight','wavy']
+];
+assert.deepEqual(lines.map(q=>q.map(seg=>seg.answer)),targets,
+ 'Every printed kanji including context must be writable');
+assert.deepEqual(lines.map(q=>q.map(seg=>seg.lineType)),kinds);
+assert.equal(lines.flat().filter(s=>s.lineType==='wavy').length,6);
+assert.equal(lines.flat().filter(s=>s.lineType==='straight').length,9);
+assert.deepEqual(lines.flat().filter(s=>s.lineType==='wavy').map(s=>[s.answer,s.kanji,s.okuri]),[
+ ['暑い','暑','い'],['寒い','寒','い'],['軽い','軽','い'],
+ ['考える','考','える'],['書く','書','く'],['出てくる','出','てくる']
+]);
+assert.equal(lines[6][1].text,'ぷう','寒風の風も独立した記入欄');
+assert.equal(lines[8].length,1,'命令の「れい」は印刷上ひらがななので追加しない');
+assert.equal(pack.schoolTest.flat().filter(s=>s.lineType).length,15,
+ 'Ten blue boxes plus five printed context kanji');
+
 for(const s of pack.stages){
  assert.equal(s.readingParts.join(''),s.reading);
  assert.equal(s.chars.map(c=>c.char).join(''),s.answer);
@@ -39,11 +52,11 @@ assert.equal(run("kanjiPackById('2026-11-07-test6-p23').status"),'past');
 assert.equal(run("kanjiPackById('2026-10-31-p82').status"),'past');
 vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const html=ctx.window.weeklyPaperHtmlV235(pack.stages);
-assert.equal((html.match(/print-mark straight/g)||[]).length,7);
-assert.equal((html.match(/print-mark wavy/g)||[]).length,3);
-for(const answer of answers)assert.ok(!html.includes('>'+answer+'<'),'Answer exposed: '+answer);
+assert.equal((html.match(/print-mark straight/g)||[]).length,9);
+assert.equal((html.match(/print-mark wavy/g)||[]).length,6);
+for(const answer of targets.flat())assert.ok(!html.includes('>'+answer+'<'),'Answer exposed: '+answer);
 const index=read('index.html');
 assert.ok(index.includes('data-packs.js?v=20261110-ch10'));
 assert.ok(index.includes('pwa-update-v303.js?v=20261110-ch10'));
 assert.equal(JSON.parse(read('app-version.json')).build,'20261110.1');
-console.log('PASS ch10: 10 photo-verified boxes, 7 straight + 3 wavy, bonus excluded, historical data, A4 and PWA.');
+console.log('PASS ch10: 10 questions, 15 targets including context kanji, 9 straight + 6 wavy, bonus excluded, A4 and history.');
