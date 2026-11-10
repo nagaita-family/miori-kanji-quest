@@ -85,6 +85,7 @@ jobs:
           node weekly-p78-test.cjs
           node weekly-p82-test.cjs
           node weekly-test6-test.cjs
+          node weekly-ch10-test.cjs
           node school-structure-test.cjs
           node kanken9-v286-smoke-test.cjs
           node kanken9-travel-v293.test.cjs
