@@ -1503,7 +1503,12 @@ const KANJI_PACKS = [
           "okuri": "い"
         },
         {
-          "text": "ひがつづく。"
+          "text": "ひ",
+          "lineType": "straight",
+          "answer": "日"
+        },
+        {
+          "text": "がつづく。"
         }
       ],
       [
@@ -1553,7 +1558,17 @@ const KANJI_PACKS = [
           "answer": "第一"
         },
         {
-          "text": "にかんがえる。"
+          "text": "に"
+        },
+        {
+          "text": "かんがえる",
+          "lineType": "wavy",
+          "answer": "考える",
+          "kanji": "考",
+          "okuri": "える"
+        },
+        {
+          "text": "。"
         }
       ],
       [
@@ -1563,7 +1578,17 @@ const KANJI_PACKS = [
           "answer": "暑中"
         },
         {
-          "text": "みまいをかく。"
+          "text": "みまいを"
+        },
+        {
+          "text": "かく",
+          "lineType": "wavy",
+          "answer": "書く",
+          "kanji": "書",
+          "okuri": "く"
+        },
+        {
+          "text": "。"
         }
       ],
       [
@@ -1573,7 +1598,12 @@ const KANJI_PACKS = [
           "answer": "寒"
         },
         {
-          "text": "ぷうがふきつける。"
+          "text": "ぷう",
+          "lineType": "straight",
+          "answer": "風"
+        },
+        {
+          "text": "がふきつける。"
         }
       ],
       [
@@ -1603,7 +1633,17 @@ const KANJI_PACKS = [
           "answer": "太陽"
         },
         {
-          "text": "がでてくる。"
+          "text": "が"
+        },
+        {
+          "text": "でてくる",
+          "lineType": "wavy",
+          "answer": "出てくる",
+          "kanji": "出",
+          "okuri": "てくる"
+        },
+        {
+          "text": "。"
         }
       ]
     ],
