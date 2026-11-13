@@ -36,7 +36,9 @@ for(const s of pack.stages){
 assert.deepEqual(pack.bonusWords.map(b=>b.answer),['理想','書写','写真','行列','血色','暗黒','石橋','真理','安全','鉄橋']);
 assert.equal(run("kanjiPackById('2026-10-31-p82').status"),'past');
 assert.equal(run("kanjiPackById('2026-10-24-p78').status"),'past');
-// Select the historical pack before generating its A4 paper.\nrun(\"CURRENT_KANJI_PACK_ID='2026-11-07-test6-p23';useKanjiPack(CURRENT_KANJI_PACK_ID)\");\nvm.runInContext(read('app-v235-paper-pdf.js'),ctx);
+// Select the historical pack before generating its A4 paper.
+run("CURRENT_KANJI_PACK_ID='2026-11-07-test6-p23';useKanjiPack(CURRENT_KANJI_PACK_ID)");
+vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const html=ctx.window.weeklyPaperHtmlV235(pack.stages);
 assert.equal((html.match(/print-mark straight/g)||[]).length,9);
 assert.equal((html.match(/print-mark wavy/g)||[]).length,1);
