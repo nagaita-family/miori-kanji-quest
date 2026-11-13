@@ -36,12 +36,12 @@ for(const s of pack.stages){
 assert.deepEqual(pack.bonusWords.map(b=>b.answer),['理想','書写','写真','行列','血色','暗黒','石橋','真理','安全','鉄橋']);
 assert.equal(run("kanjiPackById('2026-10-31-p82').status"),'past');
 assert.equal(run("kanjiPackById('2026-10-24-p78').status"),'past');
-vm.runInContext(read('app-v235-paper-pdf.js'),ctx);
+// Select the historical pack before generating its A4 paper.\nrun(\"CURRENT_KANJI_PACK_ID='2026-11-07-test6-p23';useKanjiPack(CURRENT_KANJI_PACK_ID)\");\nvm.runInContext(read('app-v235-paper-pdf.js'),ctx);
 const html=ctx.window.weeklyPaperHtmlV235(pack.stages);
 assert.equal((html.match(/print-mark straight/g)||[]).length,9);
 assert.equal((html.match(/print-mark wavy/g)||[]).length,1);
 for(const answer of answers)assert.ok(!html.includes('>'+answer+'<'),'Answer leak: '+answer);
-assert.ok(read('index.html').includes('data-packs.js?v=20261110-ch10-context'));
-assert.ok(read('index.html').includes('pwa-update-v303.js?v=20261110-ch10-context'));
-assert.equal(JSON.parse(read('app-version.json')).build,'20261110.2');
+assert.ok(read('index.html').includes('data-packs.js?v=20261114-ch10-deployfix'));
+assert.ok(read('index.html').includes('pwa-update-v303.js?v=20261114-ch10-deployfix'));
+assert.equal(JSON.parse(read('app-version.json')).build,'20261114.1');
 console.log('PASS historical test6: source-verified ten blue boxes, 9 straight + 1 wavy, bonus excluded, history, A4 and PWA.');

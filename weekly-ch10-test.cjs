@@ -1,4 +1,4 @@
-// Regression for 2026-11-10 光3・下 24–30, ちいちゃんのかげおくり②.
+// Regression for 2026-11-10 ぐんぐん下9・10.
 // Test includes all printed kanji, including context kanji outside blue boxes. Bonus words excluded.
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const read=p=>fs.readFileSync(p,'utf8');
@@ -12,7 +12,7 @@ assert.equal(run('CURRENT_KANJI_PACK_ID'),id);
 assert.equal(run('ACTIVE_KANJI_PACK_ID'),id);
 assert.equal(run('KANJI_PACKS.length'),10);
 const pack=JSON.parse(run('JSON.stringify(currentKanjiPack())'));
-assert.equal(pack.status,'current');assert.equal(pack.testDate,undefined);
+assert.equal(pack.status,'current');assert.equal(pack.testDate,undefined);\nassert.equal(pack.shortLabel,'ぐんぐん下9・10');
 assert.equal(pack.stages.length,10);assert.equal(pack.schoolTest.length,10);
 const answers=['暑い','寒い','軽い','命','第一','暑中','寒','軽食','命','太陽'];
 const prompts=['あついひがつづく。','さむいきせつ。','かばんがかるい。','おさないいのち。','だいいちにかんがえる。','しょちゅうみまいをかく。','かんぷうがふきつける。','けいしょくをとる。','めいれいにしたがう。','たいようがでてくる。'];
@@ -56,7 +56,7 @@ assert.equal((html.match(/print-mark straight/g)||[]).length,9);
 assert.equal((html.match(/print-mark wavy/g)||[]).length,6);
 for(const answer of targets.flat())assert.ok(!html.includes('>'+answer+'<'),'Answer exposed: '+answer);
 const index=read('index.html');
-assert.ok(index.includes('data-packs.js?v=20261110-ch10-context'));
-assert.ok(index.includes('pwa-update-v303.js?v=20261110-ch10-context'));
-assert.equal(JSON.parse(read('app-version.json')).build,'20261110.2');
+assert.ok(index.includes('data-packs.js?v=20261114-ch10-deployfix'));
+assert.ok(index.includes('pwa-update-v303.js?v=20261114-ch10-deployfix'));
+assert.equal(JSON.parse(read('app-version.json')).build,'20261114.1');
 console.log('PASS ch10: 10 questions, 15 targets including context kanji, 9 straight + 6 wavy, bonus excluded, A4 and history.');

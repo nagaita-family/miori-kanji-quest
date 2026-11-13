@@ -59,5 +59,5 @@ const paper=ctx.window.weeklyPaperHtmlV235(pack.stages);
 assert.equal((paper.match(/print-mark straight/g)||[]).length,7);
 assert.equal((paper.match(/print-mark wavy/g)||[]).length,3);
 for(const ans of targetAnswers)assert.ok(!paper.includes('>'+ans+'<'),'No answers on print sheet: '+ans);
-assert.ok(read('index.html').includes('data-packs.js?v=20261110-ch10-context'));
+assert.ok(read('index.html').includes('data-packs.js?v=20261114-ch10-deployfix'));
 console.log('PASS p82: ten photo-verified targets, 7 straight + 3 wavy, contextual 劇 excluded, 決まる and 画面 corrected; A4 sheet, history and cache.');
