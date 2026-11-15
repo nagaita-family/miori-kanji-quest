@@ -197,7 +197,7 @@
       <div class="bestActionsV295">
         <button id="bestOverlayV295" type="button">👀 重ねて見る</button>
         <button id="bestRetryV295" type="button">✏️ もう1回きれいに書く</button>
-        <button id="bestChooseV295" class="primary" type="button">⭐ これを今日のベストにする</button>
+        <button id="bestChooseV295" class="primary" type="button">⭐ これを今日のベストにする → 次へ</button>
       </div>
     </div>`;
     document.body.appendChild(ov);
@@ -216,7 +216,26 @@
       ov.remove();clearCanvas();polish();
       const status=document.getElementById('statusLine');if(status)status.textContent='もっと好きな字にしてみよう ✏️';
     };
-    document.getElementById('bestChooseV295').onclick=()=>chooseBest(captured,selected,ov);
+    const choose=ov.querySelector('#bestChooseV295');
+    choose.onclick=()=>{
+      // iPad's rapid repeated taps must not finish or advance a question twice.
+      if(choose.dataset.submitting==='1')return;
+      choose.dataset.submitting='1';choose.disabled=true;
+      try{chooseBest(captured,selected,ov);}
+      catch(error){
+        console.error('Kanji Quest: best-writing completion failed',error);
+        if(ov.isConnected){
+          choose.disabled=false;delete choose.dataset.submitting;
+          choose.textContent='⚠ もう一度おしてね';
+        }else if(document.getElementById('resultScreen')?.classList.contains('active')){
+          // The result screen's next button uses the daily-queue recovery handler.
+          const next=document.getElementById('nextRecommendBtn');
+          if(next){next.style.display='';next.textContent='次の問題へ →';}
+        }else{
+          showCheckHint('保存したよ。次に進めなかったら、もう一度「できた！」をおしてね。','↻ もう一度おしてね');
+        }
+      }
+    };
   }
 
   function credit(ci,help,attemptCount){
