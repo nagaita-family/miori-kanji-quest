@@ -52,9 +52,9 @@
     './kanken9-paper-guard-v287.js?v=2870',
     './kanken9-layout-v288.js?v=2910',
     './kanken9-travel-v293.js?v=2940',
-    './app-v295-best-writing.js?v=2956',
+    './app-v295-best-writing.js?v=2956&fix=20261116',
     './app-v296-practice-star.js?v=2960',
-    './app-v297-daily-practice.js?v=2971',
+    './app-v297-daily-practice.js?v=2971&fix=20261116',
     './app-v298-word-drill.js?v=2981',
     './app-v300-season2.js?v=3001',
     './app-v302-best-gallery.js?v=3021'
