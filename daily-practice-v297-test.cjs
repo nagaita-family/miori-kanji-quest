@@ -44,6 +44,14 @@ for(let i=0;i<run.queue.length;i++){
  assert.equal(api.afterBest(run.queue[i]),i===4?-1:run.queue[i+1],'Best selection advances through all five');
 }
 assert.equal(api.state(),null,'A completed daily session stops instead of looping indefinitely');
+assert.equal(api.afterBest(run.queue[4]),-1,'Double-tap on the fifth completed item must not start a sixth');
+elements.recommendBtn.handlers.click();
+const retryRun=api.state();
+assert.equal(api.afterBest(-99),undefined,'Unexpected completion must not cancel the five-question queue');
+assert.equal(api.state().pos,0,'The session remains active after an old handler fires');
+assert.equal(api.afterBest(retryRun.queue[0]),retryRun.queue[1]);
+assert.equal(api.afterBest(retryRun.queue[0]),retryRun.queue[1],'Double-tap does not advance twice');
+assert.equal(api.state().pos,1,'The second exercise is still pending');
 assert.match(best,/MioriDailyPracticeV297\?\.afterBest/,'Best-writing confirmation uses the new session');
 assert.match(best,/if\(nextIndex<0\)\{renderHome\(\)/,'At five completions the child returns home');
 assert.match(best,/data-best-stroke/,'Comparison includes an explicit pen-order button');
@@ -57,6 +65,10 @@ assert.match(sheet,/practiceNotebookV270/,'Keep existing notebook storage and Pe
 assert.match(sheet,/save\.practiceNotebookV270\[item\.char\]/,'Every practised character is recorded');
 assert.match(sheet,/stopImmediatePropagation\(\);open\(\)/,'Multi-kanji access does not also open the old single-kanji note');
 assert.match(daily,/orientation:landscape/,'Regular practice has a landscape viewport layout');
+assert.match(daily,/nextRecommendBtn[\s\S]*resultScreen/,'Result-screen next is routed through daily queue');
+assert.match(daily,/safe-area-inset-bottom/,'Landscape practice reserves iPad bottom safe area');
+assert.match(daily,/writeActions\{flex:0 0 auto/,'Landscape action buttons cannot be clipped inside the paper');
+assert.match(best,/choose\.dataset\.submitting/,'Repeated taps must not finish the same exercise twice');
 assert.match(release,/app-v297-daily-practice\.js\?v=2971/);
 assert.match(release,/app-v298-word-drill\.js\?v=2981/);
 assert.match(index,/app-v240-release\.js\?v=3022/);
