@@ -45,5 +45,5 @@ assert.equal((html.match(/print-mark wavy/g)||[]).length,1);
 for(const answer of answers)assert.ok(!html.includes('>'+answer+'<'),'Answer leak: '+answer);
 assert.ok(read('index.html').includes('data-packs.js?v=20261114-ch10-deployfix'));
 assert.ok(read('index.html').includes('pwa-update-v303.js?v=20261114-ch10-deployfix'));
-assert.equal(JSON.parse(read('app-version.json')).build,'20261114.1');
+assert.equal(JSON.parse(read('app-version.json')).build,'20261116.1');
 console.log('PASS historical test6: source-verified ten blue boxes, 9 straight + 1 wavy, bonus excluded, history, A4 and PWA.');
