@@ -1,7 +1,7 @@
 // v2.9.7: Today's 5 recommended questions and optional stroke-order viewer.
 (() => {
   'use strict';
-  let session=null,completed=false,strokeToken=0;
+  let session=null,completed=false,strokeToken=0,lastAdvance=null;
   const get=id=>document.getElementById(id);
   function begin(){
     const list=QUEST_STAGES,first=Number(get('recommendBtn')?.dataset.stage);
@@ -14,14 +14,19 @@
       const last=Math.max(0,...stats.map(x=>Number(x.last)||0));
       return {i,score:(100-mastery)*1.15+(last?Math.min(14,(now-last)/86400000):14)*2.2+(seen?0:38)+(window.MioriPracticeStarV296?.starred?.(i)?80:0)};
     }).filter(x=>x.i!==first).sort((a,b)=>b.score-a.score||a.i-b.i);
-    session={queue:[first,...ranked.slice(0,Math.min(5,list.length)-1).map(x=>x.i)],pos:0};completed=false;
+    session={queue:[first,...ranked.slice(0,Math.min(5,list.length)-1).map(x=>x.i)],pos:0};completed=false;lastAdvance=null;
   }
   function afterBest(index){
-    if(!session)return undefined;
-    if(session.queue[session.pos]!==index){session=null;return undefined;}
+    // An old result handler or a second tap must not wipe the remaining five-question queue.
+    if(!session)return lastAdvance?.index===index?lastAdvance.next:undefined;
+    if(session.queue[session.pos]!==index){
+      return lastAdvance?.index===index?lastAdvance.next:undefined;
+    }
     session.pos++;
-    if(session.pos>=session.queue.length){session=null;completed=true;return -1;}
-    return session.queue[session.pos];
+    const next=session.pos>=session.queue.length?-1:session.queue[session.pos];
+    lastAdvance={index,next};
+    if(next===-1){session=null;completed=true;}
+    return next;
   }
   function showCompleted(){
     if(!completed)return;
@@ -45,6 +50,16 @@
   get('recommendBtn')?.addEventListener('click',begin,true);
   get('missionGrid')?.addEventListener('click',()=>{session=null;},true);
   get('backHomeBtn')?.addEventListener('click',()=>{session=null;},true);
+  // Recovery path: legacy/manual completion can leave the result screen open.
+  // Keep its "next" button in the same five-question order (rather than random recommendations).
+  get('nextRecommendBtn')?.addEventListener('click',ev=>{
+    if(!session||!get('resultScreen')?.classList.contains('active')||
+       session.queue[session.pos]!==stageIndex)return;
+    ev.preventDefault();ev.stopImmediatePropagation();
+    const next=afterBest(stageIndex);
+    if(next===-1){renderHome();showCompleted();}
+    else if(Number.isInteger(next))startStage(next);
+  },true);
   if(get('recommendBtn'))get('recommendBtn').textContent='今日のおすすめ5問 →';
 
   function closeStroke(){strokeToken++;get('practiceStrokeV297')?.remove();}
@@ -105,10 +120,13 @@
   '.practiceStrokeCardV297 p{font-size:13px;font-weight:850;color:#536d85}.practiceStrokeCardV297 button{border:0;border-radius:9px;padding:9px 14px;background:#daeaff;color:#224b74;font-weight:900}',
   '.practiceStrokeCardV297 .practiceStrokeCloseV297{position:absolute;right:10px;top:9px;border-radius:50%;width:34px;height:34px;padding:0;background:#ebe7df;font-size:22px}',
   '@media(orientation:landscape) and (min-width:700px) and (max-height:950px){',
-  'body.paperModeV220 #challengeScreen .challengeLayout{height:calc(100dvh - 64px);min-height:0;overflow:hidden;padding:4px 0;display:block}',
+  'body.paperModeV220 #challengeScreen{height:100dvh;overflow:hidden}',
+  'body.paperModeV220 #challengeScreen .playTop{height:54px;padding:4px 10px}',
+  'body.paperModeV220 #challengeScreen .challengeLayout{height:calc(100dvh - 54px);min-height:0;overflow:hidden;padding:3px 0 calc(3px + env(safe-area-inset-bottom,0px));display:block}',
   'body.paperModeV220 #challengeScreen .writingPane{height:100%;min-height:0;display:flex;flex-direction:column;gap:2px;padding:0}',
   'body.paperModeV220 #challengeScreen .paperPracticeV221{flex:1 1 auto;min-height:0;overflow:auto;padding:7px 13px 4px;display:flex;flex-direction:column;box-shadow:none}',
   'body.paperModeV220 #challengeScreen .paperBodyV221{flex:1 1 auto;min-height:0;overflow:auto;padding:0}',
+  'body.paperModeV220 #challengeScreen .paperSentenceV221{min-height:0}',
   'body.paperModeV220 #challengeScreen .paperTopV221{padding-bottom:3px;margin-bottom:3px}',
   'body.paperModeV220 #challengeScreen .paperFootV221{padding-top:3px;margin-top:3px}',
   'body.paperModeV220 #challengeScreen .paperAnswerStackV221.count1{--cell:min(32dvh,210px)}',
@@ -117,11 +135,15 @@
   'body.paperModeV220 #challengeScreen .paperOkuriBoxV221{height:min(34dvh,220px);width:min(29dvh,190px)}',
   'body.paperModeV220 #challengeScreen .charPrompt{margin:0;font-size:13px}',
   'body.paperModeV220 #challengeScreen .statusLine{margin:1px 0;font-size:12px;min-height:0}',
-  'body.paperModeV220 #challengeScreen .writeActions{flex-shrink:0;margin:0}',
-  'body.paperModeV220 #challengeScreen .writeActions button{padding:8px 10px}',
-  'body.paperModeV220 #challengeScreen .helpDock{flex-shrink:0;margin-top:2px;padding:4px 8px}',
+  'body.paperModeV220 #challengeScreen .writeActions{flex:0 0 auto;position:relative;z-index:70;width:100%;margin:0;padding:5px 6px;background:#eef4f8;border-top:1px solid #dce4ea;gap:5px;flex-wrap:nowrap}',
+  'body.paperModeV220 #challengeScreen .writeActions button{min-width:0;padding:8px 10px;font-size:clamp(12px,1.8vw,16px);white-space:nowrap}',
+  'body.paperModeV220 #challengeScreen .helpDock{flex:0 0 auto;max-height:min(12dvh,66px);overflow:auto;margin-top:2px;padding:3px 8px}',
   'body.paperModeV220 #challengeScreen .helpNote,body.paperModeV220 #challengeScreen .shapeHintLine{display:none}',
   '.bestWritingCardV295{width:min(920px,98vw);max-height:calc(100dvh - 15px);padding:10px 14px}',
+  '.bestWritingV295{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}',
+  '.bestWritingCardV295 .bestCompareGridV295{min-height:0;overflow:auto}',
+  '.bestWritingCardV295 .bestActionsV295{flex:0 0 auto;position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;padding:6px 0 2px;background:#fffdf6}',
+  '.bestWritingCardV295 .bestActionsV295 button{min-width:0;padding:8px 4px;font-size:clamp(11px,1.65vw,14px)}',
   '.bestWritingCardV295 h2{font-size:21px}.bestWritingCardV295 .bestLeadV295{margin-bottom:4px;font-size:12px}',
   '.bestWritingCardV295 .bestLookPointsV295{margin:4px 0}',
   '.bestWritingCardV295 .bestCompareGridV295{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:7px}',
