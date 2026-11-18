@@ -8,9 +8,11 @@ const ctx=vm.createContext({window:{},console,document:{
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
 const id='2026-11-10-ch10-p30';
-assert.equal(run('CURRENT_KANJI_PACK_ID'),id);
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),id);
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-11-19-kanji14-p31');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-11-19-kanji14-p31');
 assert.equal(run('KANJI_PACKS.length'),11);
+// Run this fixture against its preserved historical pack, not the new current week.
+run("CURRENT_KANJI_PACK_ID='2026-11-10-ch10-p30';useKanjiPack(CURRENT_KANJI_PACK_ID)");
 const pack=JSON.parse(run('JSON.stringify(currentKanjiPack())'));
 assert.equal(pack.status,'past');assert.equal(pack.testDate,undefined);
 assert.equal(pack.shortLabel,'ぐんぐん下9・10');
