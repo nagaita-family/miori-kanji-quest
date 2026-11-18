@@ -1492,7 +1492,7 @@ const KANJI_PACKS = [
     "shortLabel": "ぐんぐん下9・10",
     "source": "2026-11-10受領写真／ぐんぐん下9・10／上段「書く」①〜⑩",
     "addedAt": "2026-11-10",
-    "status": "current",
+    "status": "past",
     "schoolTest": [
       [
         {
@@ -1924,6 +1924,433 @@ const KANJI_PACKS = [
         ]
       }
     ]
+  },
+  {
+    "id": "2026-11-19-kanji14-p31",
+    "label": "漢字14・書く①〜⑩（31〜33ページ）",
+    "shortLabel": "漢字14 書く",
+    "source": "2026-11-19受領写真／光3・下31〜33／上段「14 書く」①〜⑩",
+    "addedAt": "2026-11-19",
+    "status": "current",
+    "schoolTest": [
+      [
+        {
+          "text": "ほん",
+          "lineType": "straight",
+          "answer": "本"
+        },
+        {
+          "text": "を"
+        },
+        {
+          "text": "よみ",
+          "lineType": "wavy",
+          "answer": "読み",
+          "kanji": "読",
+          "okuri": "み"
+        },
+        {
+          "text": "かえす",
+          "lineType": "wavy",
+          "answer": "返す",
+          "kanji": "返",
+          "okuri": "す"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "ぶん",
+          "lineType": "straight",
+          "answer": "文"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "しゅご",
+          "lineType": "straight",
+          "answer": "主語"
+        },
+        {
+          "text": "をさがす。"
+        }
+      ],
+      [
+        {
+          "text": "きゅうしゅう",
+          "lineType": "straight",
+          "answer": "九州"
+        },
+        {
+          "text": "へ"
+        },
+        {
+          "text": "いく",
+          "lineType": "wavy",
+          "answer": "行く",
+          "kanji": "行",
+          "okuri": "く"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "こや",
+          "lineType": "straight",
+          "answer": "小屋"
+        },
+        {
+          "text": "をたてる。"
+        }
+      ],
+      [
+        {
+          "text": "き",
+          "lineType": "straight",
+          "answer": "木"
+        },
+        {
+          "text": "の"
+        },
+        {
+          "text": "ね",
+          "lineType": "straight",
+          "answer": "根"
+        },
+        {
+          "text": "っこがはる。"
+        }
+      ],
+      [
+        {
+          "text": "おおきく",
+          "lineType": "wavy",
+          "answer": "大きく",
+          "kanji": "大",
+          "okuri": "きく"
+        },
+        {
+          "text": "へんじ",
+          "lineType": "straight",
+          "answer": "返事"
+        },
+        {
+          "text": "をする。"
+        }
+      ],
+      [
+        {
+          "text": "おも",
+          "lineType": "straight",
+          "answer": "主"
+        },
+        {
+          "text": "なメンバー。"
+        }
+      ],
+      [
+        {
+          "text": "や",
+          "lineType": "straight",
+          "answer": "家"
+        },
+        {
+          "text": "ぬし",
+          "lineType": "straight",
+          "answer": "主"
+        },
+        {
+          "text": "が"
+        },
+        {
+          "text": "でかける",
+          "lineType": "wavy",
+          "answer": "出かける",
+          "kanji": "出",
+          "okuri": "かける"
+        },
+        {
+          "text": "。",
+          "kanji": "出"
+        }
+      ],
+      [
+        {
+          "text": "ビルの"
+        },
+        {
+          "text": "おくじょう",
+          "lineType": "straight",
+          "answer": "屋上"
+        },
+        {
+          "text": "。"
+        }
+      ],
+      [
+        {
+          "text": "こんき",
+          "lineType": "straight",
+          "answer": "根気"
+        },
+        {
+          "text": "よくつづける。"
+        }
+      ]
+    ],
+    "bonusWords": [],
+    "bonusNote": "下段『ほかの言葉にチャレンジ！』は写真下端で欠けているため未登録。内容を推測して補完しない。",
+    "stages": [
+      {
+        "reading": "かえ",
+        "readingParts": [
+          "かえ"
+        ],
+        "before": "本を読み",
+        "after": "。",
+        "answer": "返",
+        "icon": "📖",
+        "targetType": "core",
+        "okuri": "す",
+        "okuriChoices": [
+          "す",
+          "る",
+          "し"
+        ],
+        "chars": [
+          {
+            "char": "返",
+            "secret": "しんにょうの上に反。折り返す形を思い出そう。",
+            "memory": "しんにょうの上に反。折り返す形を思い出そう。",
+            "clue": "しんにょうの上に反。折り返す形を思い出そう。"
+          }
+        ]
+      },
+      {
+        "reading": "しゅご",
+        "readingParts": [
+          "しゅ",
+          "ご"
+        ],
+        "before": "文の",
+        "after": "をさがす。",
+        "answer": "主語",
+        "icon": "📝",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "主",
+            "secret": "主は王の上に点。",
+            "memory": "主は王の上に点。",
+            "clue": "主は王の上に点。"
+          },
+          {
+            "char": "語",
+            "secret": "語は言へんと吾を組み合わせる。",
+            "memory": "語は言へんと吾を組み合わせる。",
+            "clue": "語は言へんと吾を組み合わせる。"
+          }
+        ]
+      },
+      {
+        "reading": "きゅうしゅう",
+        "readingParts": [
+          "きゅう",
+          "しゅう"
+        ],
+        "before": "",
+        "after": "へ行く。",
+        "answer": "九州",
+        "icon": "🗾",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "九",
+            "secret": "九の形と曲がりを確かめよう。",
+            "memory": "九の形と曲がりを確かめよう。",
+            "clue": "九の形と曲がりを確かめよう。"
+          },
+          {
+            "char": "州",
+            "secret": "州は点とたて線の並びに注意。",
+            "memory": "州は点とたて線の並びに注意。",
+            "clue": "州は点とたて線の並びに注意。"
+          }
+        ]
+      },
+      {
+        "reading": "こや",
+        "readingParts": [
+          "こ",
+          "や"
+        ],
+        "before": "",
+        "after": "をたてる。",
+        "answer": "小屋",
+        "icon": "🏠",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "小",
+            "secret": "小は中心のたて線を意識。",
+            "memory": "小は中心のたて線を意識。",
+            "clue": "小は中心のたて線を意識。"
+          },
+          {
+            "char": "屋",
+            "secret": "屋の上はしかばね、下は至。",
+            "memory": "屋の上はしかばね、下は至。",
+            "clue": "屋の上はしかばね、下は至。"
+          }
+        ]
+      },
+      {
+        "reading": "ね",
+        "readingParts": [
+          "ね"
+        ],
+        "before": "木の",
+        "after": "っこがはる。",
+        "answer": "根",
+        "icon": "🌳",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "根",
+            "secret": "左は木へん、右は艮。",
+            "memory": "左は木へん、右は艮。",
+            "clue": "左は木へん、右は艮。"
+          }
+        ]
+      },
+      {
+        "reading": "へんじ",
+        "readingParts": [
+          "へん",
+          "じ"
+        ],
+        "before": "大きく",
+        "after": "をする。",
+        "answer": "返事",
+        "icon": "💬",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "返",
+            "secret": "しんにょうの上に反。",
+            "memory": "しんにょうの上に反。",
+            "clue": "しんにょうの上に反。"
+          },
+          {
+            "char": "事",
+            "secret": "上の一と下の口の形を確かめよう。",
+            "memory": "上の一と下の口の形を確かめよう。",
+            "clue": "上の一と下の口の形を確かめよう。"
+          }
+        ]
+      },
+      {
+        "reading": "おも",
+        "readingParts": [
+          "おも"
+        ],
+        "before": "",
+        "after": "メンバー。",
+        "answer": "主",
+        "icon": "👥",
+        "targetType": "core",
+        "okuri": "な",
+        "okuriChoices": [
+          "な",
+          "に",
+          "の"
+        ],
+        "chars": [
+          {
+            "char": "主",
+            "secret": "上の点と王の形を整えよう。",
+            "memory": "上の点と王の形を整えよう。",
+            "clue": "上の点と王の形を整えよう。"
+          }
+        ]
+      },
+      {
+        "reading": "ぬし",
+        "readingParts": [
+          "ぬし"
+        ],
+        "before": "家",
+        "after": "が出かける。",
+        "answer": "主",
+        "icon": "🏡",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "主",
+            "secret": "上の点と王の形を整えよう。",
+            "memory": "上の点と王の形を整えよう。",
+            "clue": "上の点と王の形を整えよう。"
+          }
+        ]
+      },
+      {
+        "reading": "おくじょう",
+        "readingParts": [
+          "おく",
+          "じょう"
+        ],
+        "before": "ビルの",
+        "after": "。",
+        "answer": "屋上",
+        "icon": "🏢",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "屋",
+            "secret": "屋の上はしかばね、下は至。",
+            "memory": "屋の上はしかばね、下は至。",
+            "clue": "屋の上はしかばね、下は至。"
+          },
+          {
+            "char": "上",
+            "secret": "上は横線2本とたて線。",
+            "memory": "上は横線2本とたて線。",
+            "clue": "上は横線2本とたて線。"
+          }
+        ]
+      },
+      {
+        "reading": "こんき",
+        "readingParts": [
+          "こん",
+          "き"
+        ],
+        "before": "",
+        "after": "よくつづける。",
+        "answer": "根気",
+        "icon": "💪",
+        "targetType": "core",
+        "chars": [
+          {
+            "char": "根",
+            "secret": "左は木へん、右は艮。",
+            "memory": "左は木へん、右は艮。",
+            "clue": "左は木へん、右は艮。"
+          },
+          {
+            "char": "気",
+            "secret": "気は上の線と内側の形に気をつけよう。",
+            "memory": "気は上の線と内側の形に気をつけよう。",
+            "clue": "気は上の線と内側の形に気をつけよう。"
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -1951,7 +2378,7 @@ const KANJI_TEST_HISTORY = [
 
 window.MIORI_KANJI_TEST_HISTORY = KANJI_TEST_HISTORY;
 
-let CURRENT_KANJI_PACK_ID = '2026-11-10-ch10-p30';
+let CURRENT_KANJI_PACK_ID = '2026-11-19-kanji14-p31';
 let ACTIVE_KANJI_PACK_ID = CURRENT_KANJI_PACK_ID;
 
 function kanjiPackById(id){
