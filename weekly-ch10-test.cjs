@@ -59,5 +59,5 @@ for(const answer of targets.flat())assert.ok(!html.includes('>'+answer+'<'),'Ans
 const index=read('index.html');
 assert.ok(index.includes('data-packs.js?v=20261114-ch10-deployfix'));
 assert.ok(index.includes('pwa-update-v303.js?v=20261114-ch10-deployfix'));
-assert.equal(JSON.parse(read('app-version.json')).build,'20261116.1');
+assert.equal(JSON.parse(read('app-version.json')).build,'20261119.1');
 console.log('PASS ch10: 10 questions, 15 targets including context kanji, 9 straight + 6 wavy, bonus excluded, A4 and history.');
