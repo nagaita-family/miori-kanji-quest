@@ -5,9 +5,9 @@ const ctx=vm.createContext({window:{},console,document:{createElement:()=>({text
 const run=code=>vm.runInContext(code,ctx);
 for(const f of ['data-v10.js','data-v11-patch.js','data-packs.js'])run(read(f));
 
-assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-11-10-ch10-p30');
-assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-11-10-ch10-p30');
-assert.equal(run('KANJI_PACKS.length'),10);
+assert.equal(run('CURRENT_KANJI_PACK_ID'),'2026-11-19-kanji14-p31');
+assert.equal(run('ACTIVE_KANJI_PACK_ID'),'2026-11-19-kanji14-p31');
+assert.equal(run('KANJI_PACKS.length'),11);
 assert.equal(run("KANJI_PACKS.find(p=>p.id==='2026-10-10-p70').status"),'past');
 
 run("useKanjiPack('2026-10-10-p70')");
